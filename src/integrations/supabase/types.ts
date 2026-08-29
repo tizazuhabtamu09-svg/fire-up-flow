@@ -36,6 +36,7 @@ export type Database = {
           role: Database["public"]["Enums"]["app_role_type"] | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
+          sectors: string[]
           sub_city: string | null
           updated_at: string
           user_id: string
@@ -62,6 +63,7 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role_type"] | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[]
           sub_city?: string | null
           updated_at?: string
           user_id: string
@@ -88,6 +90,7 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role_type"] | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[]
           sub_city?: string | null
           updated_at?: string
           user_id?: string
@@ -413,6 +416,7 @@ export type Database = {
           photo_url: string | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
+          sectors: string[]
           skills: string[]
           updated_at: string
           user_id: string
@@ -443,6 +447,7 @@ export type Database = {
           photo_url?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[]
           skills?: string[]
           updated_at?: string
           user_id: string
@@ -473,6 +478,7 @@ export type Database = {
           photo_url?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[]
           skills?: string[]
           updated_at?: string
           user_id?: string
@@ -1118,6 +1124,7 @@ export type Database = {
           amount: number
           created_at: string
           id: string
+          package_id: string | null
           payer_name: string
           purpose: string | null
           receipt_path: string | null
@@ -1130,6 +1137,7 @@ export type Database = {
           amount: number
           created_at?: string
           id?: string
+          package_id?: string | null
           payer_name: string
           purpose?: string | null
           receipt_path?: string | null
@@ -1142,6 +1150,7 @@ export type Database = {
           amount?: number
           created_at?: string
           id?: string
+          package_id?: string | null
           payer_name?: string
           purpose?: string | null
           receipt_path?: string | null
@@ -1150,7 +1159,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "payments_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "subscription_packages"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pricing_settings: {
         Row: {
@@ -1791,6 +1808,7 @@ export type Database = {
           registration_type: string | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
+          sectors: string[]
           skills: string[]
           sub_city: string | null
           updated_at: string
@@ -1845,6 +1863,7 @@ export type Database = {
           registration_type?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[]
           skills?: string[]
           sub_city?: string | null
           updated_at?: string
@@ -1899,6 +1918,7 @@ export type Database = {
           registration_type?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[]
           skills?: string[]
           sub_city?: string | null
           updated_at?: string
