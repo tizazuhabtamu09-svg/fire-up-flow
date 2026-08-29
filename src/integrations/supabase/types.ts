@@ -1691,7 +1691,63 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      ack_employee_termination: { Args: { _id: string }; Returns: undefined }
+      admin_adjust_wallet: {
+        Args: { _amount: number; _note: string; _user_id: string }
+        Returns: number
+      }
+      approve_payment: { Args: { _payment_id: string }; Returns: undefined }
+      are_linked: { Args: { _a: string; _b: string }; Returns: boolean }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role_type"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
+      my_broker_employer_ids: { Args: { _user_id: string }; Returns: string[] }
+      my_employer_ids: { Args: { _user_id: string }; Returns: string[] }
+      notify_user: {
+        Args: {
+          _body?: string
+          _link?: string
+          _title: string
+          _type: string
+          _user_id: string
+        }
+        Returns: undefined
+      }
+      review_employee_termination: {
+        Args: {
+          _approve: boolean
+          _id: string
+          _make_available: boolean
+          _note: string
+        }
+        Returns: undefined
+      }
+      review_profile_change: {
+        Args: { _approve: boolean; _id: string; _note: string }
+        Returns: undefined
+      }
+      review_termination: {
+        Args: {
+          _approve: boolean
+          _id: string
+          _make_available: boolean
+          _note: string
+        }
+        Returns: undefined
+      }
+      set_worker_roster_status: {
+        Args: { _status: string; _worker_id: string }
+        Returns: undefined
+      }
+      spend_wallet: {
+        Args: { _amount: number; _reason: string }
+        Returns: number
+      }
     }
     Enums: {
       app_role_type: "employee" | "employer" | "broker" | "admin" | "kyc"
