@@ -1912,7 +1912,89 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      workers_public: {
+        Row: {
+          age: number | null
+          area: string | null
+          available: boolean | null
+          city: string | null
+          created_at: string | null
+          experience: string | null
+          full_name: string | null
+          gender: Database["public"]["Enums"]["gender_type"] | null
+          global_status: string | null
+          id: string | null
+          language: string | null
+          language_other: string | null
+          latitude: number | null
+          longitude: number | null
+          photo_url: string | null
+          price: number | null
+          sector: Database["public"]["Enums"]["sector_type"] | null
+          sector_other: string | null
+          sub_city: string | null
+          verification_status:
+            | Database["public"]["Enums"]["verification_status_type"]
+            | null
+        }
+        Insert: {
+          age?: number | null
+          area?: string | null
+          available?: boolean | null
+          city?: string | null
+          created_at?: string | null
+          experience?: string | null
+          full_name?: string | null
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          global_status?: string | null
+          id?: string | null
+          language?: string | null
+          language_other?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          photo_url?: string | null
+          price?: number | null
+          sector?: Database["public"]["Enums"]["sector_type"] | null
+          sector_other?: string | null
+          sub_city?: string | null
+          verification_status?:
+            | Database["public"]["Enums"]["verification_status_type"]
+            | null
+        }
+        Update: {
+          age?: number | null
+          area?: string | null
+          available?: boolean | null
+          city?: string | null
+          created_at?: string | null
+          experience?: string | null
+          full_name?: string | null
+          gender?: Database["public"]["Enums"]["gender_type"] | null
+          global_status?: string | null
+          id?: string | null
+          language?: string | null
+          language_other?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          photo_url?: string | null
+          price?: number | null
+          sector?: Database["public"]["Enums"]["sector_type"] | null
+          sector_other?: string | null
+          sub_city?: string | null
+          verification_status?:
+            | Database["public"]["Enums"]["verification_status_type"]
+            | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "worker_public_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       ack_employee_termination: { Args: { _id: string }; Returns: undefined }
