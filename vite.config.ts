@@ -13,28 +13,23 @@ const env = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
 // client-rendered bundle for Apache/Plesk hosting instead of an SSR server.
 const STATIC_SPA = process.env.STATIC_SPA === "1";
 
-// These are public browser connection values, not privileged credentials.
-// They MUST match this project's backend: the server validates every session
-// token against it, so a stale value makes the browser sign in to a different
-// backend and every admin/broker action fails with "session expired".
-const PROJECT_BACKEND_URL = "https://ltskydjhjshautyhusnv.supabase.co";
-const PROJECT_PUBLISHABLE_KEY = "sb_publishable_WywS3SOXRV5ZxZzkTuiUbQ_fRUtrWQQ";
-
 // Publishable (safe to ship) backend values, resolved from the environment
 // only. NEVER hardcode a project URL/key here: a stale fallback silently
 // points the published build at a different backend, which shows up as
 // "Invalid login credentials" for accounts that exist in this project.
 const publicBackendUrl =
-  env.VITE_SUPABASE_URL ||
-  env.SUPABASE_URL ||
-  process.env.SUPABASE_URL ||
-  PROJECT_BACKEND_URL;
+  env.VITE_SUPABASE_URL || env.SUPABASE_URL || process.env.SUPABASE_URL;
 const publicBackendKey =
   env.VITE_SUPABASE_PUBLISHABLE_KEY ||
   env.VITE_SUPABASE_ANON_KEY ||
   env.SUPABASE_PUBLISHABLE_KEY ||
-  process.env.SUPABASE_PUBLISHABLE_KEY ||
-  PROJECT_PUBLISHABLE_KEY;
+  process.env.SUPABASE_PUBLISHABLE_KEY;
+
+if (!publicBackendUrl || !publicBackendKey) {
+  throw new Error(
+    "Missing Supabase backend config: set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in .env",
+  );
+}
 
 
 
