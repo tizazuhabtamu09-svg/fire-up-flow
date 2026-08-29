@@ -140,6 +140,66 @@ export type Database = {
         }
         Relationships: []
       }
+      banners: {
+        Row: {
+          active: boolean
+          body: string | null
+          created_at: string
+          created_by: string | null
+          cta_label: string | null
+          cta_link: string | null
+          desktop_image: string | null
+          ends_at: string | null
+          id: string
+          kind: string
+          mobile_image: string | null
+          placement: string
+          sort_order: number
+          starts_at: string | null
+          subtitle: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          body?: string | null
+          created_at?: string
+          created_by?: string | null
+          cta_label?: string | null
+          cta_link?: string | null
+          desktop_image?: string | null
+          ends_at?: string | null
+          id?: string
+          kind?: string
+          mobile_image?: string | null
+          placement?: string
+          sort_order?: number
+          starts_at?: string | null
+          subtitle?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          body?: string | null
+          created_at?: string
+          created_by?: string | null
+          cta_label?: string | null
+          cta_link?: string | null
+          desktop_image?: string | null
+          ends_at?: string | null
+          id?: string
+          kind?: string
+          mobile_image?: string | null
+          placement?: string
+          sort_order?: number
+          starts_at?: string | null
+          subtitle?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       bookings: {
         Row: {
           address: string | null
@@ -819,6 +879,170 @@ export type Database = {
             columns: ["hired_id"]
             isOneToOne: false
             referencedRelation: "hired_employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_applications: {
+        Row: {
+          applicant_id: string
+          city: string | null
+          created_at: string
+          employer_note: string | null
+          experience: string | null
+          full_name: string
+          id: string
+          job_id: string
+          message: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+          worker_id: string | null
+        }
+        Insert: {
+          applicant_id: string
+          city?: string | null
+          created_at?: string
+          employer_note?: string | null
+          experience?: string | null
+          full_name: string
+          id?: string
+          job_id: string
+          message?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          worker_id?: string | null
+        }
+        Update: {
+          applicant_id?: string
+          city?: string | null
+          created_at?: string
+          employer_note?: string | null
+          experience?: string | null
+          full_name?: string
+          id?: string
+          job_id?: string
+          message?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          worker_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "job_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_applications_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_posts: {
+        Row: {
+          address: string | null
+          admin_note: string | null
+          area: string | null
+          city: string | null
+          closed_at: string | null
+          contact_phone: string | null
+          created_at: string
+          description: string
+          duration: string | null
+          employer_id: string
+          employer_name: string | null
+          employment_type: string
+          fee_amount: number
+          id: string
+          openings: number
+          payment_id: string | null
+          published_at: string | null
+          requirements: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          salary: number | null
+          salary_max: number | null
+          sector: Database["public"]["Enums"]["sector_type"] | null
+          sector_other: string | null
+          status: string
+          sub_city: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          address?: string | null
+          admin_note?: string | null
+          area?: string | null
+          city?: string | null
+          closed_at?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description: string
+          duration?: string | null
+          employer_id: string
+          employer_name?: string | null
+          employment_type?: string
+          fee_amount?: number
+          id?: string
+          openings?: number
+          payment_id?: string | null
+          published_at?: string | null
+          requirements?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          salary?: number | null
+          salary_max?: number | null
+          sector?: Database["public"]["Enums"]["sector_type"] | null
+          sector_other?: string | null
+          status?: string
+          sub_city?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          address?: string | null
+          admin_note?: string | null
+          area?: string | null
+          city?: string | null
+          closed_at?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          description?: string
+          duration?: string | null
+          employer_id?: string
+          employer_name?: string | null
+          employment_type?: string
+          fee_amount?: number
+          id?: string
+          openings?: number
+          payment_id?: string | null
+          published_at?: string | null
+          requirements?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          salary?: number | null
+          salary_max?: number | null
+          sector?: Database["public"]["Enums"]["sector_type"] | null
+          sector_other?: string | null
+          status?: string
+          sub_city?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_posts_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
             referencedColumns: ["id"]
           },
         ]
@@ -1706,6 +1930,7 @@ export type Database = {
         Returns: boolean
       }
       is_staff: { Args: { _user_id: string }; Returns: boolean }
+      is_verified_employee: { Args: { _user_id: string }; Returns: boolean }
       my_broker_employer_ids: { Args: { _user_id: string }; Returns: string[] }
       my_employer_ids: { Args: { _user_id: string }; Returns: string[] }
       notify_user: {
