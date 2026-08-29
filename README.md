@@ -21,7 +21,23 @@ npm i
 npm run dev
 ```
 
+## After remixing this project
+
+This is a marketplace template for connecting service workers with households. Before publishing, update these:
+
+1. **Branding**: edit `BRAND` in `src/lib/app-config.ts` (name, Amharic name, tagline, description). This updates the header, footer, SEO, and most page copy automatically.
+2. **Contact details**: set your phone, email, and payment account in `.env`:
+   - `VITE_CONTACT_PHONE`
+   - `VITE_CONTACT_EMAIL`
+   - `VITE_PAYMENT_ACCOUNT_NAME`
+   - `VITE_TELEBIRR_NUMBER`
+3. **Content**: update the hero copy, pricing, worker categories, and testimonials on `src/routes/index.tsx`.
+4. **Service categories**: adjust the worker sectors in `src/lib/app-config.ts`.
+5. **Auth and onboarding**: test the `/join` flow for employees, employers, and brokers.
+6. **Payments**: review the wallet and fee values in `src/lib/app-config.ts`.
+
 ## Built with
+
 
 - TanStack Start
 - TypeScript
