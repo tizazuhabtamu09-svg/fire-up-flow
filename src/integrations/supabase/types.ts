@@ -36,7 +36,6 @@ export type Database = {
           role: Database["public"]["Enums"]["app_role_type"] | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
-          sectors: string[]
           sub_city: string | null
           updated_at: string
           user_id: string
@@ -63,7 +62,6 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role_type"] | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           sub_city?: string | null
           updated_at?: string
           user_id: string
@@ -90,7 +88,6 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role_type"] | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           sub_city?: string | null
           updated_at?: string
           user_id?: string
@@ -140,66 +137,6 @@ export type Database = {
           witness_phone?: string | null
           witness_sex?: Database["public"]["Enums"]["gender_type"] | null
           worker_ref?: string
-        }
-        Relationships: []
-      }
-      banners: {
-        Row: {
-          active: boolean
-          body: string | null
-          created_at: string
-          created_by: string | null
-          cta_label: string | null
-          cta_link: string | null
-          desktop_image: string | null
-          ends_at: string | null
-          id: string
-          kind: string
-          mobile_image: string | null
-          placement: string
-          sort_order: number
-          starts_at: string | null
-          subtitle: string | null
-          title: string | null
-          updated_at: string
-        }
-        Insert: {
-          active?: boolean
-          body?: string | null
-          created_at?: string
-          created_by?: string | null
-          cta_label?: string | null
-          cta_link?: string | null
-          desktop_image?: string | null
-          ends_at?: string | null
-          id?: string
-          kind?: string
-          mobile_image?: string | null
-          placement?: string
-          sort_order?: number
-          starts_at?: string | null
-          subtitle?: string | null
-          title?: string | null
-          updated_at?: string
-        }
-        Update: {
-          active?: boolean
-          body?: string | null
-          created_at?: string
-          created_by?: string | null
-          cta_label?: string | null
-          cta_link?: string | null
-          desktop_image?: string | null
-          ends_at?: string | null
-          id?: string
-          kind?: string
-          mobile_image?: string | null
-          placement?: string
-          sort_order?: number
-          starts_at?: string | null
-          subtitle?: string | null
-          title?: string | null
-          updated_at?: string
         }
         Relationships: []
       }
@@ -416,7 +353,6 @@ export type Database = {
           photo_url: string | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
-          sectors: string[]
           skills: string[]
           updated_at: string
           user_id: string
@@ -447,7 +383,6 @@ export type Database = {
           photo_url?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           skills?: string[]
           updated_at?: string
           user_id: string
@@ -478,7 +413,6 @@ export type Database = {
           photo_url?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           skills?: string[]
           updated_at?: string
           user_id?: string
@@ -889,170 +823,6 @@ export type Database = {
           },
         ]
       }
-      job_applications: {
-        Row: {
-          applicant_id: string
-          city: string | null
-          created_at: string
-          employer_note: string | null
-          experience: string | null
-          full_name: string
-          id: string
-          job_id: string
-          message: string | null
-          phone: string | null
-          status: string
-          updated_at: string
-          worker_id: string | null
-        }
-        Insert: {
-          applicant_id: string
-          city?: string | null
-          created_at?: string
-          employer_note?: string | null
-          experience?: string | null
-          full_name: string
-          id?: string
-          job_id: string
-          message?: string | null
-          phone?: string | null
-          status?: string
-          updated_at?: string
-          worker_id?: string | null
-        }
-        Update: {
-          applicant_id?: string
-          city?: string | null
-          created_at?: string
-          employer_note?: string | null
-          experience?: string | null
-          full_name?: string
-          id?: string
-          job_id?: string
-          message?: string | null
-          phone?: string | null
-          status?: string
-          updated_at?: string
-          worker_id?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "job_applications_job_id_fkey"
-            columns: ["job_id"]
-            isOneToOne: false
-            referencedRelation: "job_posts"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "job_applications_worker_id_fkey"
-            columns: ["worker_id"]
-            isOneToOne: false
-            referencedRelation: "workers"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      job_posts: {
-        Row: {
-          address: string | null
-          admin_note: string | null
-          area: string | null
-          city: string | null
-          closed_at: string | null
-          contact_phone: string | null
-          created_at: string
-          description: string
-          duration: string | null
-          employer_id: string
-          employer_name: string | null
-          employment_type: string
-          fee_amount: number
-          id: string
-          openings: number
-          payment_id: string | null
-          published_at: string | null
-          requirements: string | null
-          reviewed_at: string | null
-          reviewed_by: string | null
-          salary: number | null
-          salary_max: number | null
-          sector: Database["public"]["Enums"]["sector_type"] | null
-          sector_other: string | null
-          status: string
-          sub_city: string | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          address?: string | null
-          admin_note?: string | null
-          area?: string | null
-          city?: string | null
-          closed_at?: string | null
-          contact_phone?: string | null
-          created_at?: string
-          description: string
-          duration?: string | null
-          employer_id: string
-          employer_name?: string | null
-          employment_type?: string
-          fee_amount?: number
-          id?: string
-          openings?: number
-          payment_id?: string | null
-          published_at?: string | null
-          requirements?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          salary?: number | null
-          salary_max?: number | null
-          sector?: Database["public"]["Enums"]["sector_type"] | null
-          sector_other?: string | null
-          status?: string
-          sub_city?: string | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          address?: string | null
-          admin_note?: string | null
-          area?: string | null
-          city?: string | null
-          closed_at?: string | null
-          contact_phone?: string | null
-          created_at?: string
-          description?: string
-          duration?: string | null
-          employer_id?: string
-          employer_name?: string | null
-          employment_type?: string
-          fee_amount?: number
-          id?: string
-          openings?: number
-          payment_id?: string | null
-          published_at?: string | null
-          requirements?: string | null
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          salary?: number | null
-          salary_max?: number | null
-          sector?: Database["public"]["Enums"]["sector_type"] | null
-          sector_other?: string | null
-          status?: string
-          sub_city?: string | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "job_posts_payment_id_fkey"
-            columns: ["payment_id"]
-            isOneToOne: false
-            referencedRelation: "payments"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       messages: {
         Row: {
           admin_reply: string | null
@@ -1104,7 +874,7 @@ export type Database = {
           link?: string | null
           read_at?: string | null
           title: string
-          type?: string
+          type: string
           user_id: string
         }
         Update: {
@@ -1124,7 +894,6 @@ export type Database = {
           amount: number
           created_at: string
           id: string
-          package_id: string | null
           payer_name: string
           purpose: string | null
           receipt_path: string | null
@@ -1137,7 +906,6 @@ export type Database = {
           amount: number
           created_at?: string
           id?: string
-          package_id?: string | null
           payer_name: string
           purpose?: string | null
           receipt_path?: string | null
@@ -1150,7 +918,6 @@ export type Database = {
           amount?: number
           created_at?: string
           id?: string
-          package_id?: string | null
           payer_name?: string
           purpose?: string | null
           receipt_path?: string | null
@@ -1159,15 +926,7 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "payments_package_id_fkey"
-            columns: ["package_id"]
-            isOneToOne: false
-            referencedRelation: "subscription_packages"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       pricing_settings: {
         Row: {
@@ -1218,7 +977,7 @@ export type Database = {
         }
         Insert: {
           admin_note?: string | null
-          changes?: Json
+          changes: Json
           created_at?: string
           id?: string
           note?: string | null
@@ -1460,14 +1219,14 @@ export type Database = {
           active?: boolean
           created_at?: string
           description?: string | null
-          duration_days?: number
+          duration_days: number
           feature_limits?: Json
           fee_overrides?: Json
           id?: string
           name: string
-          price?: number
+          price: number
           updated_at?: string
-          user_type?: Database["public"]["Enums"]["app_role_type"]
+          user_type: Database["public"]["Enums"]["app_role_type"]
         }
         Update: {
           active?: boolean
@@ -1648,10 +1407,6 @@ export type Database = {
           available: boolean
           city: string | null
           created_at: string
-          education: string | null
-          education_graduation_year: number | null
-          education_institution: string | null
-          education_qualification: string | null
           experience: string | null
           full_name: string
           gender: Database["public"]["Enums"]["gender_type"] | null
@@ -1665,7 +1420,6 @@ export type Database = {
           price: number | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
-          sectors: string[]
           sub_city: string | null
           verification_status: Database["public"]["Enums"]["verification_status_type"]
         }
@@ -1675,10 +1429,6 @@ export type Database = {
           available?: boolean
           city?: string | null
           created_at?: string
-          education?: string | null
-          education_graduation_year?: number | null
-          education_institution?: string | null
-          education_qualification?: string | null
           experience?: string | null
           full_name: string
           gender?: Database["public"]["Enums"]["gender_type"] | null
@@ -1692,7 +1442,6 @@ export type Database = {
           price?: number | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           sub_city?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status_type"]
         }
@@ -1702,10 +1451,6 @@ export type Database = {
           available?: boolean
           city?: string | null
           created_at?: string
-          education?: string | null
-          education_graduation_year?: number | null
-          education_institution?: string | null
-          education_qualification?: string | null
           experience?: string | null
           full_name?: string
           gender?: Database["public"]["Enums"]["gender_type"] | null
@@ -1719,7 +1464,6 @@ export type Database = {
           price?: number | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           sub_city?: string | null
           verification_status?: Database["public"]["Enums"]["verification_status_type"]
         }
@@ -1823,7 +1567,6 @@ export type Database = {
           registration_type: string | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
-          sectors: string[]
           skills: string[]
           sub_city: string | null
           updated_at: string
@@ -1878,7 +1621,6 @@ export type Database = {
           registration_type?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           skills?: string[]
           sub_city?: string | null
           updated_at?: string
@@ -1933,7 +1675,6 @@ export type Database = {
           registration_type?: string | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
-          sectors?: string[]
           skills?: string[]
           sub_city?: string | null
           updated_at?: string
@@ -1947,164 +1688,10 @@ export type Database = {
       }
     }
     Views: {
-      workers_public: {
-        Row: {
-          age: number | null
-          area: string | null
-          available: boolean | null
-          city: string | null
-          created_at: string | null
-          education: string | null
-          education_graduation_year: number | null
-          education_institution: string | null
-          education_qualification: string | null
-          experience: string | null
-          full_name: string | null
-          gender: Database["public"]["Enums"]["gender_type"] | null
-          global_status: string | null
-          id: string | null
-          language: string | null
-          language_other: string | null
-          latitude: number | null
-          longitude: number | null
-          photo_url: string | null
-          price: number | null
-          sector: Database["public"]["Enums"]["sector_type"] | null
-          sector_other: string | null
-          sectors: string[] | null
-          sub_city: string | null
-          verification_status:
-            | Database["public"]["Enums"]["verification_status_type"]
-            | null
-        }
-        Insert: {
-          age?: number | null
-          area?: string | null
-          available?: boolean | null
-          city?: string | null
-          created_at?: string | null
-          education?: string | null
-          education_graduation_year?: number | null
-          education_institution?: string | null
-          education_qualification?: string | null
-          experience?: string | null
-          full_name?: string | null
-          gender?: Database["public"]["Enums"]["gender_type"] | null
-          global_status?: string | null
-          id?: string | null
-          language?: string | null
-          language_other?: string | null
-          latitude?: number | null
-          longitude?: number | null
-          photo_url?: string | null
-          price?: number | null
-          sector?: Database["public"]["Enums"]["sector_type"] | null
-          sector_other?: string | null
-          sectors?: string[] | null
-          sub_city?: string | null
-          verification_status?:
-            | Database["public"]["Enums"]["verification_status_type"]
-            | null
-        }
-        Update: {
-          age?: number | null
-          area?: string | null
-          available?: boolean | null
-          city?: string | null
-          created_at?: string | null
-          education?: string | null
-          education_graduation_year?: number | null
-          education_institution?: string | null
-          education_qualification?: string | null
-          experience?: string | null
-          full_name?: string | null
-          gender?: Database["public"]["Enums"]["gender_type"] | null
-          global_status?: string | null
-          id?: string | null
-          language?: string | null
-          language_other?: string | null
-          latitude?: number | null
-          longitude?: number | null
-          photo_url?: string | null
-          price?: number | null
-          sector?: Database["public"]["Enums"]["sector_type"] | null
-          sector_other?: string | null
-          sectors?: string[] | null
-          sub_city?: string | null
-          verification_status?:
-            | Database["public"]["Enums"]["verification_status_type"]
-            | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "worker_public_profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "workers"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
-      ack_employee_termination: { Args: { _id: string }; Returns: undefined }
-      admin_adjust_wallet: {
-        Args: { _amount: number; _note: string; _user_id: string }
-        Returns: number
-      }
-      approve_payment: { Args: { _payment_id: string }; Returns: undefined }
-      are_linked: { Args: { _a: string; _b: string }; Returns: boolean }
-      has_role: {
-        Args: {
-          _role: Database["public"]["Enums"]["app_role_type"]
-          _user_id: string
-        }
-        Returns: boolean
-      }
-      is_staff: { Args: { _user_id: string }; Returns: boolean }
-      is_verified_employee: { Args: { _user_id: string }; Returns: boolean }
-      my_broker_employer_ids: { Args: { _user_id: string }; Returns: string[] }
-      my_employer_ids: { Args: { _user_id: string }; Returns: string[] }
-      notify_user: {
-        Args: {
-          _body?: string
-          _link?: string
-          _title: string
-          _type: string
-          _user_id: string
-        }
-        Returns: undefined
-      }
-      review_employee_termination: {
-        Args: {
-          _approve: boolean
-          _id: string
-          _make_available: boolean
-          _note: string
-        }
-        Returns: undefined
-      }
-      review_profile_change: {
-        Args: { _approve: boolean; _id: string; _note: string }
-        Returns: undefined
-      }
-      review_termination: {
-        Args: {
-          _approve: boolean
-          _id: string
-          _make_available: boolean
-          _note: string
-        }
-        Returns: undefined
-      }
-      set_worker_roster_status: {
-        Args: { _status: string; _worker_id: string }
-        Returns: undefined
-      }
-      spend_wallet: {
-        Args: { _amount: number; _reason: string }
-        Returns: number
-      }
+      [_ in never]: never
     }
     Enums: {
       app_role_type: "employee" | "employer" | "broker" | "admin" | "kyc"
