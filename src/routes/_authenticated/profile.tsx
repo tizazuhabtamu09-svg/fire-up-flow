@@ -177,3 +177,68 @@ function ProfilePage() {
     </div>
   );
 }
+
+/**
+ * Employer-only card: counts of the employer's job posts grouped by review
+ * status, with a link to the full "My job posts" page.
+ */
+function EmployerJobStatusCard({ userId }: { userId: string }) {
+  const [jobs, setJobs] = useState<JobPost[] | null>(null);
+
+  useEffect(() => {
+    let active = true;
+    supabase
+      .from("job_posts")
+      .select("*")
+      .eq("employer_id", userId)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (active) setJobs(data ?? []);
+      });
+    return () => {
+      active = false;
+    };
+  }, [userId]);
+
+  const counts = (jobs ?? []).reduce<Record<string, number>>((acc, j) => {
+    acc[j.status] = (acc[j.status] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  return (
+    <div className="card-soft mt-6 p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Briefcase className="h-5 w-5" style={{ color: "var(--brand-dark)" }} />
+          <div>
+            <p className="font-semibold">My job posts</p>
+            <p className="font-amharic text-xs text-muted-foreground">የእኔ የስራ ማስታወቂዎች ሁኔታ</p>
+          </div>
+        </div>
+        <Link to="/my-jobs" className="btn-outline-brand text-xs">View all</Link>
+      </div>
+
+      {jobs === null ? (
+        <p className="mt-4 text-sm text-muted-foreground">Loading…</p>
+      ) : jobs.length === 0 ? (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">You haven't posted a job yet.</p>
+          <Link to="/post-job" className="btn-brand text-xs">Post a Job</Link>
+        </div>
+      ) : (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {Object.entries(JOB_STATUS_LABEL).map(([status, label]) =>
+            counts[status] ? (
+              <span
+                key={status}
+                className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-muted-foreground"
+              >
+                {label}: <span className="text-foreground">{counts[status]}</span>
+              </span>
+            ) : null,
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
