@@ -107,6 +107,8 @@ function ProfilePage() {
         <VerifiedBadge status={profile?.verification_status} />
       </div>
 
+      {profile?.role === "employer" && <EmployerJobStatusCard userId={profile.id} />}
+
       {profile?.role === "employee" && (
         <div className="card-soft mt-6 flex flex-wrap items-center justify-between gap-3 p-5">
           <div>
