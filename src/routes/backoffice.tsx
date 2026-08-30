@@ -24,6 +24,7 @@ const NAV: { to: string; label: string; exact: boolean; adminOnly?: boolean; per
   { to: "/backoffice/documents", label: "Document review", exact: false },
   { to: "/backoffice/requests", label: "Employee requests", exact: false },
   { to: "/backoffice/jobs", label: "Job posts", exact: false },
+  { to: "/backoffice/banners", label: "Posting (banners)", exact: false, adminOnly: true },
   { to: "/backoffice/compliance", label: "Compliance logs", exact: false },
   { to: "/backoffice/accounts", label: "Create accounts", exact: false },
   { to: "/backoffice/pricing", label: "Pricing", exact: false, permission: "pricing" },
