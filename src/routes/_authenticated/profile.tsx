@@ -1,7 +1,9 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Briefcase } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile, roleLabels } from "@/lib/use-session";
+import { JOB_STATUS_LABEL, type JobPost } from "@/lib/jobs";
 import { ChangePassword } from "@/components/ChangePassword";
 import { ChangeEmail } from "@/components/ChangeEmail";
 import { VerifiedBadge } from "@/components/VerifiedBadge";
