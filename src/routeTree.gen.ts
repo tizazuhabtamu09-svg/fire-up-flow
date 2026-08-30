@@ -42,6 +42,7 @@ import { Route as BackofficePricingRouteImport } from './routes/backoffice.prici
 import { Route as BackofficePaymentsRouteImport } from './routes/backoffice.payments'
 import { Route as BackofficeJobsRouteImport } from './routes/backoffice.jobs'
 import { Route as BackofficeComplianceRouteImport } from './routes/backoffice.compliance'
+import { Route as BackofficeBannersRouteImport } from './routes/backoffice.banners'
 import { Route as BackofficeAccountsRouteImport } from './routes/backoffice.accounts'
 import { Route as AuthenticatedVerificationRouteImport } from './routes/_authenticated/verification'
 import { Route as AuthenticatedUpdateProfileRouteImport } from './routes/_authenticated/update-profile'
@@ -249,6 +250,11 @@ const BackofficeJobsRoute = BackofficeJobsRouteImport.update({
 const BackofficeComplianceRoute = BackofficeComplianceRouteImport.update({
   id: '/compliance',
   path: '/compliance',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeBannersRoute = BackofficeBannersRouteImport.update({
+  id: '/banners',
+  path: '/banners',
   getParentRoute: () => BackofficeRoute,
 } as any)
 const BackofficeAccountsRoute = BackofficeAccountsRouteImport.update({
@@ -529,6 +535,7 @@ export interface FileRoutesByFullPath {
   '/update-profile': typeof AuthenticatedUpdateProfileRoute
   '/verification': typeof AuthenticatedVerificationRoute
   '/backoffice/accounts': typeof BackofficeAccountsRoute
+  '/backoffice/banners': typeof BackofficeBannersRoute
   '/backoffice/compliance': typeof BackofficeComplianceRoute
   '/backoffice/jobs': typeof BackofficeJobsRoute
   '/backoffice/payments': typeof BackofficePaymentsRoute
@@ -605,6 +612,7 @@ export interface FileRoutesByTo {
   '/update-profile': typeof AuthenticatedUpdateProfileRoute
   '/verification': typeof AuthenticatedVerificationRoute
   '/backoffice/accounts': typeof BackofficeAccountsRoute
+  '/backoffice/banners': typeof BackofficeBannersRoute
   '/backoffice/compliance': typeof BackofficeComplianceRoute
   '/backoffice/jobs': typeof BackofficeJobsRoute
   '/backoffice/payments': typeof BackofficePaymentsRoute
@@ -685,6 +693,7 @@ export interface FileRoutesById {
   '/_authenticated/update-profile': typeof AuthenticatedUpdateProfileRoute
   '/_authenticated/verification': typeof AuthenticatedVerificationRoute
   '/backoffice/accounts': typeof BackofficeAccountsRoute
+  '/backoffice/banners': typeof BackofficeBannersRoute
   '/backoffice/compliance': typeof BackofficeComplianceRoute
   '/backoffice/jobs': typeof BackofficeJobsRoute
   '/backoffice/payments': typeof BackofficePaymentsRoute
@@ -765,6 +774,7 @@ export interface FileRouteTypes {
     | '/update-profile'
     | '/verification'
     | '/backoffice/accounts'
+    | '/backoffice/banners'
     | '/backoffice/compliance'
     | '/backoffice/jobs'
     | '/backoffice/payments'
@@ -841,6 +851,7 @@ export interface FileRouteTypes {
     | '/update-profile'
     | '/verification'
     | '/backoffice/accounts'
+    | '/backoffice/banners'
     | '/backoffice/compliance'
     | '/backoffice/jobs'
     | '/backoffice/payments'
@@ -920,6 +931,7 @@ export interface FileRouteTypes {
     | '/_authenticated/update-profile'
     | '/_authenticated/verification'
     | '/backoffice/accounts'
+    | '/backoffice/banners'
     | '/backoffice/compliance'
     | '/backoffice/jobs'
     | '/backoffice/payments'
@@ -1226,6 +1238,13 @@ declare module '@tanstack/react-router' {
       path: '/compliance'
       fullPath: '/backoffice/compliance'
       preLoaderRoute: typeof BackofficeComplianceRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/banners': {
+      id: '/backoffice/banners'
+      path: '/banners'
+      fullPath: '/backoffice/banners'
+      preLoaderRoute: typeof BackofficeBannersRouteImport
       parentRoute: typeof BackofficeRoute
     }
     '/backoffice/accounts': {
@@ -1641,6 +1660,7 @@ const AuthenticatedRouteRouteWithChildren =
 
 interface BackofficeRouteChildren {
   BackofficeAccountsRoute: typeof BackofficeAccountsRoute
+  BackofficeBannersRoute: typeof BackofficeBannersRoute
   BackofficeComplianceRoute: typeof BackofficeComplianceRoute
   BackofficeJobsRoute: typeof BackofficeJobsRoute
   BackofficePaymentsRoute: typeof BackofficePaymentsRoute
@@ -1656,6 +1676,7 @@ interface BackofficeRouteChildren {
 
 const BackofficeRouteChildren: BackofficeRouteChildren = {
   BackofficeAccountsRoute: BackofficeAccountsRoute,
+  BackofficeBannersRoute: BackofficeBannersRoute,
   BackofficeComplianceRoute: BackofficeComplianceRoute,
   BackofficeJobsRoute: BackofficeJobsRoute,
   BackofficePaymentsRoute: BackofficePaymentsRoute,
