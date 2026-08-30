@@ -97,6 +97,7 @@ function DashboardPage() {
           ) : (
             <>
               <Link to="/workers" className="btn-brand text-sm">{t("dash.findWorkers")}</Link>
+              <Link to="/my-jobs" className="btn-outline-brand text-sm">My Job Posts</Link>
               <Link to="/my-requests" className="btn-outline-brand text-sm">{t("dash.myRequests")}</Link>
               <Link to="/my-team" className="btn-outline-brand text-sm">{t("dash.myTeam")}</Link>
             </>
