@@ -49,12 +49,55 @@ export async function fetchStaffAccess(userId: string): Promise<StaffAccess> {
  * metadata so a fresh Google sign-up (whose profile role defaults to employer)
  * is still forced through the role picker.
  */
+/**
+ * Guarantees the signed-in user has a `profiles` row. Some accounts (e.g. Google
+ * sign-ups or signups made before the signup trigger existed) can end up without
+ * one, which makes them invisible in the back office user list and in the
+ * document verification queue. The row is created with `pending` verification so
+ * the account shows up for review straight after registration.
+ */
+export async function ensureProfileRow(userId: string): Promise<void> {
+  const { data: existing } = await supabase.from("profiles").select("id").eq("id", userId).maybeSingle();
+  if (existing) return;
+
+  const [{ data: userData }, { data: application }] = await Promise.all([
+    supabase.auth.getUser(),
+    supabase
+      .from("applications")
+      .select("full_name, phone, city, role")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
+  const meta = (userData.user?.user_metadata ?? {}) as {
+    full_name?: string;
+    phone?: string;
+    role?: string;
+    onboarding_role?: string;
+  };
+  const role = (application?.role ?? meta.onboarding_role ?? meta.role ?? "employer") as AppRole;
+
+  await supabase.from("profiles").upsert(
+    {
+      id: userId,
+      full_name: application?.full_name ?? meta.full_name ?? userData.user?.email ?? null,
+      phone: application?.phone ?? meta.phone ?? null,
+      city: application?.city ?? null,
+      role,
+    },
+    { onConflict: "id" },
+  );
+}
+
 export async function fetchOnboardingStatus(userId: string): Promise<OnboardingStatus> {
+  await ensureProfileRow(userId);
   const [staff, { data: application }, { data: userData }] = await Promise.all([
     fetchStaffAccess(userId),
     supabase.from("applications").select("id").eq("user_id", userId).limit(1).maybeSingle(),
     supabase.auth.getUser(),
   ]);
+
 
   // Staff accounts (admin, KYC reviewer, sub-admin) never see the role picker.
   if (staff.isStaff) return { state: "staff" };
