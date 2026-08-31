@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
+import { ensureProfileRow } from "@/lib/onboarding";
 import { uploadFile } from "@/lib/uploads";
 import { RegistrationForm, type RegistrationValues, type RegistrationFiles } from "@/components/RegistrationForm";
 import { useJoinFlow } from "@/lib/use-join-flow";
@@ -47,6 +48,7 @@ function EmployerJoin() {
         longitude: v.longitude,
       });
       if (error) throw error;
+      await ensureProfileRow(userId);
       await supabase
         .from("profiles")
         .update({
