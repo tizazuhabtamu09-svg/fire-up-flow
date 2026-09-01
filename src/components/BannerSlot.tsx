@@ -1,6 +1,7 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { useBanners, type BannerWithUrls } from "@/lib/banners";
+
 
 function Cta({ label, link }: { label: string; link: string }) {
   const internal = link.startsWith("/");
