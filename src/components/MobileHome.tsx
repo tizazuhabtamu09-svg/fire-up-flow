@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight, Mic, Sparkles, Star, MapPin, Briefcase,
-  Home as HomeIcon, FileText, Users, ClipboardList, Menu, ChevronRight, ChevronLeft,
+  Home as HomeIcon, FileText, Users, ClipboardList, ChevronRight, ChevronLeft,
 } from "lucide-react";
 import { MobileMenu } from "@/components/MobileMenu";
 import { EmployeeAvatar } from "@/components/EmployeeAvatar";
