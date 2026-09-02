@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight, Mic, Sparkles, Star, MapPin, Briefcase,
-  Home as HomeIcon, FileText, Users, ClipboardList, Menu, ChevronRight, ChevronLeft,
+  Home as HomeIcon, FileText, Users, ClipboardList, ChevronRight, ChevronLeft,
 } from "lucide-react";
 import { MobileMenu } from "@/components/MobileMenu";
 import { EmployeeAvatar } from "@/components/EmployeeAvatar";
@@ -79,14 +79,6 @@ export function MobileHome() {
       <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-lg md:hidden">
         <div className="mx-auto flex h-[4.5rem] w-full max-w-md items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              aria-label="Open menu"
-              onClick={() => setMenuOpen(true)}
-              className={`${glass} flex h-11 w-11 items-center justify-center`}
-            >
-              <Menu className="h-5 w-5" />
-            </button>
             <img src={logoAsset.url} alt={`${BRAND.name} logo`} className="h-11 w-11 object-contain" />
             <span className="flex flex-col leading-tight">
               <span className="text-2xl font-extrabold">{BRAND.name}</span>
