@@ -22,6 +22,7 @@ import { NotificationsBell } from "../components/NotificationsBell";
 import { MobileBackBar } from "../components/MobileBackBar";
 import { Toaster } from "../components/ui/sonner";
 import logoAsset from "../assets/agaze-logo.png.asset.json";
+import logoFullAsset from "../assets/agaze-logo-full.png.asset.json";
 
 
 function NotFoundComponent() {
@@ -203,8 +204,7 @@ function SiteFooter() {
         <div className="w-[70%] shrink-0 snap-start md:w-auto">
 
           <div className="flex items-center gap-2">
-            <img src={logoAsset.url} alt={`${BRAND.fullName} logo`} className="h-9 w-9 object-contain" />
-            <span className="font-bold">{BRAND.fullName}</span>
+            <img src={logoFullAsset.url} alt={`${BRAND.fullName} logo`} className="h-16 w-auto object-contain" />
           </div>
           <p className="mt-3 text-sm text-muted-foreground">{t("footer.tagline")}</p>
           <div className="mt-4 flex flex-wrap gap-2">
