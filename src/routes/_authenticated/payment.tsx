@@ -208,6 +208,7 @@ function PaymentPage() {
           >
             {showBank ? "Hide bank / Telebirr payment" : "Pay by bank / Telebirr instead (optional)"}
           </button>
+          {error && !showBank && <p className="mt-3 text-sm text-destructive">{error}</p>}
         </div>
       )}
 
