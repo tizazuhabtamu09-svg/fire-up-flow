@@ -11,10 +11,14 @@ const FILTERS = [
   { value: "closed", label: "Closed" },
 ];
 
+type PaymentSlip = { payer_name: string | null; amount: number; receipt_path: string | null };
+
 /** Staff queue: approve, reject or close employer job posts. */
 export function JobApprovals({ reviewerId }: { reviewerId: string }) {
   const [filter, setFilter] = useState("pending_approval");
   const [jobs, setJobs] = useState<JobPost[]>([]);
+  const [slips, setSlips] = useState<Record<string, PaymentSlip>>({});
+  const [slipUrls, setSlipUrls] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<string | null>(null);
@@ -28,9 +32,38 @@ export function JobApprovals({ reviewerId }: { reviewerId: string }) {
       .eq("status", filter)
       .order("created_at", { ascending: false });
     if (err) setError(err.message);
-    setJobs(data ?? []);
+    const list = data ?? [];
+    setJobs(list);
+
+    // Load the payment (and its receipt slip) attached to each job post.
+    const paymentIds = list.map((j) => j.payment_id).filter(Boolean) as string[];
+    if (paymentIds.length > 0) {
+      const { data: pays } = await supabase
+        .from("payments")
+        .select("id, payer_name, amount, receipt_path")
+        .in("id", paymentIds);
+      const byId: Record<string, PaymentSlip> = {};
+      const urls: Record<string, string> = {};
+      for (const p of pays ?? []) {
+        byId[p.id] = { payer_name: p.payer_name, amount: p.amount, receipt_path: p.receipt_path };
+        if (p.receipt_path && !/\.pdf$/i.test(p.receipt_path)) {
+          const { data: signed } = await supabase.storage.from("receipts").createSignedUrl(p.receipt_path, 300);
+          if (signed?.signedUrl) urls[p.id] = signed.signedUrl;
+        }
+      }
+      setSlips(byId);
+      setSlipUrls(urls);
+    } else {
+      setSlips({});
+      setSlipUrls({});
+    }
     setLoading(false);
   }, [filter]);
+
+  async function viewReceipt(path: string) {
+    const { data } = await supabase.storage.from("receipts").createSignedUrl(path, 60);
+    if (data?.signedUrl) window.open(data.signedUrl, "_blank");
+  }
 
   useEffect(() => {
     load();
