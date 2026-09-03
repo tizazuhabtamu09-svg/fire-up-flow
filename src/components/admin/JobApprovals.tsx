@@ -137,24 +137,24 @@ export function JobApprovals({ reviewerId }: { reviewerId: string }) {
               )}
               {job.contact_phone && <p className="mt-2 text-sm">Contact: {job.contact_phone}</p>}
 
-              {job.payment_id && slips[job.payment_id] && (
+              {slip && (
                 <div className="mt-4 rounded-xl border border-border bg-secondary/40 p-4">
                   <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Payment slip</p>
                   <p className="mt-1 text-sm">
-                    {slips[job.payment_id].payer_name || "Payer"} · {money(Number(slips[job.payment_id].amount))}
+                    {slip.payer_name || "Payer"} · {money(Number(slip.amount))}
                   </p>
-                  {slipUrls[job.payment_id] ? (
-                    <a href={slipUrls[job.payment_id]} target="_blank" rel="noreferrer" className="mt-2 block">
+                  {slipUrl ? (
+                    <a href={slipUrl} target="_blank" rel="noreferrer" className="mt-2 block">
                       <img
-                        src={slipUrls[job.payment_id]}
+                        src={slipUrl}
                         alt={`Payment receipt for ${job.title}`}
                         className="max-h-64 rounded-lg border border-border object-contain"
                         loading="lazy"
                       />
                     </a>
-                  ) : slips[job.payment_id].receipt_path ? (
+                  ) : slip.receipt_path ? (
                     <button
-                      onClick={() => viewReceipt(slips[job.payment_id].receipt_path!)}
+                      onClick={() => viewReceipt(slip.receipt_path!)}
                       className="btn-outline-brand mt-2 text-xs"
                     >
                       View receipt (PDF)
