@@ -186,7 +186,8 @@ export function JobApprovals({ reviewerId }: { reviewerId: string }) {
                 )}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
