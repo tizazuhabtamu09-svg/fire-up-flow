@@ -110,7 +110,10 @@ export function JobApprovals({ reviewerId }: { reviewerId: string }) {
         <p className="mt-6 text-sm text-muted-foreground">Nothing in this queue.</p>
       ) : (
         <div className="mt-6 space-y-4">
-          {jobs.map((job) => (
+          {jobs.map((job) => {
+            const slip = job.payment_id ? slips[job.payment_id] : undefined;
+            const slipUrl = job.payment_id ? slipUrls[job.payment_id] : undefined;
+            return (
             <div key={job.id} className="card-soft p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
