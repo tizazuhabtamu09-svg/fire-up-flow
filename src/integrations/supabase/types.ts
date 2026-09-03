@@ -959,6 +959,8 @@ export type Database = {
           area: string | null
           city: string | null
           closed_at: string | null
+          closing_date: string | null
+          company_name: string | null
           contact_phone: string | null
           created_at: string
           description: string
@@ -989,6 +991,8 @@ export type Database = {
           area?: string | null
           city?: string | null
           closed_at?: string | null
+          closing_date?: string | null
+          company_name?: string | null
           contact_phone?: string | null
           created_at?: string
           description: string
@@ -1019,6 +1023,8 @@ export type Database = {
           area?: string | null
           city?: string | null
           closed_at?: string | null
+          closing_date?: string | null
+          company_name?: string | null
           contact_phone?: string | null
           created_at?: string
           description?: string
@@ -1124,6 +1130,7 @@ export type Database = {
           amount: number
           created_at: string
           id: string
+          method: string
           package_id: string | null
           payer_name: string
           purpose: string | null
@@ -1137,6 +1144,7 @@ export type Database = {
           amount: number
           created_at?: string
           id?: string
+          method?: string
           package_id?: string | null
           payer_name: string
           purpose?: string | null
@@ -1150,6 +1158,7 @@ export type Database = {
           amount?: number
           created_at?: string
           id?: string
+          method?: string
           package_id?: string | null
           payer_name?: string
           purpose?: string | null
