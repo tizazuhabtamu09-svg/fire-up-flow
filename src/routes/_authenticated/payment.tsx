@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/use-session";
 import { CONTACT, money } from "@/lib/app-config";
@@ -38,6 +38,75 @@ function PaymentPage() {
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [balance, setBalance] = useState<number | null>(null);
+  const [showBank, setShowBank] = useState(false);
+
+  // Wallet balance decides which payment method is offered first.
+  useEffect(() => {
+    if (!user) return;
+    let active = true;
+    supabase
+      .from("profiles")
+      .select("wallet_balance, full_name")
+      .eq("id", user.id)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (!active || !data) return;
+        setBalance(Number(data.wallet_balance));
+        setPayerName((n) => n || (data.full_name ?? ""));
+      });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  const due = Number(amount) || 0;
+  // Recharging tops the wallet up, so it can never be paid from the wallet itself.
+  const walletEligible = (purpose ?? "recharge") !== "recharge" && due > 0;
+  const hasFunds = balance !== null && balance >= due;
+
+  /** Deduct the fee straight from the wallet and settle the payment immediately. */
+  async function payFromWallet() {
+    if (!user || !walletEligible) return;
+    setSaving(true);
+    setError(null);
+    const { data: newBalance, error: rpcErr } = await supabase.rpc("spend_wallet", {
+      _amount: due,
+      _reason: purpose ?? "Wallet payment",
+    });
+    if (rpcErr) {
+      setSaving(false);
+      return setError(rpcErr.message);
+    }
+    setBalance(Number(newBalance));
+
+    const { data: payment, error: insErr } = await supabase
+      .from("payments")
+      .insert({
+        user_id: user.id,
+        amount: due,
+        payer_name: payerName.trim() || "Wallet",
+        purpose: purpose ?? "wallet",
+        package_id: packageId ?? null,
+        method: "wallet",
+        status: "approved",
+        reviewed_at: new Date().toISOString(),
+      })
+      .select("id")
+      .maybeSingle();
+
+    if (!insErr && jobId) {
+      await supabase
+        .from("job_posts")
+        .update({ status: "pending_approval", payment_id: payment?.id ?? null })
+        .eq("id", jobId)
+        .eq("status", "awaiting_payment");
+    }
+
+    setSaving(false);
+    if (insErr) setError(insErr.message);
+    else setDone(true);
+  }
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -70,6 +139,7 @@ function PaymentPage() {
         receipt_path: receiptPath,
         purpose: purpose ?? "recharge",
         package_id: packageId ?? null,
+        method: "bank",
       })
       .select("id")
       .maybeSingle();
@@ -111,6 +181,38 @@ function PaymentPage() {
       <h1 className="text-3xl font-bold">{t("pay.title")}</h1>
       <p className="font-amharic text-muted-foreground">ክፍያ</p>
 
+      {walletEligible && (
+        <div className="card-soft mt-6 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pay from wallet</p>
+          <p className="mt-2 text-sm">
+            Amount due <span className="font-bold">{money(due)}</span> · Balance{" "}
+            <span className="font-bold">{balance === null ? "…" : money(balance)}</span>
+          </p>
+          <button
+            type="button"
+            onClick={payFromWallet}
+            disabled={saving || !hasFunds}
+            className="btn-brand mt-4 w-full disabled:opacity-60"
+          >
+            {saving ? "Processing…" : `Pay ${money(due)} from wallet`}
+          </button>
+          {!hasFunds && balance !== null && (
+            <p className="mt-2 text-xs text-destructive">
+              Not enough balance. Top up your wallet or pay by bank / Telebirr below.
+            </p>
+          )}
+          <button
+            type="button"
+            onClick={() => setShowBank((v) => !v)}
+            className="mt-3 w-full text-center text-xs font-semibold text-primary hover:underline"
+          >
+            {showBank ? "Hide bank / Telebirr payment" : "Pay by bank / Telebirr instead (optional)"}
+          </button>
+        </div>
+      )}
+
+      {(!walletEligible || showBank) && (
+      <>
       <div className="card-soft mt-6 p-6" style={{ background: "var(--brand-soft)" }}>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("pay.sendTo")}</p>
         <p className="mt-2 text-lg font-bold">{CONTACT.accountName}</p>
@@ -140,6 +242,8 @@ function PaymentPage() {
           {saving ? t("pay.submitting") : t("pay.submitPayment")}
         </button>
       </form>
+      </>
+      )}
     </div>
   );
 }
