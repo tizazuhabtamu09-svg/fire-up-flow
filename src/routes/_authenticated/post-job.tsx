@@ -33,7 +33,8 @@ function PostJobPage() {
     sector: "" as SectorType | "",
     sectorOther: "",
     employmentType: "full_time",
-    duration: "",
+    companyName: "",
+    closingDate: "",
     salary: "",
     salaryMax: "",
     openings: "1",
@@ -73,7 +74,8 @@ function PostJobPage() {
         sector: form.sector || null,
         sector_other: form.sectorOther.trim() || null,
         employment_type: form.employmentType,
-        duration: form.duration.trim() || null,
+        company_name: form.companyName.trim() || null,
+        closing_date: form.closingDate || null,
         salary: form.salary ? Number(form.salary) : null,
         salary_max: form.salaryMax ? Number(form.salaryMax) : null,
         openings: Number(form.openings) || 1,
@@ -144,8 +146,12 @@ function PostJobPage() {
             </select>
           </label>
           <label className="block">
-            <span className="text-sm font-medium">Duration (optional)</span>
-            <input value={form.duration} onChange={(e) => set("duration", e.target.value)} className={cls} placeholder="e.g. 12 months" />
+            <span className="text-sm font-medium">Company / organisation</span>
+            <input value={form.companyName} onChange={(e) => set("companyName", e.target.value)} className={cls} placeholder="e.g. Agaze Facility Services" />
+          </label>
+          <label className="block">
+            <span className="text-sm font-medium">Closing date</span>
+            <input type="date" value={form.closingDate} onChange={(e) => set("closingDate", e.target.value)} className={cls} />
           </label>
           <label className="block">
             <span className="text-sm font-medium">Monthly salary (ETB)</span>
