@@ -896,7 +896,9 @@ export type Database = {
           city: string | null
           claim_token: string
           created_at: string
+          cv_path: string | null
           education: Json | null
+          education_document: string | null
           email: string | null
           employer_note: string | null
           experience: string | null
@@ -916,7 +918,9 @@ export type Database = {
           city?: string | null
           claim_token?: string
           created_at?: string
+          cv_path?: string | null
           education?: Json | null
+          education_document?: string | null
           email?: string | null
           employer_note?: string | null
           experience?: string | null
@@ -936,7 +940,9 @@ export type Database = {
           city?: string | null
           claim_token?: string
           created_at?: string
+          cv_path?: string | null
           education?: Json | null
+          education_document?: string | null
           email?: string | null
           employer_note?: string | null
           experience?: string | null
