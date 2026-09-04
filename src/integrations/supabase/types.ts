@@ -891,9 +891,13 @@ export type Database = {
       }
       job_applications: {
         Row: {
-          applicant_id: string
+          address: string | null
+          applicant_id: string | null
           city: string | null
+          claim_token: string
           created_at: string
+          education: Json | null
+          email: string | null
           employer_note: string | null
           experience: string | null
           full_name: string
@@ -901,14 +905,19 @@ export type Database = {
           job_id: string
           message: string | null
           phone: string | null
+          profile_complete: boolean
           status: string
           updated_at: string
           worker_id: string | null
         }
         Insert: {
-          applicant_id: string
+          address?: string | null
+          applicant_id?: string | null
           city?: string | null
+          claim_token?: string
           created_at?: string
+          education?: Json | null
+          email?: string | null
           employer_note?: string | null
           experience?: string | null
           full_name: string
@@ -916,14 +925,19 @@ export type Database = {
           job_id: string
           message?: string | null
           phone?: string | null
+          profile_complete?: boolean
           status?: string
           updated_at?: string
           worker_id?: string | null
         }
         Update: {
-          applicant_id?: string
+          address?: string | null
+          applicant_id?: string | null
           city?: string | null
+          claim_token?: string
           created_at?: string
+          education?: Json | null
+          email?: string | null
           employer_note?: string | null
           experience?: string | null
           full_name?: string
@@ -931,6 +945,7 @@ export type Database = {
           job_id?: string
           message?: string | null
           phone?: string | null
+          profile_complete?: boolean
           status?: string
           updated_at?: string
           worker_id?: string | null
