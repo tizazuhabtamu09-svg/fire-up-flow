@@ -139,11 +139,19 @@ function JobDetail() {
       <div className="card-soft mt-6 p-6">
         {!user ? (
           <>
-            <h2 className="text-lg font-bold">Sign in to apply</h2>
+            <h2 className="text-lg font-bold">Apply for this job</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              Applications are open to verified Agaze employees.
+              No account needed — share your basic details and finish your profile later.
             </p>
-            <Link to="/auth" className="btn-brand mt-4 inline-block text-sm">Sign in</Link>
+            <button onClick={() => setQuickApply(true)} className="btn-brand mt-4 text-sm">
+              Apply
+            </button>
+            <p className="mt-2 text-xs text-muted-foreground">
+              Already registered?{" "}
+              <Link to="/auth" className="font-semibold text-primary hover:underline">
+                Sign in
+              </Link>
+            </p>
           </>
         ) : applied ? (
           <>
