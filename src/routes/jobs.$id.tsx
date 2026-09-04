@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { money } from "@/lib/app-config";
 import { useSession } from "@/lib/use-session";
 import { employmentLabel, useJobAccess, type JobPost } from "@/lib/jobs";
+import { QuickApplyModal } from "@/components/QuickApplyModal";
 
 export const Route = createFileRoute("/jobs/$id")({
   head: () => ({
@@ -34,6 +35,7 @@ function JobDetail() {
   const [phone, setPhone] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [quickApply, setQuickApply] = useState(false);
 
   useEffect(() => {
     supabase
@@ -204,6 +206,18 @@ function JobDetail() {
           </form>
         )}
       </div>
+
+      {quickApply && (
+        <QuickApplyModal
+          jobId={job.id}
+          jobTitle={job.title}
+          onClose={() => setQuickApply(false)}
+          onApplied={() => {
+            setQuickApply(false);
+            setApplied(true);
+          }}
+        />
+      )}
     </div>
   );
 }
