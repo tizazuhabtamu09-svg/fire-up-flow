@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { uploadApplicationFile } from "@/lib/application-files";
 
 export type QuickApplyDraft = {
   full_name: string;
@@ -51,6 +52,8 @@ export function QuickApplyModal({
 }) {
   const [form, setForm] = useState<QuickApplyDraft>(loadDraft);
   const [showEdu, setShowEdu] = useState(false);
+  const [cv, setCv] = useState<File | null>(null);
+  const [eduDoc, setEduDoc] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -66,6 +69,15 @@ export function QuickApplyModal({
     setSaving(true);
     setError(null);
     const hasEdu = Object.values(form.education).some((v) => v.trim());
+    let cvPath: string | null = null;
+    let eduPath: string | null = null;
+    try {
+      if (cv) cvPath = await uploadApplicationFile(jobId, cv, "cv");
+      if (eduDoc) eduPath = await uploadApplicationFile(jobId, eduDoc, "education");
+    } catch (uploadError) {
+      setSaving(false);
+      return setError(uploadError instanceof Error ? uploadError.message : "Upload failed");
+    }
     const { data: session } = await supabase.auth.getSession();
     const { error: err } = await supabase.from("job_applications").insert({
       job_id: jobId,
@@ -75,6 +87,8 @@ export function QuickApplyModal({
       address: form.address.trim(),
       email: form.email.trim() || null,
       education: hasEdu ? form.education : null,
+      cv_path: cvPath,
+      education_document: eduPath,
       profile_complete: false,
     });
     setSaving(false);
@@ -150,8 +164,27 @@ export function QuickApplyModal({
                   />
                 </label>
               ))}
+              <label className="block">
+                <span className="text-xs font-medium text-muted-foreground">Educational document (optional)</span>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,image/*"
+                  onChange={(e) => setEduDoc(e.target.files?.[0] ?? null)}
+                  className="mt-1 w-full text-xs"
+                />
+              </label>
             </div>
           )}
+
+          <label className="block">
+            <span className="text-sm font-medium">CV / resume (optional)</span>
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,image/*"
+              onChange={(e) => setCv(e.target.files?.[0] ?? null)}
+              className="mt-1 w-full text-xs"
+            />
+          </label>
 
           {error && <p className="text-sm text-destructive">{error}</p>}
           <button disabled={saving} className="btn-brand w-full disabled:opacity-60">

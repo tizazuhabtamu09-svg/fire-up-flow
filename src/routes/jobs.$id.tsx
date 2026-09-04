@@ -6,6 +6,7 @@ import { money } from "@/lib/app-config";
 import { useSession } from "@/lib/use-session";
 import { employmentLabel, useJobAccess, type JobPost } from "@/lib/jobs";
 import { QuickApplyModal } from "@/components/QuickApplyModal";
+import { uploadApplicationFile } from "@/lib/application-files";
 
 export const Route = createFileRoute("/jobs/$id")({
   head: () => ({
@@ -36,6 +37,8 @@ function JobDetail() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [quickApply, setQuickApply] = useState(false);
+  const [cv, setCv] = useState<File | null>(null);
+  const [eduDoc, setEduDoc] = useState<File | null>(null);
 
   useEffect(() => {
     supabase
@@ -80,6 +83,16 @@ function JobDetail() {
         .eq("verification_status", "approved")
         .maybeSingle(),
     ]);
+    let cvPath: string | null = null;
+    let eduPath: string | null = null;
+    try {
+      if (cv) cvPath = await uploadApplicationFile(job.id, cv, "cv");
+      if (eduDoc) eduPath = await uploadApplicationFile(job.id, eduDoc, "education");
+    } catch (uploadError) {
+      setSaving(false);
+      setError(uploadError instanceof Error ? uploadError.message : "Upload failed");
+      return;
+    }
     const { error: err } = await supabase.from("job_applications").insert({
       job_id: job.id,
       applicant_id: user.id,
@@ -89,6 +102,8 @@ function JobDetail() {
       city: worker?.city || profile?.city || null,
       experience: worker?.experience ?? null,
       message: message.trim() || null,
+      cv_path: cvPath,
+      education_document: eduPath,
     });
     setSaving(false);
     if (err) setError(err.message);
@@ -199,6 +214,26 @@ function JobDetail() {
                 placeholder="Tell the employer about your experience"
               />
             </label>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label className="block">
+                <span className="text-sm font-medium">CV / resume</span>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,image/*"
+                  onChange={(e) => setCv(e.target.files?.[0] ?? null)}
+                  className="mt-1 w-full text-xs"
+                />
+              </label>
+              <label className="block">
+                <span className="text-sm font-medium">Educational background</span>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,image/*"
+                  onChange={(e) => setEduDoc(e.target.files?.[0] ?? null)}
+                  className="mt-1 w-full text-xs"
+                />
+              </label>
+            </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <button disabled={saving} className="btn-brand disabled:opacity-60">
               {saving ? "Sending…" : "Send application"}
