@@ -24,6 +24,7 @@ function MyJobsPage() {
   const [jobs, setJobs] = useState<JobPost[]>([]);
   const [apps, setApps] = useState<Record<string, JobApplication[]>>({});
   const [openJob, setOpenJob] = useState<string | null>(null);
+  const [counts, setCounts] = useState<Record<string, number>>({});
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
@@ -34,23 +35,40 @@ function MyJobsPage() {
       .eq("employer_id", user.id)
       .order("created_at", { ascending: false });
     setJobs(data ?? []);
+    // Applicant counts per job so employers see interest at a glance.
+    const ids = (data ?? []).map((j) => j.id);
+    if (ids.length > 0) {
+      const { data: rows } = await supabase
+        .from("job_applications")
+        .select("job_id")
+        .in("job_id", ids);
+      const tally: Record<string, number> = {};
+      for (const r of rows ?? []) tally[r.job_id] = (tally[r.job_id] ?? 0) + 1;
+      setCounts(tally);
+    } else {
+      setCounts({});
+    }
   }, [user]);
 
   useEffect(() => {
     load();
   }, [load]);
 
+  async function loadApplications(jobId: string) {
+    const { data, error: err } = await supabase
+      .from("job_applications")
+      .select("*")
+      .eq("job_id", jobId)
+      .order("created_at", { ascending: false });
+    if (err) return setError(err.message);
+    setApps((a) => ({ ...a, [jobId]: data ?? [] }));
+    setCounts((c) => ({ ...c, [jobId]: data?.length ?? 0 }));
+  }
+
   async function toggleApplicants(jobId: string) {
     if (openJob === jobId) return setOpenJob(null);
     setOpenJob(jobId);
-    if (!apps[jobId]) {
-      const { data } = await supabase
-        .from("job_applications")
-        .select("*")
-        .eq("job_id", jobId)
-        .order("created_at", { ascending: false });
-      setApps((a) => ({ ...a, [jobId]: data ?? [] }));
-    }
+    if (!apps[jobId]) await loadApplications(jobId);
   }
 
   async function closeJob(job: JobPost) {
@@ -125,6 +143,11 @@ function MyJobsPage() {
                   )}
                   <button onClick={() => toggleApplicants(job.id)} className="btn-outline-brand text-xs">
                     {openJob === job.id ? "Hide applicants" : "Applicants"}
+                    {(counts[job.id] ?? 0) > 0 && (
+                      <span className="ml-1.5 rounded-full bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+                        {counts[job.id]}
+                      </span>
+                    )}
                   </button>
                   {job.status !== "closed" && (
                     <button onClick={() => closeJob(job)} className="text-xs font-semibold text-destructive hover:underline">
@@ -143,13 +166,24 @@ function MyJobsPage() {
                       <div key={app.id} className="rounded-xl border border-border/60 p-4">
                         <div className="flex flex-wrap items-start justify-between gap-3">
                           <div>
-                            <p className="font-semibold">{app.full_name}</p>
+                            <div className="flex flex-wrap items-center gap-2">
+                              <p className="font-semibold">{app.full_name}</p>
+                              <span className="rounded-full bg-secondary px-2 py-0.5 text-[10px] font-semibold uppercase text-muted-foreground">
+                                {app.applicant_id ? "Registered employee" : "Guest candidate"}
+                              </span>
+                            </div>
                             <p className="text-xs text-muted-foreground">
-                              {[app.city, app.experience].filter(Boolean).join(" · ") || "Verified employee"}
+                              {[app.city, app.experience].filter(Boolean).join(" · ") ||
+                                (app.applicant_id ? "Verified employee" : "Quick application")}
                             </p>
                             {app.phone && (
                               <a href={`tel:${app.phone}`} className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
                                 <Phone className="h-3.5 w-3.5" /> {app.phone}
+                              </a>
+                            )}
+                            {app.email && (
+                              <a href={`mailto:${app.email}`} className="mt-0.5 block text-xs font-semibold text-primary hover:underline">
+                                {app.email}
                               </a>
                             )}
                             {app.address && <p className="mt-1 text-xs text-muted-foreground">{app.address}</p>}
