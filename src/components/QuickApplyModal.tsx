@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { X } from "lucide-react";
+import { useId, useState } from "react";
+import { ChevronDown, FileText, UploadCloud, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { uploadApplicationFile } from "@/lib/application-files";
 
@@ -32,7 +32,60 @@ function loadDraft(): QuickApplyDraft {
 }
 
 const field =
-  "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-primary";
+  "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-primary/20";
+
+/** Compact, token-light file picker styled as a dropzone-style button. */
+function FileButton({
+  file,
+  onFile,
+  label,
+  hint,
+}: {
+  file: File | null;
+  onFile: (f: File | null) => void;
+  label: string;
+  hint: string;
+}) {
+  const inputId = useId();
+  return (
+    <div>
+      <input
+        id={inputId}
+        type="file"
+        accept=".pdf,.doc,.docx,image/*"
+        className="hidden"
+        onChange={(e) => onFile(e.target.files?.[0] ?? null)}
+      />
+      {file ? (
+        <div className="mt-1 flex items-center justify-between gap-2 rounded-xl border border-input bg-background px-3 py-2.5">
+          <span className="flex min-w-0 items-center gap-2 text-sm">
+            <FileText className="h-4 w-4 shrink-0 text-primary" />
+            <span className="truncate">{file.name}</span>
+          </span>
+          <button
+            type="button"
+            onClick={() => onFile(null)}
+            className="shrink-0 rounded-md p-1 text-muted-foreground hover:bg-secondary hover:text-destructive"
+            aria-label="Remove file"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      ) : (
+        <label
+          htmlFor={inputId}
+          className="mt-1 flex cursor-pointer items-center gap-2 rounded-xl border border-dashed border-input bg-background px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+        >
+          <UploadCloud className="h-4 w-4 shrink-0" />
+          <span className="truncate">
+            <span className="font-medium text-foreground">{label}</span>
+            <span className="ml-1 text-xs">{hint}</span>
+          </span>
+        </label>
+      )}
+    </div>
+  );
+}
 
 /**
  * One-step application for candidates who don't have an account yet.
@@ -103,97 +156,139 @@ export function QuickApplyModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-0 sm:items-center sm:p-4">
-      <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-t-2xl bg-card p-6 shadow-xl sm:rounded-2xl">
-        <div className="flex items-start justify-between gap-4">
-          <div>
+      <div className="flex max-h-[92vh] w-full max-w-md flex-col overflow-hidden rounded-t-2xl bg-card shadow-xl sm:rounded-2xl">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4 border-b border-border/60 px-6 py-4">
+          <div className="min-w-0">
             <h2 className="text-lg font-bold">Apply now</h2>
-            <p className="text-xs text-muted-foreground">{jobTitle}</p>
+            <p className="truncate text-xs text-muted-foreground">{jobTitle}</p>
           </div>
-          <button onClick={onClose} aria-label="Close" className="text-muted-foreground hover:text-foreground">
+          <button
+            onClick={onClose}
+            aria-label="Close"
+            className="rounded-md p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <form onSubmit={submit} className="mt-5 space-y-3">
-          <label className="block">
-            <span className="text-sm font-medium">Full name</span>
-            <input value={form.full_name} onChange={(e) => set("full_name", e.target.value)} required className={field} />
-          </label>
-          <label className="block">
-            <span className="text-sm font-medium">Address</span>
-            <input value={form.address} onChange={(e) => set("address", e.target.value)} required className={field} />
-          </label>
-          <label className="block">
-            <span className="text-sm font-medium">Phone number</span>
-            <input
-              value={form.phone}
-              onChange={(e) => set("phone", e.target.value)}
-              required
-              inputMode="tel"
-              className={field}
-            />
-          </label>
-          <label className="block">
-            <span className="text-sm font-medium">Email (optional)</span>
-            <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} className={field} />
-          </label>
+        <form onSubmit={submit} className="flex-1 overflow-y-auto px-6 py-5">
+          <div className="space-y-4">
+            <label className="block">
+              <span className="text-sm font-medium">Full name</span>
+              <input
+                value={form.full_name}
+                onChange={(e) => set("full_name", e.target.value)}
+                required
+                className={field}
+                placeholder="Your full name"
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium">Address</span>
+              <input
+                value={form.address}
+                onChange={(e) => set("address", e.target.value)}
+                required
+                className={field}
+                placeholder="City, region"
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium">Phone number</span>
+              <input
+                value={form.phone}
+                onChange={(e) => set("phone", e.target.value)}
+                required
+                inputMode="tel"
+                className={field}
+                placeholder="09xxxxxxxx"
+              />
+            </label>
+            <label className="block">
+              <span className="text-sm font-medium">
+                Email <span className="font-normal text-muted-foreground">(optional)</span>
+              </span>
+              <input
+                type="email"
+                value={form.email}
+                onChange={(e) => set("email", e.target.value)}
+                className={field}
+                placeholder="you@example.com"
+              />
+            </label>
 
-          <button
-            type="button"
-            onClick={() => setShowEdu((s) => !s)}
-            className="w-full rounded-xl border border-border/60 px-3 py-2 text-left text-sm font-semibold"
-          >
-            {showEdu ? "− " : "+ "}Add educational background (optional)
-          </button>
-          {showEdu && (
-            <div className="space-y-3 rounded-xl border border-border/60 p-3">
-              {(
-                [
-                  ["level", "Level (e.g. Diploma)"],
-                  ["institution", "Institution"],
-                  ["field", "Field of study"],
-                  ["year", "Graduation year"],
-                ] as const
-              ).map(([key, label]) => (
-                <label key={key} className="block">
-                  <span className="text-xs font-medium text-muted-foreground">{label}</span>
-                  <input
-                    value={form.education[key]}
-                    onChange={(e) => set("education", { ...form.education, [key]: e.target.value })}
-                    className={field}
+            {/* Education accordion */}
+            <button
+              type="button"
+              onClick={() => setShowEdu((s) => !s)}
+              className="flex w-full items-center justify-between rounded-xl border border-border/60 px-3 py-2.5 text-left text-sm font-semibold transition-colors hover:bg-secondary/50"
+              aria-expanded={showEdu}
+            >
+              <span>Add educational background</span>
+              <span className="text-xs font-normal text-muted-foreground">(optional)</span>
+              <ChevronDown
+                className={`ml-2 h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 ${
+                  showEdu ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {showEdu && (
+              <div className="space-y-3 rounded-xl border border-border/60 bg-secondary/20 p-3">
+                {(
+                  [
+                    ["level", "Level (e.g. Diploma)"],
+                    ["institution", "Institution"],
+                    ["field", "Field of study"],
+                    ["year", "Graduation year"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="block">
+                    <span className="text-xs font-medium text-muted-foreground">{label}</span>
+                    <input
+                      value={form.education[key]}
+                      onChange={(e) => set("education", { ...form.education, [key]: e.target.value })}
+                      className={field}
+                    />
+                  </label>
+                ))}
+                <div>
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Educational document (optional)
+                  </span>
+                  <FileButton
+                    file={eduDoc}
+                    onFile={setEduDoc}
+                    label="Upload document"
+                    hint="PDF, DOC or image"
                   />
-                </label>
-              ))}
-              <label className="block">
-                <span className="text-xs font-medium text-muted-foreground">Educational document (optional)</span>
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,image/*"
-                  onChange={(e) => setEduDoc(e.target.files?.[0] ?? null)}
-                  className="mt-1 w-full text-xs"
-                />
-              </label>
+                </div>
+              </div>
+            )}
+
+            {/* Documents */}
+            <div>
+              <span className="text-sm font-medium">CV / resume (optional)</span>
+              <FileButton file={cv} onFile={setCv} label="Upload CV" hint="PDF, DOC or image" />
             </div>
-          )}
 
-          <label className="block">
-            <span className="text-sm font-medium">CV / resume (optional)</span>
-            <input
-              type="file"
-              accept=".pdf,.doc,.docx,image/*"
-              onChange={(e) => setCv(e.target.files?.[0] ?? null)}
-              className="mt-1 w-full text-xs"
-            />
-          </label>
+            {error && (
+              <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {error}
+              </p>
+            )}
+            <p className="text-center text-xs text-muted-foreground">
+              You can complete your full profile later — your details are saved.
+            </p>
+          </div>
+        </form>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+        {/* Sticky footer */}
+        <div className="border-t border-border/60 bg-card px-6 py-4">
           <button disabled={saving} className="btn-brand w-full disabled:opacity-60">
             {saving ? "Sending…" : "Submit and Apply"}
           </button>
-          <p className="text-center text-xs text-muted-foreground">
-            You can complete your full profile later — your details are saved.
-          </p>
-        </form>
+        </div>
       </div>
     </div>
   );
