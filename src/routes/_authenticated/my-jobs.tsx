@@ -34,6 +34,19 @@ function MyJobsPage() {
       .eq("employer_id", user.id)
       .order("created_at", { ascending: false });
     setJobs(data ?? []);
+    // Applicant counts per job so employers see interest at a glance.
+    const ids = (data ?? []).map((j) => j.id);
+    if (ids.length > 0) {
+      const { data: rows } = await supabase
+        .from("job_applications")
+        .select("job_id")
+        .in("job_id", ids);
+      const tally: Record<string, number> = {};
+      for (const r of rows ?? []) tally[r.job_id] = (tally[r.job_id] ?? 0) + 1;
+      setCounts(tally);
+    } else {
+      setCounts({});
+    }
   }, [user]);
 
   useEffect(() => {
