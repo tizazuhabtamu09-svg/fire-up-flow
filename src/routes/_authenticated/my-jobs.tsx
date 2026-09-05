@@ -24,6 +24,7 @@ function MyJobsPage() {
   const [jobs, setJobs] = useState<JobPost[]>([]);
   const [apps, setApps] = useState<Record<string, JobApplication[]>>({});
   const [openJob, setOpenJob] = useState<string | null>(null);
+  const [counts, setCounts] = useState<Record<string, number>>({});
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
@@ -52,8 +53,6 @@ function MyJobsPage() {
   useEffect(() => {
     load();
   }, [load]);
-
-  const [counts, setCounts] = useState<Record<string, number>>({});
 
   async function loadApplications(jobId: string) {
     const { data, error: err } = await supabase
