@@ -40,17 +40,23 @@ function MyJobsPage() {
     load();
   }, [load]);
 
+  const [counts, setCounts] = useState<Record<string, number>>({});
+
+  async function loadApplications(jobId: string) {
+    const { data, error: err } = await supabase
+      .from("job_applications")
+      .select("*")
+      .eq("job_id", jobId)
+      .order("created_at", { ascending: false });
+    if (err) return setError(err.message);
+    setApps((a) => ({ ...a, [jobId]: data ?? [] }));
+    setCounts((c) => ({ ...c, [jobId]: data?.length ?? 0 }));
+  }
+
   async function toggleApplicants(jobId: string) {
     if (openJob === jobId) return setOpenJob(null);
     setOpenJob(jobId);
-    if (!apps[jobId]) {
-      const { data } = await supabase
-        .from("job_applications")
-        .select("*")
-        .eq("job_id", jobId)
-        .order("created_at", { ascending: false });
-      setApps((a) => ({ ...a, [jobId]: data ?? [] }));
-    }
+    if (!apps[jobId]) await loadApplications(jobId);
   }
 
   async function closeJob(job: JobPost) {
