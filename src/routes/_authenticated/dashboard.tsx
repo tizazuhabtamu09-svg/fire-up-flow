@@ -92,7 +92,8 @@ function DashboardPage() {
                 <Link to="/employee/$id" params={{ id: myWorkerId }} className="btn-brand text-sm">{t("dash.myProfile")}</Link>
               )}
               <Link to="/my-applications" className="btn-outline-brand text-sm">My applications</Link>
-              <Link to="/workers" className="btn-outline-brand text-sm">{t("dash.findWorker")}</Link>
+              <Link to="/update-profile" className="btn-outline-brand text-sm">Update profile</Link>
+              <Link to="/jobs" className="btn-outline-brand text-sm">Browse jobs</Link>
               <Link to="/profile" className="btn-outline-brand text-sm">{t("dash.accountSettings")}</Link>
             </>
           ) : (
