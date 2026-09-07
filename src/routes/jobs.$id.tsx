@@ -158,7 +158,8 @@ function JobDetail() {
           <>
             <h2 className="text-lg font-bold">Apply for this job</h2>
             <p className="mt-1 text-sm text-muted-foreground">
-              No account needed — share your basic details and finish your profile later.
+              Three quick steps: your details, your experience and documents, then your account — and your
+              application is sent.
             </p>
             <button onClick={() => setQuickApply(true)} className="btn-brand mt-4 text-sm">
               Apply
