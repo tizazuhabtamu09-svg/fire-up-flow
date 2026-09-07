@@ -181,6 +181,96 @@ function DashboardPage() {
   );
 }
 
+const APPLICATION_STAGE: Record<string, { label: string; tone: string }> = {
+  pending: { label: "Received", tone: "bg-secondary text-muted-foreground" },
+  reviewing: { label: "Under review", tone: "bg-primary/10 text-primary" },
+  shortlisted: { label: "Shortlisted", tone: "bg-primary/15 text-primary" },
+  hired: { label: "Hired", tone: "bg-primary/20 text-primary" },
+  rejected: { label: "Not selected", tone: "bg-destructive/10 text-destructive" },
+};
+
+type ApplicationRow = {
+  id: string;
+  job_id: string;
+  status: string;
+  created_at: string;
+  profile_complete: boolean | null;
+  job?: { title: string | null; employer_name: string | null; city: string | null } | null;
+};
+
+/** Employee dashboard: the jobs this person applied to and where each one stands. */
+function MyApplicationsCard({ userId }: { userId?: string }) {
+  const [rows, setRows] = useState<ApplicationRow[] | null>(null);
+
+  useEffect(() => {
+    if (!userId) return;
+    let active = true;
+    supabase
+      .from("job_applications")
+      .select("id, job_id, status, created_at, profile_complete, job:job_posts(title, employer_name, city)")
+      .eq("applicant_id", userId)
+      .order("created_at", { ascending: false })
+      .then(({ data }) => {
+        if (active) setRows((data as ApplicationRow[]) ?? []);
+      });
+    return () => {
+      active = false;
+    };
+  }, [userId]);
+
+  if (rows === null) return null;
+
+  const incomplete = rows.some((r) => !r.profile_complete);
+
+  return (
+    <div className="mt-8">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-xl font-bold">My job applications</h2>
+          <p className="font-amharic text-xs text-muted-foreground">ያመለከትኳቸው ስራዎች</p>
+        </div>
+        <Link to="/my-applications" className="btn-outline-brand text-xs">View all</Link>
+      </div>
+
+      {incomplete && (
+        <div className="card-soft mt-4 flex flex-wrap items-center justify-between gap-3 p-5">
+          <p className="text-sm">
+            Finish your employee profile so employers can see your full details and verify you.
+          </p>
+          <Link to="/update-profile" className="btn-brand text-sm">Update profile</Link>
+        </div>
+      )}
+
+      {rows.length === 0 ? (
+        <div className="card-soft mt-4 flex flex-wrap items-center justify-between gap-3 p-6">
+          <p className="text-sm text-muted-foreground">You have not applied to any job yet.</p>
+          <Link to="/jobs" className="btn-brand text-xs">Browse open jobs</Link>
+        </div>
+      ) : (
+        <div className="mt-4 space-y-3">
+          {rows.slice(0, 5).map((r) => {
+            const stage = APPLICATION_STAGE[r.status] ?? APPLICATION_STAGE.pending;
+            return (
+              <div key={r.id} className="card-soft flex flex-wrap items-center justify-between gap-4 p-5">
+                <div className="min-w-0">
+                  <Link to="/jobs/$id" params={{ id: r.job_id }} className="font-semibold hover:underline">
+                    {r.job?.title ?? "Job"}
+                  </Link>
+                  <p className="text-sm text-muted-foreground">
+                    {[r.job?.employer_name, r.job?.city].filter(Boolean).join(" \u00b7 ") || "Employer"} \u00b7{" "}
+                    {new Date(r.created_at).toLocaleDateString()}
+                  </p>
+                </div>
+                <span className={`rounded-full px-3 py-1 text-xs font-semibold ${stage.tone}`}>{stage.label}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /** Active-plan entitlement card: plan name, time left and granted benefits. */
 function SubscriptionCard({ userId }: { userId?: string }) {
   const { subscription, loading } = useActiveSubscription(userId);
