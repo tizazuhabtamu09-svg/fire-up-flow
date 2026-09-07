@@ -92,10 +92,11 @@ export async function ensureProfileRow(userId: string): Promise<void> {
 
 export async function fetchOnboardingStatus(userId: string): Promise<OnboardingStatus> {
   await ensureProfileRow(userId);
-  const [staff, { data: application }, { data: userData }] = await Promise.all([
+  const [staff, { data: application }, { data: userData }, { data: jobApplication }] = await Promise.all([
     fetchStaffAccess(userId),
     supabase.from("applications").select("id").eq("user_id", userId).limit(1).maybeSingle(),
     supabase.auth.getUser(),
+    supabase.from("job_applications").select("id").eq("applicant_id", userId).limit(1).maybeSingle(),
   ]);
 
 
@@ -103,7 +104,12 @@ export async function fetchOnboardingStatus(userId: string): Promise<OnboardingS
   if (staff.isStaff) return { state: "staff" };
   if (application) return { state: "complete" };
 
-  const meta = userData.user?.user_metadata as { onboarding_role?: string } | undefined;
+  const meta = userData.user?.user_metadata as { onboarding_role?: string; candidate?: boolean } | undefined;
+  // Candidates who registered while applying for a job already told us who they
+  // are: send them straight to their employee dashboard, where they can finish
+  // their profile later under "Update profile".
+  if (jobApplication || meta?.candidate) return { state: "complete" };
+
   const picked = meta?.onboarding_role;
   if (picked && ONBOARDING_ROLES.includes(picked as OnboardingRole)) {
     return { state: "needs-form", role: picked as OnboardingRole };
