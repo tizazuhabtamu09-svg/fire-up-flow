@@ -257,7 +257,7 @@ function MyApplicationsCard({ userId }: { userId?: string }) {
                     {r.job?.title ?? "Job"}
                   </Link>
                   <p className="text-sm text-muted-foreground">
-                    {[r.job?.employer_name, r.job?.city].filter(Boolean).join(" \u00b7 ") || "Employer"} \u00b7{" "}
+                    {[r.job?.employer_name, r.job?.city].filter(Boolean).join(" · ") || "Employer"} ·{" "}
                     {new Date(r.created_at).toLocaleDateString()}
                   </p>
                 </div>
