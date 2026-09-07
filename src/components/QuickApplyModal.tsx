@@ -156,7 +156,13 @@ export function QuickApplyModal({
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/my-applications`,
-          data: { full_name: form.full_name.trim(), phone: form.phone.trim(), role: "employee" },
+          data: {
+            full_name: form.full_name.trim(),
+            phone: form.phone.trim(),
+            role: "employee",
+            onboarding_role: "employee",
+            candidate: true,
+          },
         },
       });
       if (signUpErr) throw signUpErr;
