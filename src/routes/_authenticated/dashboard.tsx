@@ -130,6 +130,9 @@ function DashboardPage() {
 
       <SubscriptionCard userId={user?.id} />
 
+      {isWorker && <MyApplicationsCard userId={user?.id} />}
+
+
       <div className="mt-8 grid gap-4 sm:grid-cols-3">
         <Stat label={isWorker ? t("dash.newRequests") : t("dash.pendingBookings")} value={pending} />
         <Stat label={t("dash.active")} value={accepted} />
