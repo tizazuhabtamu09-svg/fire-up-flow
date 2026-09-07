@@ -54,6 +54,7 @@ import { Route as AuthenticatedMyTeamRouteImport } from './routes/_authenticated
 import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
 import { Route as AuthenticatedMyJobsRouteImport } from './routes/_authenticated/my-jobs'
 import { Route as AuthenticatedMyEmployerRouteImport } from './routes/_authenticated/my-employer'
+import { Route as AuthenticatedMyApplicationsRouteImport } from './routes/_authenticated/my-applications'
 import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
@@ -315,6 +316,12 @@ const AuthenticatedMyEmployerRoute = AuthenticatedMyEmployerRouteImport.update({
   path: '/my-employer',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedMyApplicationsRoute =
+  AuthenticatedMyApplicationsRouteImport.update({
+    id: '/my-applications',
+    path: '/my-applications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
   id: '/messages',
   path: '/messages',
@@ -524,6 +531,7 @@ export interface FileRoutesByFullPath {
   '/bookings': typeof AuthenticatedBookingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/messages': typeof AuthenticatedMessagesRoute
+  '/my-applications': typeof AuthenticatedMyApplicationsRoute
   '/my-employer': typeof AuthenticatedMyEmployerRoute
   '/my-jobs': typeof AuthenticatedMyJobsRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
@@ -601,6 +609,7 @@ export interface FileRoutesByTo {
   '/bookings': typeof AuthenticatedBookingsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/messages': typeof AuthenticatedMessagesRoute
+  '/my-applications': typeof AuthenticatedMyApplicationsRoute
   '/my-employer': typeof AuthenticatedMyEmployerRoute
   '/my-jobs': typeof AuthenticatedMyJobsRoute
   '/my-requests': typeof AuthenticatedMyRequestsRoute
@@ -682,6 +691,7 @@ export interface FileRoutesById {
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/messages': typeof AuthenticatedMessagesRoute
+  '/_authenticated/my-applications': typeof AuthenticatedMyApplicationsRoute
   '/_authenticated/my-employer': typeof AuthenticatedMyEmployerRoute
   '/_authenticated/my-jobs': typeof AuthenticatedMyJobsRoute
   '/_authenticated/my-requests': typeof AuthenticatedMyRequestsRoute
@@ -763,6 +773,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/dashboard'
     | '/messages'
+    | '/my-applications'
     | '/my-employer'
     | '/my-jobs'
     | '/my-requests'
@@ -840,6 +851,7 @@ export interface FileRouteTypes {
     | '/bookings'
     | '/dashboard'
     | '/messages'
+    | '/my-applications'
     | '/my-employer'
     | '/my-jobs'
     | '/my-requests'
@@ -920,6 +932,7 @@ export interface FileRouteTypes {
     | '/_authenticated/bookings'
     | '/_authenticated/dashboard'
     | '/_authenticated/messages'
+    | '/_authenticated/my-applications'
     | '/_authenticated/my-employer'
     | '/_authenticated/my-jobs'
     | '/_authenticated/my-requests'
@@ -1324,6 +1337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyEmployerRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-applications': {
+      id: '/_authenticated/my-applications'
+      path: '/my-applications'
+      fullPath: '/my-applications'
+      preLoaderRoute: typeof AuthenticatedMyApplicationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/messages': {
       id: '/_authenticated/messages'
       path: '/messages'
@@ -1610,6 +1630,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedMessagesRoute: typeof AuthenticatedMessagesRoute
+  AuthenticatedMyApplicationsRoute: typeof AuthenticatedMyApplicationsRoute
   AuthenticatedMyEmployerRoute: typeof AuthenticatedMyEmployerRoute
   AuthenticatedMyJobsRoute: typeof AuthenticatedMyJobsRoute
   AuthenticatedMyRequestsRoute: typeof AuthenticatedMyRequestsRoute
@@ -1635,6 +1656,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedMessagesRoute: AuthenticatedMessagesRoute,
+  AuthenticatedMyApplicationsRoute: AuthenticatedMyApplicationsRoute,
   AuthenticatedMyEmployerRoute: AuthenticatedMyEmployerRoute,
   AuthenticatedMyJobsRoute: AuthenticatedMyJobsRoute,
   AuthenticatedMyRequestsRoute: AuthenticatedMyRequestsRoute,
