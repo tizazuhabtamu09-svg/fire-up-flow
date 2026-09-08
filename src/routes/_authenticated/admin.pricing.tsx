@@ -13,11 +13,20 @@ export const Route = createFileRoute("/_authenticated/admin/pricing")({
 });
 
 const CATEGORIES = [
+  { value: "fees", label: "Service fees" },
   { value: "broker", label: "Broker fees" },
   { value: "pro", label: "Pro feature rates" },
   { value: "subscription", label: "Subscription types" },
   { value: "general", label: "General" },
 ];
+
+/** Known categories plus any extra category found in the saved prices, so no row is ever hidden. */
+function allCategories(rows: { category: string | null }[]) {
+  const extra = [...new Set(rows.map((r) => r.category ?? "general"))]
+    .filter((c) => !CATEGORIES.some((k) => k.value === c))
+    .map((c) => ({ value: c, label: c.replace(/_/g, " ") }));
+  return [...CATEGORIES, ...extra];
+}
 
 function AdminPricing() {
   const [rows, setRows] = useState<Pricing[]>([]);
@@ -86,7 +95,7 @@ function AdminPricing() {
       {status && <p className="mb-4 text-sm text-primary">{status}</p>}
 
       <div className="space-y-8">
-        {CATEGORIES.map((cat) => {
+        {allCategories(rows).map((cat) => {
           const items = rows.filter((r) => (r.category ?? "general") === cat.value);
           if (items.length === 0) return null;
           return (
