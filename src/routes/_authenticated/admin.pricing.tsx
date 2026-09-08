@@ -95,7 +95,7 @@ function AdminPricing() {
       {status && <p className="mb-4 text-sm text-primary">{status}</p>}
 
       <div className="space-y-8">
-        {CATEGORIES.map((cat) => {
+        {allCategories(rows).map((cat) => {
           const items = rows.filter((r) => (r.category ?? "general") === cat.value);
           if (items.length === 0) return null;
           return (
