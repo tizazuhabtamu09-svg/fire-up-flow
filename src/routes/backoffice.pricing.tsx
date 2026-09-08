@@ -14,11 +14,20 @@ export const Route = createFileRoute("/backoffice/pricing")({
 });
 
 const CATEGORIES = [
+  { value: "fees", label: "Service fees" },
   { value: "broker", label: "Broker fees" },
   { value: "pro", label: "Pro feature rates" },
   { value: "subscription", label: "Subscription types" },
   { value: "general", label: "General" },
 ];
+
+/** Known categories plus any extra category found in the saved prices, so no row is ever hidden. */
+function allCategories(rows: { category: string | null }[]) {
+  const extra = [...new Set(rows.map((r) => r.category ?? "general"))]
+    .filter((c) => !CATEGORIES.some((k) => k.value === c))
+    .map((c) => ({ value: c, label: c.replace(/_/g, " ") }));
+  return [...CATEGORIES, ...extra];
+}
 
 function BackofficePricing() {
   const staff = useStaff();
