@@ -661,6 +661,13 @@ export type Database = {
             referencedRelation: "workers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "employee_termination_requests_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       employer_ratings: {
@@ -713,6 +720,13 @@ export type Database = {
             columns: ["worker_id"]
             isOneToOne: false
             referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_ratings_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -782,6 +796,13 @@ export type Database = {
             columns: ["worker_id"]
             isOneToOne: false
             referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_reports_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -969,6 +990,13 @@ export type Database = {
             columns: ["worker_id"]
             isOneToOne: false
             referencedRelation: "workers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_applications_worker_id_fkey"
+            columns: ["worker_id"]
+            isOneToOne: false
+            referencedRelation: "workers_public"
             referencedColumns: ["id"]
           },
         ]
@@ -1746,6 +1774,13 @@ export type Database = {
             referencedRelation: "workers"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "worker_public_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "workers_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       worker_ratings: {
@@ -1970,19 +2005,18 @@ export type Database = {
           city: string | null
           created_at: string | null
           experience: string | null
+          fayda_verified: boolean | null
           full_name: string | null
           gender: Database["public"]["Enums"]["gender_type"] | null
-          global_status: string | null
+          guarantor_verified: boolean | null
           id: string | null
-          language: string | null
-          language_other: string | null
-          latitude: number | null
-          longitude: number | null
           photo_url: string | null
           price: number | null
           sector: Database["public"]["Enums"]["sector_type"] | null
           sector_other: string | null
+          sectors: string[] | null
           sub_city: string | null
+          user_id: string | null
           verification_status:
             | Database["public"]["Enums"]["verification_status_type"]
             | null
@@ -1994,19 +2028,18 @@ export type Database = {
           city?: string | null
           created_at?: string | null
           experience?: string | null
+          fayda_verified?: boolean | null
           full_name?: string | null
           gender?: Database["public"]["Enums"]["gender_type"] | null
-          global_status?: string | null
+          guarantor_verified?: boolean | null
           id?: string | null
-          language?: string | null
-          language_other?: string | null
-          latitude?: number | null
-          longitude?: number | null
           photo_url?: string | null
           price?: number | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[] | null
           sub_city?: string | null
+          user_id?: string | null
           verification_status?:
             | Database["public"]["Enums"]["verification_status_type"]
             | null
@@ -2018,32 +2051,23 @@ export type Database = {
           city?: string | null
           created_at?: string | null
           experience?: string | null
+          fayda_verified?: boolean | null
           full_name?: string | null
           gender?: Database["public"]["Enums"]["gender_type"] | null
-          global_status?: string | null
+          guarantor_verified?: boolean | null
           id?: string | null
-          language?: string | null
-          language_other?: string | null
-          latitude?: number | null
-          longitude?: number | null
           photo_url?: string | null
           price?: number | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
           sector_other?: string | null
+          sectors?: string[] | null
           sub_city?: string | null
+          user_id?: string | null
           verification_status?:
             | Database["public"]["Enums"]["verification_status_type"]
             | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "worker_public_profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "workers"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Functions: {
