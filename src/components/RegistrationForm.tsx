@@ -148,6 +148,7 @@ export function RegistrationForm({
   // Merge with defaults so older saved drafts (missing newer fields) stay controlled.
   const [form, setForm] = useState<RegistrationValues>({ ...emptyRegistration, ...initial });
   const [files, setFiles] = useState<RegistrationFiles>({ photo: null, idFront: null, idBack: null, contract: null, guarantorId: null, guarantorPhoto: null, educationDoc: null });
+  const [showGuarantor, setShowGuarantor] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
