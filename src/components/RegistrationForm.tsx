@@ -384,6 +384,8 @@ export function RegistrationForm({
             </Field>
           </div>
         </fieldset>
+          )}
+        </div>
       )}
 
       {showAvailability && (
