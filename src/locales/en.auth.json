@@ -79,6 +79,7 @@
   "auth.goToDashboard": "Go to my dashboard",
   "auth.googleSignInFailed": "Google sign-in failed",
   "auth.guarantorDetails": "Guarantor details",
+  "auth.addGuarantorDetails": "Add guarantor details",
   "auth.guarantorFaydaPhoto": "Guarantor Fayda ID photo",
   "auth.guarantorFullName": "Guarantor full name",
   "auth.guarantorIdNumber": "Guarantor ID number",

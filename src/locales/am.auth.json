@@ -79,6 +79,7 @@
   "auth.goToDashboard": "ወደ ዳሽቦርዴ ሂድ",
   "auth.googleSignInFailed": "በGoogle መግባት አልተሳካም",
   "auth.guarantorDetails": "የዋስ ዝርዝሮች",
+  "auth.addGuarantorDetails": "የዋስ ዝርዝሮችን ያክሉ",
   "auth.guarantorFaydaPhoto": "የዋስ የፋይዳ መታወቂያ ፎቶ",
   "auth.guarantorFullName": "የዋስ ሙሉ ስም",
   "auth.guarantorIdNumber": "የዋስ መታወቂያ ቁጥር",

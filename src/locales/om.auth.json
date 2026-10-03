@@ -79,6 +79,7 @@
   "auth.goToDashboard": "Gara daashboordii kootti deemi",
   "auth.googleSignInFailed": "Google waliin seenuun hin milkoofne",
   "auth.guarantorDetails": "Ibsawwan wabii",
+  "auth.addGuarantorDetails": "Ibsawwan wabii ida'i",
   "auth.guarantorFaydaPhoto": "Suuraa waraqaa Fayda wabii",
   "auth.guarantorFullName": "Maqaa guutuu wabii",
   "auth.guarantorIdNumber": "Lakkoofsa waraqaa wabii",
