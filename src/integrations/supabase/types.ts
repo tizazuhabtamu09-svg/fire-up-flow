@@ -2012,8 +2012,6 @@ export type Database = {
           id: string | null
           latitude: number | null
           longitude: number | null
-          latitude: number | null
-          longitude: number | null
           photo_url: string | null
           price: number | null
           sector: Database["public"]["Enums"]["sector_type"] | null
