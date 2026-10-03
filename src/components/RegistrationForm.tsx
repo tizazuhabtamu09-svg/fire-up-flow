@@ -356,7 +356,13 @@ export function RegistrationForm({
       </div>
 
       {isEmployee && (
-        <fieldset className="rounded-xl border border-border p-4">
+        <div>
+          <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
+            <input type="checkbox" checked={showGuarantor} onChange={(e) => setShowGuarantor(e.target.checked)} />
+            {t("auth.addGuarantorDetails")}
+          </label>
+          {showGuarantor && (
+        <fieldset className="mt-3 rounded-xl border border-border p-4">
           <legend className="px-2 text-sm font-semibold">{t("auth.guarantorDetails")}</legend>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label={t("auth.guarantorFullName")}>
