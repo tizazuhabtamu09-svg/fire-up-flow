@@ -2010,6 +2010,8 @@ export type Database = {
           gender: Database["public"]["Enums"]["gender_type"] | null
           guarantor_verified: boolean | null
           id: string | null
+          latitude: number | null
+          longitude: number | null
           photo_url: string | null
           price: number | null
           sector: Database["public"]["Enums"]["sector_type"] | null
@@ -2033,6 +2035,8 @@ export type Database = {
           gender?: Database["public"]["Enums"]["gender_type"] | null
           guarantor_verified?: boolean | null
           id?: string | null
+          latitude?: number | null
+          longitude?: number | null
           photo_url?: string | null
           price?: number | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
@@ -2056,6 +2060,8 @@ export type Database = {
           gender?: Database["public"]["Enums"]["gender_type"] | null
           guarantor_verified?: boolean | null
           id?: string | null
+          latitude?: number | null
+          longitude?: number | null
           photo_url?: string | null
           price?: number | null
           sector?: Database["public"]["Enums"]["sector_type"] | null
