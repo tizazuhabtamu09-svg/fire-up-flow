@@ -9,153 +9,89 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as AccessDeniedRouteImport } from './routes/access-denied'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as BackofficeRouteImport } from './routes/backoffice'
-import { Route as CareersRouteImport } from './routes/careers'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as HelpRouteImport } from './routes/help'
-import { Route as NearbyRouteImport } from './routes/nearby'
-import { Route as OauthCallbackRouteImport } from './routes/oauth-callback'
-import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as TrustSafetyRouteImport } from './routes/trust-safety'
 import { Route as WorkersRouteImport } from './routes/workers'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
-import { Route as AuthenticatedMyApplicationsRouteImport } from './routes/_authenticated/my-applications'
-import { Route as AuthenticatedMyEmployerRouteImport } from './routes/_authenticated/my-employer'
-import { Route as AuthenticatedMyJobsRouteImport } from './routes/_authenticated/my-jobs'
-import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
-import { Route as AuthenticatedMyTeamRouteImport } from './routes/_authenticated/my-team'
-import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
-import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated/payment'
-import { Route as AuthenticatedPostJobRouteImport } from './routes/_authenticated/post-job'
-import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
-import { Route as AuthenticatedUpdateProfileRouteImport } from './routes/_authenticated/update-profile'
-import { Route as AuthenticatedVerificationRouteImport } from './routes/_authenticated/verification'
-import { Route as BackofficeIndexRouteImport } from './routes/backoffice.index'
-import { Route as BackofficeAccountsRouteImport } from './routes/backoffice.accounts'
-import { Route as BackofficeBannersRouteImport } from './routes/backoffice.banners'
-import { Route as BackofficeComplianceRouteImport } from './routes/backoffice.compliance'
-import { Route as BackofficeJobsRouteImport } from './routes/backoffice.jobs'
-import { Route as BackofficePaymentsRouteImport } from './routes/backoffice.payments'
-import { Route as BackofficePricingRouteImport } from './routes/backoffice.pricing'
-import { Route as BackofficeRequestsRouteImport } from './routes/backoffice.requests'
-import { Route as BackofficeRolesRouteImport } from './routes/backoffice.roles'
-import { Route as BackofficeSettingsRouteImport } from './routes/backoffice.settings'
-import { Route as BackofficeUsersRouteImport } from './routes/backoffice.users'
-import { Route as EmployeeIdRouteImport } from './routes/employee.$id'
-import { Route as JobsIndexRouteImport } from './routes/jobs.index'
-import { Route as JobsIdRouteImport } from './routes/jobs.$id'
+import { Route as TrustSafetyRouteImport } from './routes/trust-safety'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as OauthCallbackRouteImport } from './routes/oauth-callback'
+import { Route as NearbyRouteImport } from './routes/nearby'
+import { Route as HelpRouteImport } from './routes/help'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CareersRouteImport } from './routes/careers'
+import { Route as BackofficeRouteImport } from './routes/backoffice'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AccessDeniedRouteImport } from './routes/access-denied'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as JoinIndexRouteImport } from './routes/join.index'
-import { Route as JoinBrokerRouteImport } from './routes/join.broker'
-import { Route as JoinCredentialsRouteImport } from './routes/join.credentials'
-import { Route as JoinEmployeeRouteImport } from './routes/join.employee'
+import { Route as JobsIndexRouteImport } from './routes/jobs.index'
+import { Route as BackofficeIndexRouteImport } from './routes/backoffice.index'
 import { Route as JoinEmployerRouteImport } from './routes/join.employer'
-import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
-import { Route as AuthenticatedAdminAccountsRouteImport } from './routes/_authenticated/admin.accounts'
-import { Route as AuthenticatedAdminAssignmentsRouteImport } from './routes/_authenticated/admin.assignments'
-import { Route as AuthenticatedAdminBannersRouteImport } from './routes/_authenticated/admin.banners'
-import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
-import { Route as AuthenticatedAdminComplianceRouteImport } from './routes/_authenticated/admin.compliance'
-import { Route as AuthenticatedAdminDocumentsRouteImport } from './routes/_authenticated/admin.documents'
-import { Route as AuthenticatedAdminJobsRouteImport } from './routes/_authenticated/admin.jobs'
-import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
-import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated/admin.payments'
-import { Route as AuthenticatedAdminPricingRouteImport } from './routes/_authenticated/admin.pricing'
-import { Route as AuthenticatedAdminProfileChangesRouteImport } from './routes/_authenticated/admin.profile-changes'
-import { Route as AuthenticatedAdminRequestsRouteImport } from './routes/_authenticated/admin.requests'
-import { Route as AuthenticatedAdminRosterRouteImport } from './routes/_authenticated/admin.roster'
-import { Route as AuthenticatedAdminSectorsRouteImport } from './routes/_authenticated/admin.sectors'
-import { Route as AuthenticatedAdminSubAdminsRouteImport } from './routes/_authenticated/admin.sub-admins'
-import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
-import { Route as AuthenticatedAdminVerificationRouteImport } from './routes/_authenticated/admin.verification'
-import { Route as AuthenticatedAdminWorkersRouteImport } from './routes/_authenticated/admin.workers'
-import { Route as AuthenticatedBrokerIndexRouteImport } from './routes/_authenticated/broker.index'
-import { Route as AuthenticatedBrokerWorkerIdRouteImport } from './routes/_authenticated/broker.$workerId'
-import { Route as AuthenticatedBrokerAccountsRouteImport } from './routes/_authenticated/broker.accounts'
-import { Route as AuthenticatedBrokerAssignRouteImport } from './routes/_authenticated/broker.assign'
-import { Route as AuthenticatedBrokerAssignmentsRouteImport } from './routes/_authenticated/broker.assignments'
-import { Route as AuthenticatedBrokerEmployersRouteImport } from './routes/_authenticated/broker.employers'
-import { Route as AuthenticatedBrokerNewRouteImport } from './routes/_authenticated/broker.new'
-import { Route as AuthenticatedRequestIdRouteImport } from './routes/_authenticated/request.$id'
+import { Route as JoinEmployeeRouteImport } from './routes/join.employee'
+import { Route as JoinCredentialsRouteImport } from './routes/join.credentials'
+import { Route as JoinBrokerRouteImport } from './routes/join.broker'
+import { Route as JobsIdRouteImport } from './routes/jobs.$id'
+import { Route as EmployeeIdRouteImport } from './routes/employee.$id'
+import { Route as BackofficeUsersRouteImport } from './routes/backoffice.users'
+import { Route as BackofficeSettingsRouteImport } from './routes/backoffice.settings'
+import { Route as BackofficeRolesRouteImport } from './routes/backoffice.roles'
+import { Route as BackofficeRequestsRouteImport } from './routes/backoffice.requests'
+import { Route as BackofficePricingRouteImport } from './routes/backoffice.pricing'
+import { Route as BackofficePaymentsRouteImport } from './routes/backoffice.payments'
+import { Route as BackofficeJobsRouteImport } from './routes/backoffice.jobs'
+import { Route as BackofficeComplianceRouteImport } from './routes/backoffice.compliance'
+import { Route as BackofficeBannersRouteImport } from './routes/backoffice.banners'
+import { Route as BackofficeAccountsRouteImport } from './routes/backoffice.accounts'
+import { Route as AuthenticatedVerificationRouteImport } from './routes/_authenticated/verification'
+import { Route as AuthenticatedUpdateProfileRouteImport } from './routes/_authenticated/update-profile'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedPostJobRouteImport } from './routes/_authenticated/post-job'
+import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated/payment'
+import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedMyTeamRouteImport } from './routes/_authenticated/my-team'
+import { Route as AuthenticatedMyRequestsRouteImport } from './routes/_authenticated/my-requests'
+import { Route as AuthenticatedMyJobsRouteImport } from './routes/_authenticated/my-jobs'
+import { Route as AuthenticatedMyEmployerRouteImport } from './routes/_authenticated/my-employer'
+import { Route as AuthenticatedMyApplicationsRouteImport } from './routes/_authenticated/my-applications'
+import { Route as AuthenticatedMessagesRouteImport } from './routes/_authenticated/messages'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as BackofficeDocumentsIndexRouteImport } from './routes/backoffice.documents.index'
+import { Route as AuthenticatedBrokerIndexRouteImport } from './routes/_authenticated/broker.index'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as BackofficeDocumentsIdRouteImport } from './routes/backoffice.documents.$id'
+import { Route as AuthenticatedRequestIdRouteImport } from './routes/_authenticated/request.$id'
+import { Route as AuthenticatedBrokerNewRouteImport } from './routes/_authenticated/broker.new'
+import { Route as AuthenticatedBrokerEmployersRouteImport } from './routes/_authenticated/broker.employers'
+import { Route as AuthenticatedBrokerAssignmentsRouteImport } from './routes/_authenticated/broker.assignments'
+import { Route as AuthenticatedBrokerAssignRouteImport } from './routes/_authenticated/broker.assign'
+import { Route as AuthenticatedBrokerAccountsRouteImport } from './routes/_authenticated/broker.accounts'
+import { Route as AuthenticatedBrokerWorkerIdRouteImport } from './routes/_authenticated/broker.$workerId'
+import { Route as AuthenticatedAdminWorkersRouteImport } from './routes/_authenticated/admin.workers'
+import { Route as AuthenticatedAdminVerificationRouteImport } from './routes/_authenticated/admin.verification'
+import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/admin.users'
+import { Route as AuthenticatedAdminSubAdminsRouteImport } from './routes/_authenticated/admin.sub-admins'
+import { Route as AuthenticatedAdminSectorsRouteImport } from './routes/_authenticated/admin.sectors'
+import { Route as AuthenticatedAdminRosterRouteImport } from './routes/_authenticated/admin.roster'
+import { Route as AuthenticatedAdminRequestsRouteImport } from './routes/_authenticated/admin.requests'
+import { Route as AuthenticatedAdminProfileChangesRouteImport } from './routes/_authenticated/admin.profile-changes'
+import { Route as AuthenticatedAdminPricingRouteImport } from './routes/_authenticated/admin.pricing'
+import { Route as AuthenticatedAdminPaymentsRouteImport } from './routes/_authenticated/admin.payments'
+import { Route as AuthenticatedAdminMessagesRouteImport } from './routes/_authenticated/admin.messages'
+import { Route as AuthenticatedAdminJobsRouteImport } from './routes/_authenticated/admin.jobs'
+import { Route as AuthenticatedAdminDocumentsRouteImport } from './routes/_authenticated/admin.documents'
+import { Route as AuthenticatedAdminComplianceRouteImport } from './routes/_authenticated/admin.compliance'
+import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
+import { Route as AuthenticatedAdminBannersRouteImport } from './routes/_authenticated/admin.banners'
+import { Route as AuthenticatedAdminAssignmentsRouteImport } from './routes/_authenticated/admin.assignments'
+import { Route as AuthenticatedAdminAccountsRouteImport } from './routes/_authenticated/admin.accounts'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AccessDeniedRoute = AccessDeniedRouteImport.update({
-  id: '/access-denied',
-  path: '/access-denied',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BackofficeRoute = BackofficeRouteImport.update({
-  id: '/backoffice',
-  path: '/backoffice',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareersRoute = CareersRouteImport.update({
-  id: '/careers',
-  path: '/careers',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HelpRoute = HelpRouteImport.update({
-  id: '/help',
-  path: '/help',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NearbyRoute = NearbyRouteImport.update({
-  id: '/nearby',
-  path: '/nearby',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OauthCallbackRoute = OauthCallbackRouteImport.update({
-  id: '/oauth-callback',
-  path: '/oauth-callback',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OnboardingRoute = OnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
+const WorkersRoute = WorkersRouteImport.update({
+  id: '/workers',
+  path: '/workers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TrustSafetyRoute = TrustSafetyRouteImport.update({
@@ -163,55 +99,195 @@ const TrustSafetyRoute = TrustSafetyRouteImport.update({
   path: '/trust-safety',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WorkersRoute = WorkersRouteImport.update({
-  id: '/workers',
-  path: '/workers',
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedBookingsRoute = AuthenticatedBookingsRouteImport.update({
-  id: '/bookings',
-  path: '/bookings',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const OauthCallbackRoute = OauthCallbackRouteImport.update({
+  id: '/oauth-callback',
+  path: '/oauth-callback',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const NearbyRoute = NearbyRouteImport.update({
+  id: '/nearby',
+  path: '/nearby',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedMyApplicationsRoute =
-  AuthenticatedMyApplicationsRouteImport.update({
-    id: '/my-applications',
-    path: '/my-applications',
+const HelpRoute = HelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareersRoute = CareersRouteImport.update({
+  id: '/careers',
+  path: '/careers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BackofficeRoute = BackofficeRouteImport.update({
+  id: '/backoffice',
+  path: '/backoffice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessDeniedRoute = AccessDeniedRouteImport.update({
+  id: '/access-denied',
+  path: '/access-denied',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinIndexRoute = JoinIndexRouteImport.update({
+  id: '/join/',
+  path: '/join/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsIndexRoute = JobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BackofficeIndexRoute = BackofficeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const JoinEmployerRoute = JoinEmployerRouteImport.update({
+  id: '/join/employer',
+  path: '/join/employer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinEmployeeRoute = JoinEmployeeRouteImport.update({
+  id: '/join/employee',
+  path: '/join/employee',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinCredentialsRoute = JoinCredentialsRouteImport.update({
+  id: '/join/credentials',
+  path: '/join/credentials',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JoinBrokerRoute = JoinBrokerRouteImport.update({
+  id: '/join/broker',
+  path: '/join/broker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsIdRoute = JobsIdRouteImport.update({
+  id: '/jobs/$id',
+  path: '/jobs/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmployeeIdRoute = EmployeeIdRouteImport.update({
+  id: '/employee/$id',
+  path: '/employee/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BackofficeUsersRoute = BackofficeUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeSettingsRoute = BackofficeSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeRolesRoute = BackofficeRolesRouteImport.update({
+  id: '/roles',
+  path: '/roles',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeRequestsRoute = BackofficeRequestsRouteImport.update({
+  id: '/requests',
+  path: '/requests',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficePricingRoute = BackofficePricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficePaymentsRoute = BackofficePaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeJobsRoute = BackofficeJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeComplianceRoute = BackofficeComplianceRouteImport.update({
+  id: '/compliance',
+  path: '/compliance',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeBannersRoute = BackofficeBannersRouteImport.update({
+  id: '/banners',
+  path: '/banners',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const BackofficeAccountsRoute = BackofficeAccountsRouteImport.update({
+  id: '/accounts',
+  path: '/accounts',
+  getParentRoute: () => BackofficeRoute,
+} as any)
+const AuthenticatedVerificationRoute =
+  AuthenticatedVerificationRouteImport.update({
+    id: '/verification',
+    path: '/verification',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedMyEmployerRoute = AuthenticatedMyEmployerRouteImport.update({
-  id: '/my-employer',
-  path: '/my-employer',
+const AuthenticatedUpdateProfileRoute =
+  AuthenticatedUpdateProfileRouteImport.update({
+    id: '/update-profile',
+    path: '/update-profile',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedMyJobsRoute = AuthenticatedMyJobsRouteImport.update({
-  id: '/my-jobs',
-  path: '/my-jobs',
+const AuthenticatedPostJobRoute = AuthenticatedPostJobRouteImport.update({
+  id: '/post-job',
+  path: '/post-job',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedMyRequestsRoute = AuthenticatedMyRequestsRouteImport.update({
-  id: '/my-requests',
-  path: '/my-requests',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedMyTeamRoute = AuthenticatedMyTeamRouteImport.update({
-  id: '/my-team',
-  path: '/my-team',
+const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedNotificationsRoute =
@@ -220,283 +296,50 @@ const AuthenticatedNotificationsRoute =
     path: '/notifications',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
-  id: '/payment',
-  path: '/payment',
+const AuthenticatedMyTeamRoute = AuthenticatedMyTeamRouteImport.update({
+  id: '/my-team',
+  path: '/my-team',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedPostJobRoute = AuthenticatedPostJobRouteImport.update({
-  id: '/post-job',
-  path: '/post-job',
+const AuthenticatedMyRequestsRoute = AuthenticatedMyRequestsRouteImport.update({
+  id: '/my-requests',
+  path: '/my-requests',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
+const AuthenticatedMyJobsRoute = AuthenticatedMyJobsRouteImport.update({
+  id: '/my-jobs',
+  path: '/my-jobs',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedUpdateProfileRoute =
-  AuthenticatedUpdateProfileRouteImport.update({
-    id: '/update-profile',
-    path: '/update-profile',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedVerificationRoute =
-  AuthenticatedVerificationRouteImport.update({
-    id: '/verification',
-    path: '/verification',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const BackofficeIndexRoute = BackofficeIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeAccountsRoute = BackofficeAccountsRouteImport.update({
-  id: '/accounts',
-  path: '/accounts',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeBannersRoute = BackofficeBannersRouteImport.update({
-  id: '/banners',
-  path: '/banners',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeComplianceRoute = BackofficeComplianceRouteImport.update({
-  id: '/compliance',
-  path: '/compliance',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeJobsRoute = BackofficeJobsRouteImport.update({
-  id: '/jobs',
-  path: '/jobs',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficePaymentsRoute = BackofficePaymentsRouteImport.update({
-  id: '/payments',
-  path: '/payments',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficePricingRoute = BackofficePricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeRequestsRoute = BackofficeRequestsRouteImport.update({
-  id: '/requests',
-  path: '/requests',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeRolesRoute = BackofficeRolesRouteImport.update({
-  id: '/roles',
-  path: '/roles',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeSettingsRoute = BackofficeSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const BackofficeUsersRoute = BackofficeUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => BackofficeRoute,
-} as any)
-const EmployeeIdRoute = EmployeeIdRouteImport.update({
-  id: '/employee/$id',
-  path: '/employee/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JobsIndexRoute = JobsIndexRouteImport.update({
-  id: '/jobs/',
-  path: '/jobs/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JobsIdRoute = JobsIdRouteImport.update({
-  id: '/jobs/$id',
-  path: '/jobs/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinIndexRoute = JoinIndexRouteImport.update({
-  id: '/join/',
-  path: '/join/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinBrokerRoute = JoinBrokerRouteImport.update({
-  id: '/join/broker',
-  path: '/join/broker',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinCredentialsRoute = JoinCredentialsRouteImport.update({
-  id: '/join/credentials',
-  path: '/join/credentials',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinEmployeeRoute = JoinEmployeeRouteImport.update({
-  id: '/join/employee',
-  path: '/join/employee',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinEmployerRoute = JoinEmployerRouteImport.update({
-  id: '/join/employer',
-  path: '/join/employer',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminAccountsRoute =
-  AuthenticatedAdminAccountsRouteImport.update({
-    id: '/accounts',
-    path: '/accounts',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminAssignmentsRoute =
-  AuthenticatedAdminAssignmentsRouteImport.update({
-    id: '/assignments',
-    path: '/assignments',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBannersRoute =
-  AuthenticatedAdminBannersRouteImport.update({
-    id: '/banners',
-    path: '/banners',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminBookingsRoute =
-  AuthenticatedAdminBookingsRouteImport.update({
-    id: '/bookings',
-    path: '/bookings',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminComplianceRoute =
-  AuthenticatedAdminComplianceRouteImport.update({
-    id: '/compliance',
-    path: '/compliance',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminDocumentsRoute =
-  AuthenticatedAdminDocumentsRouteImport.update({
-    id: '/documents',
-    path: '/documents',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminJobsRoute = AuthenticatedAdminJobsRouteImport.update({
-  id: '/jobs',
-  path: '/jobs',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminMessagesRoute =
-  AuthenticatedAdminMessagesRouteImport.update({
-    id: '/messages',
-    path: '/messages',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminPaymentsRoute =
-  AuthenticatedAdminPaymentsRouteImport.update({
-    id: '/payments',
-    path: '/payments',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminPricingRoute =
-  AuthenticatedAdminPricingRouteImport.update({
-    id: '/pricing',
-    path: '/pricing',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminProfileChangesRoute =
-  AuthenticatedAdminProfileChangesRouteImport.update({
-    id: '/profile-changes',
-    path: '/profile-changes',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminRequestsRoute =
-  AuthenticatedAdminRequestsRouteImport.update({
-    id: '/requests',
-    path: '/requests',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminRosterRoute =
-  AuthenticatedAdminRosterRouteImport.update({
-    id: '/roster',
-    path: '/roster',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminSectorsRoute =
-  AuthenticatedAdminSectorsRouteImport.update({
-    id: '/sectors',
-    path: '/sectors',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminSubAdminsRoute =
-  AuthenticatedAdminSubAdminsRouteImport.update({
-    id: '/sub-admins',
-    path: '/sub-admins',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AuthenticatedAdminRoute,
-} as any)
-const AuthenticatedAdminVerificationRoute =
-  AuthenticatedAdminVerificationRouteImport.update({
-    id: '/verification',
-    path: '/verification',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedAdminWorkersRoute =
-  AuthenticatedAdminWorkersRouteImport.update({
-    id: '/workers',
-    path: '/workers',
-    getParentRoute: () => AuthenticatedAdminRoute,
-  } as any)
-const AuthenticatedBrokerIndexRoute =
-  AuthenticatedBrokerIndexRouteImport.update({
-    id: '/broker/',
-    path: '/broker/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrokerWorkerIdRoute =
-  AuthenticatedBrokerWorkerIdRouteImport.update({
-    id: '/broker/$workerId',
-    path: '/broker/$workerId',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrokerAccountsRoute =
-  AuthenticatedBrokerAccountsRouteImport.update({
-    id: '/broker/accounts',
-    path: '/broker/accounts',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrokerAssignRoute =
-  AuthenticatedBrokerAssignRouteImport.update({
-    id: '/broker/assign',
-    path: '/broker/assign',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrokerAssignmentsRoute =
-  AuthenticatedBrokerAssignmentsRouteImport.update({
-    id: '/broker/assignments',
-    path: '/broker/assignments',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrokerEmployersRoute =
-  AuthenticatedBrokerEmployersRouteImport.update({
-    id: '/broker/employers',
-    path: '/broker/employers',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedBrokerNewRoute = AuthenticatedBrokerNewRouteImport.update({
-  id: '/broker/new',
-  path: '/broker/new',
+const AuthenticatedMyEmployerRoute = AuthenticatedMyEmployerRouteImport.update({
+  id: '/my-employer',
+  path: '/my-employer',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedRequestIdRoute = AuthenticatedRequestIdRouteImport.update({
-  id: '/request/$id',
-  path: '/request/$id',
+const AuthenticatedMyApplicationsRoute =
+  AuthenticatedMyApplicationsRouteImport.update({
+    id: '/my-applications',
+    path: '/my-applications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedMessagesRoute = AuthenticatedMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBookingsRoute = AuthenticatedBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const BackofficeDocumentsIndexRoute =
@@ -505,11 +348,168 @@ const BackofficeDocumentsIndexRoute =
     path: '/documents/',
     getParentRoute: () => BackofficeRoute,
   } as any)
+const AuthenticatedBrokerIndexRoute =
+  AuthenticatedBrokerIndexRouteImport.update({
+    id: '/broker/',
+    path: '/broker/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 const BackofficeDocumentsIdRoute = BackofficeDocumentsIdRouteImport.update({
   id: '/documents/$id',
   path: '/documents/$id',
   getParentRoute: () => BackofficeRoute,
 } as any)
+const AuthenticatedRequestIdRoute = AuthenticatedRequestIdRouteImport.update({
+  id: '/request/$id',
+  path: '/request/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBrokerNewRoute = AuthenticatedBrokerNewRouteImport.update({
+  id: '/broker/new',
+  path: '/broker/new',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedBrokerEmployersRoute =
+  AuthenticatedBrokerEmployersRouteImport.update({
+    id: '/broker/employers',
+    path: '/broker/employers',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBrokerAssignmentsRoute =
+  AuthenticatedBrokerAssignmentsRouteImport.update({
+    id: '/broker/assignments',
+    path: '/broker/assignments',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBrokerAssignRoute =
+  AuthenticatedBrokerAssignRouteImport.update({
+    id: '/broker/assign',
+    path: '/broker/assign',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBrokerAccountsRoute =
+  AuthenticatedBrokerAccountsRouteImport.update({
+    id: '/broker/accounts',
+    path: '/broker/accounts',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedBrokerWorkerIdRoute =
+  AuthenticatedBrokerWorkerIdRouteImport.update({
+    id: '/broker/$workerId',
+    path: '/broker/$workerId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminWorkersRoute =
+  AuthenticatedAdminWorkersRouteImport.update({
+    id: '/workers',
+    path: '/workers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminVerificationRoute =
+  AuthenticatedAdminVerificationRouteImport.update({
+    id: '/verification',
+    path: '/verification',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminSubAdminsRoute =
+  AuthenticatedAdminSubAdminsRouteImport.update({
+    id: '/sub-admins',
+    path: '/sub-admins',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminSectorsRoute =
+  AuthenticatedAdminSectorsRouteImport.update({
+    id: '/sectors',
+    path: '/sectors',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminRosterRoute =
+  AuthenticatedAdminRosterRouteImport.update({
+    id: '/roster',
+    path: '/roster',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminRequestsRoute =
+  AuthenticatedAdminRequestsRouteImport.update({
+    id: '/requests',
+    path: '/requests',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminProfileChangesRoute =
+  AuthenticatedAdminProfileChangesRouteImport.update({
+    id: '/profile-changes',
+    path: '/profile-changes',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPricingRoute =
+  AuthenticatedAdminPricingRouteImport.update({
+    id: '/pricing',
+    path: '/pricing',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPaymentsRoute =
+  AuthenticatedAdminPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminMessagesRoute =
+  AuthenticatedAdminMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminJobsRoute = AuthenticatedAdminJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminDocumentsRoute =
+  AuthenticatedAdminDocumentsRouteImport.update({
+    id: '/documents',
+    path: '/documents',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminComplianceRoute =
+  AuthenticatedAdminComplianceRouteImport.update({
+    id: '/compliance',
+    path: '/compliance',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBookingsRoute =
+  AuthenticatedAdminBookingsRouteImport.update({
+    id: '/bookings',
+    path: '/bookings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBannersRoute =
+  AuthenticatedAdminBannersRouteImport.update({
+    id: '/banners',
+    path: '/banners',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAssignmentsRoute =
+  AuthenticatedAdminAssignmentsRouteImport.update({
+    id: '/assignments',
+    path: '/assignments',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAccountsRoute =
+  AuthenticatedAdminAccountsRouteImport.update({
+    id: '/accounts',
+    path: '/accounts',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -1022,102 +1022,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/access-denied': {
-      id: '/access-denied'
-      path: '/access-denied'
-      fullPath: '/access-denied'
-      preLoaderRoute: typeof AccessDeniedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/backoffice': {
-      id: '/backoffice'
-      path: '/backoffice'
-      fullPath: '/backoffice'
-      preLoaderRoute: typeof BackofficeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/careers': {
-      id: '/careers'
-      path: '/careers'
-      fullPath: '/careers'
-      preLoaderRoute: typeof CareersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/help': {
-      id: '/help'
-      path: '/help'
-      fullPath: '/help'
-      preLoaderRoute: typeof HelpRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/nearby': {
-      id: '/nearby'
-      path: '/nearby'
-      fullPath: '/nearby'
-      preLoaderRoute: typeof NearbyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/oauth-callback': {
-      id: '/oauth-callback'
-      path: '/oauth-callback'
-      fullPath: '/oauth-callback'
-      preLoaderRoute: typeof OauthCallbackRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
+    '/workers': {
+      id: '/workers'
+      path: '/workers'
+      fullPath: '/workers'
+      preLoaderRoute: typeof WorkersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trust-safety': {
@@ -1127,214 +1036,102 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TrustSafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/workers': {
-      id: '/workers'
-      path: '/workers'
-      fullPath: '/workers'
-      preLoaderRoute: typeof WorkersRouteImport
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/bookings': {
-      id: '/_authenticated/bookings'
-      path: '/bookings'
-      fullPath: '/bookings'
-      preLoaderRoute: typeof AuthenticatedBookingsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/oauth-callback': {
+      id: '/oauth-callback'
+      path: '/oauth-callback'
+      fullPath: '/oauth-callback'
+      preLoaderRoute: typeof OauthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/messages': {
-      id: '/_authenticated/messages'
-      path: '/messages'
-      fullPath: '/messages'
-      preLoaderRoute: typeof AuthenticatedMessagesRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/nearby': {
+      id: '/nearby'
+      path: '/nearby'
+      fullPath: '/nearby'
+      preLoaderRoute: typeof NearbyRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-applications': {
-      id: '/_authenticated/my-applications'
-      path: '/my-applications'
-      fullPath: '/my-applications'
-      preLoaderRoute: typeof AuthenticatedMyApplicationsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/help': {
+      id: '/help'
+      path: '/help'
+      fullPath: '/help'
+      preLoaderRoute: typeof HelpRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-employer': {
-      id: '/_authenticated/my-employer'
-      path: '/my-employer'
-      fullPath: '/my-employer'
-      preLoaderRoute: typeof AuthenticatedMyEmployerRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-jobs': {
-      id: '/_authenticated/my-jobs'
-      path: '/my-jobs'
-      fullPath: '/my-jobs'
-      preLoaderRoute: typeof AuthenticatedMyJobsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/careers': {
+      id: '/careers'
+      path: '/careers'
+      fullPath: '/careers'
+      preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-requests': {
-      id: '/_authenticated/my-requests'
-      path: '/my-requests'
-      fullPath: '/my-requests'
-      preLoaderRoute: typeof AuthenticatedMyRequestsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/backoffice': {
+      id: '/backoffice'
+      path: '/backoffice'
+      fullPath: '/backoffice'
+      preLoaderRoute: typeof BackofficeRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/my-team': {
-      id: '/_authenticated/my-team'
-      path: '/my-team'
-      fullPath: '/my-team'
-      preLoaderRoute: typeof AuthenticatedMyTeamRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/notifications': {
-      id: '/_authenticated/notifications'
-      path: '/notifications'
-      fullPath: '/notifications'
-      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/access-denied': {
+      id: '/access-denied'
+      path: '/access-denied'
+      fullPath: '/access-denied'
+      preLoaderRoute: typeof AccessDeniedRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/payment': {
-      id: '/_authenticated/payment'
-      path: '/payment'
-      fullPath: '/payment'
-      preLoaderRoute: typeof AuthenticatedPaymentRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/post-job': {
-      id: '/_authenticated/post-job'
-      path: '/post-job'
-      fullPath: '/post-job'
-      preLoaderRoute: typeof AuthenticatedPostJobRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/update-profile': {
-      id: '/_authenticated/update-profile'
-      path: '/update-profile'
-      fullPath: '/update-profile'
-      preLoaderRoute: typeof AuthenticatedUpdateProfileRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/verification': {
-      id: '/_authenticated/verification'
-      path: '/verification'
-      fullPath: '/verification'
-      preLoaderRoute: typeof AuthenticatedVerificationRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/backoffice/': {
-      id: '/backoffice/'
+    '/': {
+      id: '/'
       path: '/'
-      fullPath: '/backoffice/'
-      preLoaderRoute: typeof BackofficeIndexRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/accounts': {
-      id: '/backoffice/accounts'
-      path: '/accounts'
-      fullPath: '/backoffice/accounts'
-      preLoaderRoute: typeof BackofficeAccountsRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/banners': {
-      id: '/backoffice/banners'
-      path: '/banners'
-      fullPath: '/backoffice/banners'
-      preLoaderRoute: typeof BackofficeBannersRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/compliance': {
-      id: '/backoffice/compliance'
-      path: '/compliance'
-      fullPath: '/backoffice/compliance'
-      preLoaderRoute: typeof BackofficeComplianceRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/jobs': {
-      id: '/backoffice/jobs'
-      path: '/jobs'
-      fullPath: '/backoffice/jobs'
-      preLoaderRoute: typeof BackofficeJobsRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/payments': {
-      id: '/backoffice/payments'
-      path: '/payments'
-      fullPath: '/backoffice/payments'
-      preLoaderRoute: typeof BackofficePaymentsRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/pricing': {
-      id: '/backoffice/pricing'
-      path: '/pricing'
-      fullPath: '/backoffice/pricing'
-      preLoaderRoute: typeof BackofficePricingRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/requests': {
-      id: '/backoffice/requests'
-      path: '/requests'
-      fullPath: '/backoffice/requests'
-      preLoaderRoute: typeof BackofficeRequestsRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/roles': {
-      id: '/backoffice/roles'
-      path: '/roles'
-      fullPath: '/backoffice/roles'
-      preLoaderRoute: typeof BackofficeRolesRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/settings': {
-      id: '/backoffice/settings'
-      path: '/settings'
-      fullPath: '/backoffice/settings'
-      preLoaderRoute: typeof BackofficeSettingsRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/backoffice/users': {
-      id: '/backoffice/users'
-      path: '/users'
-      fullPath: '/backoffice/users'
-      preLoaderRoute: typeof BackofficeUsersRouteImport
-      parentRoute: typeof BackofficeRoute
-    }
-    '/employee/$id': {
-      id: '/employee/$id'
-      path: '/employee/$id'
-      fullPath: '/employee/$id'
-      preLoaderRoute: typeof EmployeeIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/jobs/': {
-      id: '/jobs/'
-      path: '/jobs'
-      fullPath: '/jobs/'
-      preLoaderRoute: typeof JobsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/jobs/$id': {
-      id: '/jobs/$id'
-      path: '/jobs/$id'
-      fullPath: '/jobs/$id'
-      preLoaderRoute: typeof JobsIdRouteImport
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join/': {
@@ -1344,18 +1141,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/join/broker': {
-      id: '/join/broker'
-      path: '/join/broker'
-      fullPath: '/join/broker'
-      preLoaderRoute: typeof JoinBrokerRouteImport
+    '/jobs/': {
+      id: '/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof JobsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/join/credentials': {
-      id: '/join/credentials'
-      path: '/join/credentials'
-      fullPath: '/join/credentials'
-      preLoaderRoute: typeof JoinCredentialsRouteImport
+    '/backoffice/': {
+      id: '/backoffice/'
+      path: '/'
+      fullPath: '/backoffice/'
+      preLoaderRoute: typeof BackofficeIndexRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/join/employer': {
+      id: '/join/employer'
+      path: '/join/employer'
+      fullPath: '/join/employer'
+      preLoaderRoute: typeof JoinEmployerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/join/employee': {
@@ -1365,200 +1169,207 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinEmployeeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/join/employer': {
-      id: '/join/employer'
-      path: '/join/employer'
-      fullPath: '/join/employer'
-      preLoaderRoute: typeof JoinEmployerRouteImport
+    '/join/credentials': {
+      id: '/join/credentials'
+      path: '/join/credentials'
+      fullPath: '/join/credentials'
+      preLoaderRoute: typeof JoinCredentialsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/': {
-      id: '/_authenticated/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+    '/join/broker': {
+      id: '/join/broker'
+      path: '/join/broker'
+      fullPath: '/join/broker'
+      preLoaderRoute: typeof JoinBrokerRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/accounts': {
-      id: '/_authenticated/admin/accounts'
-      path: '/accounts'
-      fullPath: '/admin/accounts'
-      preLoaderRoute: typeof AuthenticatedAdminAccountsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+    '/jobs/$id': {
+      id: '/jobs/$id'
+      path: '/jobs/$id'
+      fullPath: '/jobs/$id'
+      preLoaderRoute: typeof JobsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/assignments': {
-      id: '/_authenticated/admin/assignments'
-      path: '/assignments'
-      fullPath: '/admin/assignments'
-      preLoaderRoute: typeof AuthenticatedAdminAssignmentsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+    '/employee/$id': {
+      id: '/employee/$id'
+      path: '/employee/$id'
+      fullPath: '/employee/$id'
+      preLoaderRoute: typeof EmployeeIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/banners': {
-      id: '/_authenticated/admin/banners'
-      path: '/banners'
-      fullPath: '/admin/banners'
-      preLoaderRoute: typeof AuthenticatedAdminBannersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/bookings': {
-      id: '/_authenticated/admin/bookings'
-      path: '/bookings'
-      fullPath: '/admin/bookings'
-      preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/compliance': {
-      id: '/_authenticated/admin/compliance'
-      path: '/compliance'
-      fullPath: '/admin/compliance'
-      preLoaderRoute: typeof AuthenticatedAdminComplianceRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/documents': {
-      id: '/_authenticated/admin/documents'
-      path: '/documents'
-      fullPath: '/admin/documents'
-      preLoaderRoute: typeof AuthenticatedAdminDocumentsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/jobs': {
-      id: '/_authenticated/admin/jobs'
-      path: '/jobs'
-      fullPath: '/admin/jobs'
-      preLoaderRoute: typeof AuthenticatedAdminJobsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/messages': {
-      id: '/_authenticated/admin/messages'
-      path: '/messages'
-      fullPath: '/admin/messages'
-      preLoaderRoute: typeof AuthenticatedAdminMessagesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/payments': {
-      id: '/_authenticated/admin/payments'
-      path: '/payments'
-      fullPath: '/admin/payments'
-      preLoaderRoute: typeof AuthenticatedAdminPaymentsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/pricing': {
-      id: '/_authenticated/admin/pricing'
-      path: '/pricing'
-      fullPath: '/admin/pricing'
-      preLoaderRoute: typeof AuthenticatedAdminPricingRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/profile-changes': {
-      id: '/_authenticated/admin/profile-changes'
-      path: '/profile-changes'
-      fullPath: '/admin/profile-changes'
-      preLoaderRoute: typeof AuthenticatedAdminProfileChangesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/requests': {
-      id: '/_authenticated/admin/requests'
-      path: '/requests'
-      fullPath: '/admin/requests'
-      preLoaderRoute: typeof AuthenticatedAdminRequestsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/roster': {
-      id: '/_authenticated/admin/roster'
-      path: '/roster'
-      fullPath: '/admin/roster'
-      preLoaderRoute: typeof AuthenticatedAdminRosterRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/sectors': {
-      id: '/_authenticated/admin/sectors'
-      path: '/sectors'
-      fullPath: '/admin/sectors'
-      preLoaderRoute: typeof AuthenticatedAdminSectorsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/sub-admins': {
-      id: '/_authenticated/admin/sub-admins'
-      path: '/sub-admins'
-      fullPath: '/admin/sub-admins'
-      preLoaderRoute: typeof AuthenticatedAdminSubAdminsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/users': {
-      id: '/_authenticated/admin/users'
+    '/backoffice/users': {
+      id: '/backoffice/users'
       path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      fullPath: '/backoffice/users'
+      preLoaderRoute: typeof BackofficeUsersRouteImport
+      parentRoute: typeof BackofficeRoute
     }
-    '/_authenticated/admin/verification': {
-      id: '/_authenticated/admin/verification'
+    '/backoffice/settings': {
+      id: '/backoffice/settings'
+      path: '/settings'
+      fullPath: '/backoffice/settings'
+      preLoaderRoute: typeof BackofficeSettingsRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/roles': {
+      id: '/backoffice/roles'
+      path: '/roles'
+      fullPath: '/backoffice/roles'
+      preLoaderRoute: typeof BackofficeRolesRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/requests': {
+      id: '/backoffice/requests'
+      path: '/requests'
+      fullPath: '/backoffice/requests'
+      preLoaderRoute: typeof BackofficeRequestsRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/pricing': {
+      id: '/backoffice/pricing'
+      path: '/pricing'
+      fullPath: '/backoffice/pricing'
+      preLoaderRoute: typeof BackofficePricingRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/payments': {
+      id: '/backoffice/payments'
+      path: '/payments'
+      fullPath: '/backoffice/payments'
+      preLoaderRoute: typeof BackofficePaymentsRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/jobs': {
+      id: '/backoffice/jobs'
+      path: '/jobs'
+      fullPath: '/backoffice/jobs'
+      preLoaderRoute: typeof BackofficeJobsRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/compliance': {
+      id: '/backoffice/compliance'
+      path: '/compliance'
+      fullPath: '/backoffice/compliance'
+      preLoaderRoute: typeof BackofficeComplianceRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/banners': {
+      id: '/backoffice/banners'
+      path: '/banners'
+      fullPath: '/backoffice/banners'
+      preLoaderRoute: typeof BackofficeBannersRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/backoffice/accounts': {
+      id: '/backoffice/accounts'
+      path: '/accounts'
+      fullPath: '/backoffice/accounts'
+      preLoaderRoute: typeof BackofficeAccountsRouteImport
+      parentRoute: typeof BackofficeRoute
+    }
+    '/_authenticated/verification': {
+      id: '/_authenticated/verification'
       path: '/verification'
-      fullPath: '/admin/verification'
-      preLoaderRoute: typeof AuthenticatedAdminVerificationRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/admin/workers': {
-      id: '/_authenticated/admin/workers'
-      path: '/workers'
-      fullPath: '/admin/workers'
-      preLoaderRoute: typeof AuthenticatedAdminWorkersRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
-    }
-    '/_authenticated/broker/': {
-      id: '/_authenticated/broker/'
-      path: '/broker'
-      fullPath: '/broker/'
-      preLoaderRoute: typeof AuthenticatedBrokerIndexRouteImport
+      fullPath: '/verification'
+      preLoaderRoute: typeof AuthenticatedVerificationRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/broker/$workerId': {
-      id: '/_authenticated/broker/$workerId'
-      path: '/broker/$workerId'
-      fullPath: '/broker/$workerId'
-      preLoaderRoute: typeof AuthenticatedBrokerWorkerIdRouteImport
+    '/_authenticated/update-profile': {
+      id: '/_authenticated/update-profile'
+      path: '/update-profile'
+      fullPath: '/update-profile'
+      preLoaderRoute: typeof AuthenticatedUpdateProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/broker/accounts': {
-      id: '/_authenticated/broker/accounts'
-      path: '/broker/accounts'
-      fullPath: '/broker/accounts'
-      preLoaderRoute: typeof AuthenticatedBrokerAccountsRouteImport
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/broker/assign': {
-      id: '/_authenticated/broker/assign'
-      path: '/broker/assign'
-      fullPath: '/broker/assign'
-      preLoaderRoute: typeof AuthenticatedBrokerAssignRouteImport
+    '/_authenticated/post-job': {
+      id: '/_authenticated/post-job'
+      path: '/post-job'
+      fullPath: '/post-job'
+      preLoaderRoute: typeof AuthenticatedPostJobRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/broker/assignments': {
-      id: '/_authenticated/broker/assignments'
-      path: '/broker/assignments'
-      fullPath: '/broker/assignments'
-      preLoaderRoute: typeof AuthenticatedBrokerAssignmentsRouteImport
+    '/_authenticated/payment': {
+      id: '/_authenticated/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof AuthenticatedPaymentRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/broker/employers': {
-      id: '/_authenticated/broker/employers'
-      path: '/broker/employers'
-      fullPath: '/broker/employers'
-      preLoaderRoute: typeof AuthenticatedBrokerEmployersRouteImport
+    '/_authenticated/notifications': {
+      id: '/_authenticated/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/broker/new': {
-      id: '/_authenticated/broker/new'
-      path: '/broker/new'
-      fullPath: '/broker/new'
-      preLoaderRoute: typeof AuthenticatedBrokerNewRouteImport
+    '/_authenticated/my-team': {
+      id: '/_authenticated/my-team'
+      path: '/my-team'
+      fullPath: '/my-team'
+      preLoaderRoute: typeof AuthenticatedMyTeamRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/request/$id': {
-      id: '/_authenticated/request/$id'
-      path: '/request/$id'
-      fullPath: '/request/$id'
-      preLoaderRoute: typeof AuthenticatedRequestIdRouteImport
+    '/_authenticated/my-requests': {
+      id: '/_authenticated/my-requests'
+      path: '/my-requests'
+      fullPath: '/my-requests'
+      preLoaderRoute: typeof AuthenticatedMyRequestsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-jobs': {
+      id: '/_authenticated/my-jobs'
+      path: '/my-jobs'
+      fullPath: '/my-jobs'
+      preLoaderRoute: typeof AuthenticatedMyJobsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-employer': {
+      id: '/_authenticated/my-employer'
+      path: '/my-employer'
+      fullPath: '/my-employer'
+      preLoaderRoute: typeof AuthenticatedMyEmployerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-applications': {
+      id: '/_authenticated/my-applications'
+      path: '/my-applications'
+      fullPath: '/my-applications'
+      preLoaderRoute: typeof AuthenticatedMyApplicationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/messages': {
+      id: '/_authenticated/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof AuthenticatedMessagesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/bookings': {
+      id: '/_authenticated/bookings'
+      path: '/bookings'
+      fullPath: '/bookings'
+      preLoaderRoute: typeof AuthenticatedBookingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/backoffice/documents/': {
@@ -1568,12 +1379,201 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BackofficeDocumentsIndexRouteImport
       parentRoute: typeof BackofficeRoute
     }
+    '/_authenticated/broker/': {
+      id: '/_authenticated/broker/'
+      path: '/broker'
+      fullPath: '/broker/'
+      preLoaderRoute: typeof AuthenticatedBrokerIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/backoffice/documents/$id': {
       id: '/backoffice/documents/$id'
       path: '/documents/$id'
       fullPath: '/backoffice/documents/$id'
       preLoaderRoute: typeof BackofficeDocumentsIdRouteImport
       parentRoute: typeof BackofficeRoute
+    }
+    '/_authenticated/request/$id': {
+      id: '/_authenticated/request/$id'
+      path: '/request/$id'
+      fullPath: '/request/$id'
+      preLoaderRoute: typeof AuthenticatedRequestIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/broker/new': {
+      id: '/_authenticated/broker/new'
+      path: '/broker/new'
+      fullPath: '/broker/new'
+      preLoaderRoute: typeof AuthenticatedBrokerNewRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/broker/employers': {
+      id: '/_authenticated/broker/employers'
+      path: '/broker/employers'
+      fullPath: '/broker/employers'
+      preLoaderRoute: typeof AuthenticatedBrokerEmployersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/broker/assignments': {
+      id: '/_authenticated/broker/assignments'
+      path: '/broker/assignments'
+      fullPath: '/broker/assignments'
+      preLoaderRoute: typeof AuthenticatedBrokerAssignmentsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/broker/assign': {
+      id: '/_authenticated/broker/assign'
+      path: '/broker/assign'
+      fullPath: '/broker/assign'
+      preLoaderRoute: typeof AuthenticatedBrokerAssignRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/broker/accounts': {
+      id: '/_authenticated/broker/accounts'
+      path: '/broker/accounts'
+      fullPath: '/broker/accounts'
+      preLoaderRoute: typeof AuthenticatedBrokerAccountsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/broker/$workerId': {
+      id: '/_authenticated/broker/$workerId'
+      path: '/broker/$workerId'
+      fullPath: '/broker/$workerId'
+      preLoaderRoute: typeof AuthenticatedBrokerWorkerIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/workers': {
+      id: '/_authenticated/admin/workers'
+      path: '/workers'
+      fullPath: '/admin/workers'
+      preLoaderRoute: typeof AuthenticatedAdminWorkersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/verification': {
+      id: '/_authenticated/admin/verification'
+      path: '/verification'
+      fullPath: '/admin/verification'
+      preLoaderRoute: typeof AuthenticatedAdminVerificationRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/users': {
+      id: '/_authenticated/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthenticatedAdminUsersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/sub-admins': {
+      id: '/_authenticated/admin/sub-admins'
+      path: '/sub-admins'
+      fullPath: '/admin/sub-admins'
+      preLoaderRoute: typeof AuthenticatedAdminSubAdminsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/sectors': {
+      id: '/_authenticated/admin/sectors'
+      path: '/sectors'
+      fullPath: '/admin/sectors'
+      preLoaderRoute: typeof AuthenticatedAdminSectorsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/roster': {
+      id: '/_authenticated/admin/roster'
+      path: '/roster'
+      fullPath: '/admin/roster'
+      preLoaderRoute: typeof AuthenticatedAdminRosterRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/requests': {
+      id: '/_authenticated/admin/requests'
+      path: '/requests'
+      fullPath: '/admin/requests'
+      preLoaderRoute: typeof AuthenticatedAdminRequestsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/profile-changes': {
+      id: '/_authenticated/admin/profile-changes'
+      path: '/profile-changes'
+      fullPath: '/admin/profile-changes'
+      preLoaderRoute: typeof AuthenticatedAdminProfileChangesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/pricing': {
+      id: '/_authenticated/admin/pricing'
+      path: '/pricing'
+      fullPath: '/admin/pricing'
+      preLoaderRoute: typeof AuthenticatedAdminPricingRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/payments': {
+      id: '/_authenticated/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AuthenticatedAdminPaymentsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/messages': {
+      id: '/_authenticated/admin/messages'
+      path: '/messages'
+      fullPath: '/admin/messages'
+      preLoaderRoute: typeof AuthenticatedAdminMessagesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/jobs': {
+      id: '/_authenticated/admin/jobs'
+      path: '/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AuthenticatedAdminJobsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/documents': {
+      id: '/_authenticated/admin/documents'
+      path: '/documents'
+      fullPath: '/admin/documents'
+      preLoaderRoute: typeof AuthenticatedAdminDocumentsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/compliance': {
+      id: '/_authenticated/admin/compliance'
+      path: '/compliance'
+      fullPath: '/admin/compliance'
+      preLoaderRoute: typeof AuthenticatedAdminComplianceRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/bookings': {
+      id: '/_authenticated/admin/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/banners': {
+      id: '/_authenticated/admin/banners'
+      path: '/banners'
+      fullPath: '/admin/banners'
+      preLoaderRoute: typeof AuthenticatedAdminBannersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/assignments': {
+      id: '/_authenticated/admin/assignments'
+      path: '/assignments'
+      fullPath: '/admin/assignments'
+      preLoaderRoute: typeof AuthenticatedAdminAssignmentsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/accounts': {
+      id: '/_authenticated/admin/accounts'
+      path: '/accounts'
+      fullPath: '/admin/accounts'
+      preLoaderRoute: typeof AuthenticatedAdminAccountsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
     }
   }
 }
