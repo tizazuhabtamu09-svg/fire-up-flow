@@ -6,23 +6,23 @@ import { CONTACT, money } from "@/lib/app-config";
 import { useLanguage } from "@/lib/i18n";
 import { FileUpload } from "@/components/FileUpload";
 
-type Search = { purpose?: string; amount?: number; package?: string; job?: string };
+type Search = {purpose?: string;amount?: number;package?: string;job?: string;};
 
 export const Route = createFileRoute("/_authenticated/payment")({
   validateSearch: (s: Record<string, unknown>): Search => ({
     purpose: typeof s['purpose'] === "string" ? s['purpose'] : "recharge",
     amount: Number(s['amount']) > 0 ? Number(s['amount']) : 0,
     package: typeof s['package'] === "string" ? s['package'] : undefined,
-    job: typeof s['job'] === "string" ? s['job'] : undefined,
+    job: typeof s['job'] === "string" ? s['job'] : undefined
   }),
   head: () => ({
     meta: [
-      { title: "Payment — Agaze/አጋዝ" },
-      { name: "description", content: "Send your Telebirr payment and upload the receipt for admin approval." },
-      { name: "robots", content: "noindex" },
-    ],
+    { title: "Payment — Agaze/አጋዝ" },
+    { name: "description", content: "Send your Telebirr payment and upload the receipt for admin approval." },
+    { name: "robots", content: "noindex" }]
+
   }),
-  component: PaymentPage,
+  component: PaymentPage
 });
 
 const cls = "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary";
@@ -45,16 +45,16 @@ function PaymentPage() {
   useEffect(() => {
     if (!user) return;
     let active = true;
-    supabase
-      .from("profiles")
-      .select("wallet_balance, full_name")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data }) => {
-        if (!active || !data) return;
-        setBalance(Number(data.wallet_balance));
-        setPayerName((n) => n || (data.full_name ?? ""));
-      });
+    supabase.
+    from("profiles").
+    select("wallet_balance, full_name").
+    eq("id", user.id).
+    maybeSingle().
+    then(({ data }) => {
+      if (!active || !data) return;
+      setBalance(Number(data.wallet_balance));
+      setPayerName((n) => n || (data.full_name ?? ""));
+    });
     return () => {
       active = false;
     };
@@ -72,7 +72,7 @@ function PaymentPage() {
     setError(null);
     const { data: newBalance, error: rpcErr } = await supabase.rpc("spend_wallet", {
       _amount: due,
-      _reason: purpose ?? "Wallet payment",
+      _reason: purpose ?? "Wallet payment"
     });
     if (rpcErr) {
       setSaving(false);
@@ -80,32 +80,32 @@ function PaymentPage() {
     }
     setBalance(Number(newBalance));
 
-    const { data: payment, error: insErr } = await supabase
-      .from("payments")
-      .insert({
-        user_id: user.id,
-        amount: due,
-        payer_name: payerName.trim() || "Wallet",
-        purpose: purpose ?? "wallet",
-        package_id: packageId ?? null,
-        method: "wallet",
-        status: "approved",
-        reviewed_at: new Date().toISOString(),
-      })
-      .select("id")
-      .maybeSingle();
+    const { data: payment, error: insErr } = await supabase.
+    from("payments").
+    insert({
+      user_id: user.id,
+      amount: due,
+      payer_name: payerName.trim() || "Wallet",
+      purpose: purpose ?? "wallet",
+      package_id: packageId ?? null,
+      method: "wallet",
+      status: "approved",
+      reviewed_at: new Date().toISOString()
+    }).
+    select("id").
+    maybeSingle();
 
     if (!insErr && jobId) {
-      await supabase
-        .from("job_posts")
-        .update({ status: "pending_approval", payment_id: payment?.id ?? null })
-        .eq("id", jobId)
-        .eq("status", "awaiting_payment");
+      await supabase.
+      from("job_posts").
+      update({ status: "pending_approval", payment_id: payment?.id ?? null }).
+      eq("id", jobId).
+      eq("status", "awaiting_payment");
     }
 
     setSaving(false);
-    if (insErr) setError(insErr.message);
-    else setDone(true);
+    if (insErr) setError(insErr.message);else
+    setDone(true);
   }
 
   async function submit(e: React.FormEvent) {
@@ -130,32 +130,32 @@ function PaymentPage() {
       receiptPath = path;
     }
 
-    const { data: payment, error: insErr } = await supabase
-      .from("payments")
-      .insert({
-        user_id: user.id,
-        amount: value,
-        payer_name: payerName.trim(),
-        receipt_path: receiptPath,
-        purpose: purpose ?? "recharge",
-        package_id: packageId ?? null,
-        method: "bank",
-      })
-      .select("id")
-      .maybeSingle();
+    const { data: payment, error: insErr } = await supabase.
+    from("payments").
+    insert({
+      user_id: user.id,
+      amount: value,
+      payer_name: payerName.trim(),
+      receipt_path: receiptPath,
+      purpose: purpose ?? "recharge",
+      package_id: packageId ?? null,
+      method: "bank"
+    }).
+    select("id").
+    maybeSingle();
 
     // A paid job post moves straight into the staff approval queue.
     if (!insErr && jobId) {
-      await supabase
-        .from("job_posts")
-        .update({ status: "pending_approval", payment_id: payment?.id ?? null })
-        .eq("id", jobId)
-        .eq("status", "awaiting_payment");
+      await supabase.
+      from("job_posts").
+      update({ status: "pending_approval", payment_id: payment?.id ?? null }).
+      eq("id", jobId).
+      eq("status", "awaiting_payment");
     }
 
     setSaving(false);
-    if (insErr) setError(insErr.message);
-    else setDone(true);
+    if (insErr) setError(insErr.message);else
+    setDone(true);
   }
 
   if (done) {
@@ -172,8 +172,8 @@ function PaymentPage() {
             {t("pay.backToDashboard")}
           </button>
         </div>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -181,44 +181,44 @@ function PaymentPage() {
       <h1 className="text-3xl font-bold">{t("pay.title")}</h1>
       <p className="font-amharic text-muted-foreground">ክፍያ</p>
 
-      {walletEligible && (
-        <div className="card-soft mt-6 p-6">
-          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pay from wallet</p>
-          <p className="mt-2 text-sm">
-            Amount due <span className="font-bold">{money(due)}</span> · Balance{" "}
+      {walletEligible &&
+      <div className="card-soft mt-6 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("ui.pay.from.wallet")}</p>
+          <p className="mt-2 text-sm">{t("ui.amount.due")}
+          <span className="font-bold">{money(due)}</span>{t("ui.balance")}{" "}
             <span className="font-bold">{balance === null ? "…" : money(balance)}</span>
           </p>
           <button
-            type="button"
-            onClick={payFromWallet}
-            disabled={saving || !hasFunds}
-            className="btn-brand mt-4 w-full disabled:opacity-60"
-          >
+          type="button"
+          onClick={payFromWallet}
+          disabled={saving || !hasFunds}
+          className="btn-brand mt-4 w-full disabled:opacity-60">
+          
             {saving ? "Processing…" : `Pay ${money(due)} from wallet`}
           </button>
-          {!hasFunds && balance !== null && (
-            <p className="mt-2 text-xs text-destructive">
-              Not enough balance. Top up your wallet or pay by bank / Telebirr below.
-            </p>
-          )}
+          {!hasFunds && balance !== null &&
+        <p className="mt-2 text-xs text-destructive">{t("ui.not.enough.balance.top.up.your.wallet.or.pay.by.bank.t")}
+
+        </p>
+        }
           <button
-            type="button"
-            onClick={() => setShowBank((v) => !v)}
-            className="mt-3 w-full text-center text-xs font-semibold text-primary hover:underline"
-          >
+          type="button"
+          onClick={() => setShowBank((v) => !v)}
+          className="mt-3 w-full text-center text-xs font-semibold text-primary hover:underline">
+          
             {showBank ? "Hide bank / Telebirr payment" : "Pay by bank / Telebirr instead (optional)"}
           </button>
           {error && !showBank && <p className="mt-3 text-sm text-destructive">{error}</p>}
         </div>
-      )}
+      }
 
-      {(!walletEligible || showBank) && (
+      {(!walletEligible || showBank) &&
       <>
       <div className="card-soft mt-6 p-6" style={{ background: "var(--brand-soft)" }}>
         <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("pay.sendTo")}</p>
         <p className="mt-2 text-lg font-bold">{CONTACT.accountName}</p>
-        <p className="text-sm">
-          Telebirr: <span className="font-semibold">{CONTACT.telebirr}</span>
+        <p className="text-sm">{t("ui.telebirr")}
+            <span className="font-semibold">{CONTACT.telebirr}</span>
         </p>
         <p className="mt-2 text-xs text-muted-foreground">{t("pay.afterSendingNote")}</p>
       </div>
@@ -244,7 +244,7 @@ function PaymentPage() {
         </button>
       </form>
       </>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }

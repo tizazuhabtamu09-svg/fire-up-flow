@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useCallback, useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import { roleLabels, type AppRole } from "@/lib/use-session";
@@ -25,11 +25,11 @@ const FILTERS = ["all", "employee", "employer", "broker", "kyc", "admin"] as con
  */
 export function UserManagement({
   canAdjustWallet = false,
-  onChanged,
-}: {
-  canAdjustWallet?: boolean;
-  onChanged?: () => void;
-}) {
+  onChanged
+
+
+
+}: {canAdjustWallet?: boolean;onChanged?: () => void;}) {const { t } = useLanguage();
   const removeAccount = useServerFn(deleteUserAccount);
   const resetPassword = useServerFn(setUserPassword);
 
@@ -42,26 +42,26 @@ export function UserManagement({
   const [status, setStatus] = useState<string | null>(null);
 
   const load = useCallback(() => {
-    supabase
-      .from("profiles")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .then(({ data }) => setRows(data ?? []));
+    supabase.
+    from("profiles").
+    select("*").
+    order("created_at", { ascending: false }).
+    then(({ data }) => setRows(data ?? []));
   }, []);
   useEffect(load, [load]);
 
   const shown = rows.filter(
     (r) =>
-      (filter === "all" || r.role === filter) &&
-      (!q ||
-        `${r.full_name ?? ""} ${r.phone ?? ""} ${r.city ?? ""}`.toLowerCase().includes(q.toLowerCase())),
+    (filter === "all" || r.role === filter) && (
+    !q ||
+    `${r.full_name ?? ""} ${r.phone ?? ""} ${r.city ?? ""}`.toLowerCase().includes(q.toLowerCase()))
   );
 
   async function save(p: Profile, patch: Partial<Profile>) {
     setError(null);
     const { error: err } = await supabase.from("profiles").update(patch).eq("id", p.id);
     if (err) return setError(err.message);
-    setRows((r) => r.map((x) => (x.id === p.id ? { ...x, ...patch } : x)));
+    setRows((r) => r.map((x) => x.id === p.id ? { ...x, ...patch } : x));
     setStatus("Saved.");
     onChanged?.();
   }
@@ -99,23 +99,23 @@ export function UserManagement({
   return (
     <div>
       <div className="flex flex-wrap items-center gap-2">
-        {FILTERS.map((r) => (
-          <button
-            key={r}
-            onClick={() => setFilter(r)}
-            className={`rounded-full border px-3 py-1.5 text-xs font-semibold capitalize ${
-              filter === r ? "border-primary bg-secondary" : "border-border text-muted-foreground"
-            }`}
-          >
+        {FILTERS.map((r) =>
+        <button
+          key={r}
+          onClick={() => setFilter(r)}
+          className={`rounded-full border px-3 py-1.5 text-xs font-semibold capitalize ${
+          filter === r ? "border-primary bg-secondary" : "border-border text-muted-foreground"}`
+          }>
+          
             {r === "all" ? "All" : roleLabels[r as AppRole].en}
           </button>
-        ))}
+        )}
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Search name, phone or city"
-          className={`${adminInput} ml-auto max-w-xs`}
-        />
+          placeholder={t("ui.search.name.phone.or.city")}
+          className={`${adminInput} ml-auto max-w-xs`} />
+        
       </div>
 
       {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
@@ -125,17 +125,17 @@ export function UserManagement({
         <table className="w-full min-w-[760px] text-left text-sm">
           <thead className="bg-secondary/60 text-xs uppercase tracking-wide text-muted-foreground">
             <tr>
-              <th className="px-4 py-3 font-semibold">Name</th>
-              <th className="px-4 py-3 font-semibold">Role</th>
-              <th className="px-4 py-3 font-semibold">Contact</th>
-              <th className="px-4 py-3 font-semibold">Wallet</th>
-              <th className="px-4 py-3 font-semibold">Status</th>
-              <th className="px-4 py-3 text-right font-semibold">Actions</th>
+              <th className="px-4 py-3 font-semibold">{t("ui.name")}</th>
+              <th className="px-4 py-3 font-semibold">{t("ui.role")}</th>
+              <th className="px-4 py-3 font-semibold">{t("ui.contact")}</th>
+              <th className="px-4 py-3 font-semibold">{t("ui.wallet")}</th>
+              <th className="px-4 py-3 font-semibold">{t("ui.status")}</th>
+              <th className="px-4 py-3 text-right font-semibold">{t("ui.actions")}</th>
             </tr>
           </thead>
           <tbody>
-            {shown.map((p) => (
-              <tr key={p.id} className="border-t border-border align-top">
+            {shown.map((p) =>
+            <tr key={p.id} className="border-t border-border align-top">
                 <td className="px-4 py-3 font-semibold">
                   {p.full_name || "Unnamed user"}
                   <div className="mt-1">
@@ -154,82 +154,82 @@ export function UserManagement({
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex flex-wrap justify-end gap-2">
-                    {p.role === "employee" && (
-                      <button onClick={() => save(p, { available: !p.available })} className="btn-outline-brand text-xs">
+                    {p.role === "employee" &&
+                  <button onClick={() => save(p, { available: !p.available })} className="btn-outline-brand text-xs">
                         {p.available ? "Available" : "Not available"}
                       </button>
-                    )}
+                  }
                     <button
-                      onClick={() => setExpanded(expanded === p.id ? null : p.id)}
-                      className="btn-outline-brand text-xs"
-                    >
+                    onClick={() => setExpanded(expanded === p.id ? null : p.id)}
+                    className="btn-outline-brand text-xs">
+                    
                       {expanded === p.id ? "Close" : "Edit"}
                     </button>
                     <button
-                      disabled={busy === p.id}
-                      onClick={() => remove(p)}
-                      className="rounded-full px-3 py-1.5 text-xs font-semibold text-destructive hover:underline disabled:opacity-50"
-                    >
+                    disabled={busy === p.id}
+                    onClick={() => remove(p)}
+                    className="rounded-full px-3 py-1.5 text-xs font-semibold text-destructive hover:underline disabled:opacity-50">
+                    
                       {busy === p.id ? "Working…" : "Delete"}
                     </button>
                   </div>
                 </td>
               </tr>
-            ))}
-            {shown.length === 0 && (
-              <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
-                  No users found.
-                </td>
-              </tr>
             )}
+            {shown.length === 0 &&
+            <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">{t("ui.no.users.found")}
+
+              </td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
 
-      {expanded && (
-        <div className="card-soft mt-6 p-5">
+      {expanded &&
+      <div className="card-soft mt-6 p-5">
           {(() => {
-            const p = rows.find((r) => r.id === expanded);
-            if (!p) return null;
-            return (
-              <>
+          const p = rows.find((r) => r.id === expanded);
+          if (!p) return null;
+          return (
+            <>
                 <UserEditor profile={p} onSave={save} onPassword={(pw) => changePassword(p, pw)} />
-                {canAdjustWallet && (
-                  <WalletAdjuster
-                    userId={p.id}
-                    balance={Number(p.wallet_balance)}
-                    onAdjusted={(next) =>
-                      setRows((r) => r.map((x) => (x.id === p.id ? { ...x, wallet_balance: next } : x)))
-                    }
-                  />
-                )}
+                {canAdjustWallet &&
+              <WalletAdjuster
+                userId={p.id}
+                balance={Number(p.wallet_balance)}
+                onAdjusted={(next) =>
+                setRows((r) => r.map((x) => x.id === p.id ? { ...x, wallet_balance: next } : x))
+                } />
+
+              }
                 <UserRegistrationDetails userId={p.id} phone={p.phone} />
                 {p.role === "broker" && <BrokerEmployees brokerId={p.id} />}
-              </>
-            );
-          })()}
+              </>);
+
+        })()}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }
 
 function UserEditor({
   profile,
   onSave,
-  onPassword,
-}: {
-  profile: Profile;
-  onSave: (p: Profile, patch: Partial<Profile>) => void;
-  onPassword: (password: string) => void;
-}) {
+  onPassword
+
+
+
+
+}: {profile: Profile;onSave: (p: Profile, patch: Partial<Profile>) => void;onPassword: (password: string) => void;}) {const { t } = useLanguage();
   const [form, setForm] = useState({
     full_name: profile.full_name ?? "",
     phone: profile.phone ?? "",
     city: profile.city ?? "",
     role: profile.role,
-    verification_status: profile.verification_status,
+    verification_status: profile.verification_status
   });
   const [password, setPassword] = useState("");
 
@@ -240,58 +240,58 @@ function UserEditor({
           className={adminInput}
           value={form.full_name}
           onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-          placeholder="Full name"
-        />
+          placeholder={t("ui.full.name")} />
+        
         <input
           className={adminInput}
           value={form.phone}
           onChange={(e) => setForm({ ...form, phone: e.target.value })}
-          placeholder="Phone"
-        />
+          placeholder={t("ui.phone")} />
+        
         <input
           className={adminInput}
           value={form.city}
           onChange={(e) => setForm({ ...form, city: e.target.value })}
-          placeholder="City"
-        />
+          placeholder={t("ui.city")} />
+        
         <select
           className={adminInput}
           value={form.role}
-          onChange={(e) => setForm({ ...form, role: e.target.value as AppRole })}
-        >
-          {(["employee", "employer", "broker", "kyc", "admin"] as const).map((r) => (
-            <option key={r} value={r}>
+          onChange={(e) => setForm({ ...form, role: e.target.value as AppRole })}>
+          
+          {(["employee", "employer", "broker", "kyc", "admin"] as const).map((r) =>
+          <option key={r} value={r}>
               {roleLabels[r].en}
             </option>
-          ))}
+          )}
         </select>
         <select
           className={adminInput}
           value={form.verification_status}
           onChange={(e) =>
-            setForm({ ...form, verification_status: e.target.value as Profile["verification_status"] })
-          }
-        >
-          {(["pending", "approved", "declined"] as const).map((s) => (
-            <option key={s} value={s}>
+          setForm({ ...form, verification_status: e.target.value as Profile["verification_status"] })
+          }>
+          
+          {(["pending", "approved", "declined"] as const).map((s) =>
+          <option key={s} value={s}>
               {s === "approved" ? "Verified" : s === "declined" ? "Declined" : "Pending"}
             </option>
-          ))}
+          )}
         </select>
         <button
           onClick={() =>
-            onSave(profile, {
-              full_name: form.full_name,
-              phone: form.phone,
-              city: form.city,
-              role: form.role,
-              verification_status: form.verification_status,
-              verified_at: form.verification_status === "approved" ? new Date().toISOString() : null,
-            })
+          onSave(profile, {
+            full_name: form.full_name,
+            phone: form.phone,
+            city: form.city,
+            role: form.role,
+            verification_status: form.verification_status,
+            verified_at: form.verification_status === "approved" ? new Date().toISOString() : null
+          })
           }
-          className="btn-brand text-sm"
-        >
-          Save user
+          className="btn-brand text-sm">{t("ui.save.user")}
+
+
         </button>
       </div>
 
@@ -300,24 +300,24 @@ function UserEditor({
           className={`${adminInput} max-w-xs`}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Set a new password (min 8 characters)"
-        />
+          placeholder={t("ui.set.a.new.password.min.8.characters")} />
+        
         <button
           onClick={() => {
             onPassword(password);
             setPassword("");
           }}
           disabled={password.length < 8}
-          className="btn-outline-brand text-xs disabled:opacity-50"
-        >
-          Reset password
+          className="btn-outline-brand text-xs disabled:opacity-50">{t("ui.reset.password")}
+
+
         </button>
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
-function BrokerEmployees({ brokerId }: { brokerId: string }) {
+function BrokerEmployees({ brokerId }: {brokerId: string;}) {const { t } = useLanguage();
   const [rows, setRows] = useState<WorkerRow[]>([]);
 
   useEffect(() => {
@@ -326,7 +326,7 @@ function BrokerEmployees({ brokerId }: { brokerId: string }) {
 
   async function toggle(w: WorkerRow) {
     const { error } = await supabase.from("workers").update({ available: !w.available }).eq("id", w.id);
-    if (!error) setRows((r) => r.map((x) => (x.id === w.id ? { ...x, available: !w.available } : x)));
+    if (!error) setRows((r) => r.map((x) => x.id === w.id ? { ...x, available: !w.available } : x));
   }
   async function remove(id: string) {
     const { error } = await supabase.from("workers").delete().eq("id", id);
@@ -335,15 +335,15 @@ function BrokerEmployees({ brokerId }: { brokerId: string }) {
 
   return (
     <div className="mt-5 rounded-xl bg-secondary/50 p-4">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        Employees under this broker
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{t("ui.employees.under.this.broker")}
+
       </p>
-      {rows.length === 0 ? (
-        <p className="mt-2 text-sm text-muted-foreground">No employees registered.</p>
-      ) : (
-        <div className="mt-2 space-y-2">
-          {rows.map((w) => (
-            <div key={w.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-card p-3 text-sm">
+      {rows.length === 0 ?
+      <p className="mt-2 text-sm text-muted-foreground">{t("ui.no.employees.registered")}</p> :
+
+      <div className="mt-2 space-y-2">
+          {rows.map((w) =>
+        <div key={w.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-card p-3 text-sm">
               <span>
                 <strong>{w.full_name}</strong> · {sectorLabel(w.sector)}
                 {w.phone ? ` · ${w.phone}` : ""}
@@ -353,14 +353,14 @@ function BrokerEmployees({ brokerId }: { brokerId: string }) {
                 <button onClick={() => toggle(w)} className="btn-outline-brand text-xs">
                   {w.available ? "Available" : "Not available"}
                 </button>
-                <button onClick={() => remove(w.id)} className="text-xs font-semibold text-destructive hover:underline">
-                  Delete
-                </button>
+                <button onClick={() => remove(w.id)} className="text-xs font-semibold text-destructive hover:underline">{t("ui.delete")}
+
+            </button>
               </span>
             </div>
-          ))}
+        )}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }

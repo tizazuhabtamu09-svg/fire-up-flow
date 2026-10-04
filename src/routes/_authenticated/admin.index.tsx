@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useLanguage } from "@/lib/i18n";import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { money, sectorLabel, SECTORS } from "@/lib/app-config";
@@ -12,10 +12,10 @@ type Booking = Database["public"]["Tables"]["bookings"]["Row"];
 type Payment = Database["public"]["Tables"]["payments"]["Row"];
 
 export const Route = createFileRoute("/_authenticated/admin/")({
-  component: AdminOverview,
+  component: AdminOverview
 });
 
-function AdminOverview() {
+function AdminOverview() {const { t } = useLanguage();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [workers, setWorkers] = useState<WorkerRow[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -33,16 +33,16 @@ function AdminOverview() {
   const totalTopUps = approved.reduce((s, p) => s + Number(p.amount), 0);
   const walletTotal = profiles.reduce((s, p) => s + Number(p.wallet_balance), 0);
   const awaitingVerification =
-    profiles.filter((p) => p.verification_status === "pending").length +
-    workers.filter((w) => w.verification_status === "pending").length;
+  profiles.filter((p) => p.verification_status === "pending").length +
+  workers.filter((w) => w.verification_status === "pending").length;
 
   const sectorCounts = SECTORS.map((s) => ({
     ...s,
-    rows: workers.filter((w) => w.sector === s.value),
+    rows: workers.filter((w) => w.sector === s.value)
   })).filter((s) => s.rows.length > 0);
 
   return (
-    <AdminSection title="Overview" description="Live numbers across accounts, verification, workers and money.">
+    <AdminSection title={t("ui.overview")} description="Live numbers across accounts, verification, workers and money.">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Metric to="/admin/users" label="Employees" value={byRole("employee")} />
         <Metric to="/admin/users" label="Employers" value={byRole("employer")} />
@@ -54,20 +54,20 @@ function AdminOverview() {
         <Metric to="/admin/payments" label="Approved top-ups" value={money(totalTopUps)} />
       </div>
 
-      <p className="mt-4 text-sm text-muted-foreground">
-        Total wallet balance across all users: {money(walletTotal)}
+      <p className="mt-4 text-sm text-muted-foreground">{t("ui.total.wallet.balance.across.all.users")}
+        {money(walletTotal)}
       </p>
 
-      <h2 className="mt-10 text-xl font-bold">Employees by sector</h2>
+      <h2 className="mt-10 text-xl font-bold">{t("ui.employees.by.sector")}</h2>
       <div className="mt-4 space-y-3">
-        {sectorCounts.map((s) => (
-          <details key={s.value} className="card-soft p-5">
+        {sectorCounts.map((s) =>
+        <details key={s.value} className="card-soft p-5">
             <summary className="cursor-pointer font-semibold">
               {s.label} <span className="font-amharic text-muted-foreground">{s.am}</span> · {s.rows.length}
             </summary>
             <div className="mt-3 space-y-2">
-              {s.rows.map((w) => (
-                <div key={w.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-secondary/50 p-3 text-sm">
+              {s.rows.map((w) =>
+            <div key={w.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-secondary/50 p-3 text-sm">
                   <span>
                     <strong>{w.full_name}</strong>
                     {w.phone ? ` · ${w.phone}` : ""}
@@ -77,12 +77,12 @@ function AdminOverview() {
                     {sectorLabel(w.sector)} · {w.verification_status}
                   </span>
                 </div>
-              ))}
+            )}
             </div>
           </details>
-        ))}
-        {sectorCounts.length === 0 && <p className="text-muted-foreground">No workers registered yet.</p>}
+        )}
+        {sectorCounts.length === 0 && <p className="text-muted-foreground">{t("ui.no.workers.registered.yet")}</p>}
       </div>
-    </AdminSection>
-  );
+    </AdminSection>);
+
 }

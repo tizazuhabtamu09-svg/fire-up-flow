@@ -14,12 +14,12 @@ import { useLanguage } from "@/lib/i18n";
 export const Route = createFileRoute("/_authenticated/profile")({
   head: () => ({
     meta: [
-      { title: "My profile — Agaze/አጋዝ" },
-      { name: "description", content: "Update your Agaze account details: name, phone, city and role." },
-      { name: "robots", content: "noindex" },
-    ],
+    { title: "My profile — Agaze/አጋዝ" },
+    { name: "description", content: "Update your Agaze account details: name, phone, city and role." },
+    { name: "robots", content: "noindex" }]
+
   }),
-  component: ProfilePage,
+  component: ProfilePage
 });
 
 const cls = "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary";
@@ -65,7 +65,7 @@ function ProfilePage() {
       setForm({
         full_name: profile.full_name ?? "",
         phone: profile.phone ?? "",
-        city: profile.city ?? "",
+        city: profile.city ?? ""
       });
     }
   }, [profile]);
@@ -77,8 +77,8 @@ function ProfilePage() {
     setError(null);
     setSaved(false);
     const { error } = await supabase.from("profiles").upsert({ id: user.id, ...form });
-    if (error) setError(error.message);
-    else setSaved(true);
+    if (error) setError(error.message);else
+    setSaved(true);
     setSaving(false);
   }
 
@@ -109,8 +109,8 @@ function ProfilePage() {
 
       {profile?.role === "employer" && <EmployerJobStatusCard userId={profile.id} />}
 
-      {profile?.role === "employee" && (
-        <div className="card-soft mt-6 flex flex-wrap items-center justify-between gap-3 p-5">
+      {profile?.role === "employee" &&
+      <div className="card-soft mt-6 flex flex-wrap items-center justify-between gap-3 p-5">
           <div>
             <p className="font-semibold">{t("profile.availability")}</p>
             <p className="text-sm text-muted-foreground">{t("profile.availabilityNote")}</p>
@@ -119,15 +119,15 @@ function ProfilePage() {
             {profile.available ? t("profile.available") : t("profile.notAvailable")}
           </button>
         </div>
-      )}
+      }
 
       <div className="card-soft mt-6 flex flex-wrap items-center gap-5 p-5">
         <div className="h-20 w-20 overflow-hidden rounded-full bg-secondary">
-          {avatar ? (
-            <img src={avatar} alt={t("profile.profileAlt")} className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-2xl">👤</div>
-          )}
+          {avatar ?
+          <img src={avatar} alt={t("profile.profileAlt")} className="h-full w-full object-cover" /> :
+
+          <div className="flex h-full w-full items-center justify-center text-2xl">👤</div>
+          }
         </div>
         <div>
           <p className="font-semibold">{t("profile.profilePicture")}</p>
@@ -174,27 +174,27 @@ function ProfilePage() {
       </div>
 
       <button onClick={signOut} className="btn-outline-brand mt-6 w-full text-sm">{t("profile.signOut")}</button>
-    </div>
-  );
+    </div>);
+
 }
 
 /**
  * Employer-only card: counts of the employer's job posts grouped by review
  * status, with a link to the full "My job posts" page.
  */
-function EmployerJobStatusCard({ userId }: { userId: string }) {
+function EmployerJobStatusCard({ userId }: {userId: string;}) {const { t } = useLanguage();
   const [jobs, setJobs] = useState<JobPost[] | null>(null);
 
   useEffect(() => {
     let active = true;
-    supabase
-      .from("job_posts")
-      .select("*")
-      .eq("employer_id", userId)
-      .order("created_at", { ascending: false })
-      .then(({ data }) => {
-        if (active) setJobs(data ?? []);
-      });
+    supabase.
+    from("job_posts").
+    select("*").
+    eq("employer_id", userId).
+    order("created_at", { ascending: false }).
+    then(({ data }) => {
+      if (active) setJobs(data ?? []);
+    });
     return () => {
       active = false;
     };
@@ -211,34 +211,34 @@ function EmployerJobStatusCard({ userId }: { userId: string }) {
         <div className="flex items-center gap-2">
           <Briefcase className="h-5 w-5" style={{ color: "var(--brand-dark)" }} />
           <div>
-            <p className="font-semibold">My job posts</p>
+            <p className="font-semibold">{t("ui.my.job.posts")}</p>
             <p className="font-amharic text-xs text-muted-foreground">የእኔ የስራ ማስታወቂዎች ሁኔታ</p>
           </div>
         </div>
-        <Link to="/my-jobs" className="btn-outline-brand text-xs">View all</Link>
+        <Link to="/my-jobs" className="btn-outline-brand text-xs">{t("ui.view.all")}</Link>
       </div>
 
-      {jobs === null ? (
-        <p className="mt-4 text-sm text-muted-foreground">Loading…</p>
-      ) : jobs.length === 0 ? (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">You haven't posted a job yet.</p>
-          <Link to="/post-job" className="btn-brand text-xs">Post a Job</Link>
-        </div>
-      ) : (
-        <div className="mt-4 flex flex-wrap gap-2">
+      {jobs === null ?
+      <p className="mt-4 text-sm text-muted-foreground">{t("ui.loading")}</p> :
+      jobs.length === 0 ?
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-muted-foreground">{t("ui.you.haven.t.posted.a.job.yet")}</p>
+          <Link to="/post-job" className="btn-brand text-xs">{t("ui.post.a.job")}</Link>
+        </div> :
+
+      <div className="mt-4 flex flex-wrap gap-2">
           {Object.entries(JOB_STATUS_LABEL).map(([status, label]) =>
-            counts[status] ? (
-              <span
-                key={status}
-                className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-muted-foreground"
-              >
+        counts[status] ?
+        <span
+          key={status}
+          className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-muted-foreground">
+          
                 {label}: <span className="text-foreground">{counts[status]}</span>
-              </span>
-            ) : null,
-          )}
+              </span> :
+        null
+        )}
         </div>
-      )}
-    </div>
-  );
+      }
+    </div>);
+
 }

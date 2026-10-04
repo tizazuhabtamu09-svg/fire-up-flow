@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { useLanguage } from "@/lib/i18n";import { createFileRoute } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession, useProfile } from "@/lib/use-session";
@@ -9,42 +9,42 @@ import {
   loadChangeRequestsFor,
   changeStatusLabel,
   fieldLabel,
-  type ChangeRequest,
-} from "@/lib/change-requests";
+  type ChangeRequest } from
+"@/lib/change-requests";
 
 export const Route = createFileRoute("/_authenticated/update-profile")({
   head: () => ({
     meta: [
-      { title: "Update profile — Agaze/አጋዝ" },
-      {
-        name: "description",
-        content: "Submit corrections to your employee registration and guarantor details for document review.",
-      },
-      { name: "robots", content: "noindex" },
-    ],
+    { title: "Update profile — Agaze/አጋዝ" },
+    {
+      name: "description",
+      content: "Submit corrections to your employee registration and guarantor details for document review."
+    },
+    { name: "robots", content: "noindex" }]
+
   }),
-  component: UpdateProfilePage,
+  component: UpdateProfilePage
 });
 
 const input = "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 text-sm outline-none focus:border-primary";
 
 const GUARANTOR_FIELDS = [
-  { key: "guarantor_name", label: "Guarantor name" },
-  { key: "guarantor_phone", label: "Guarantor phone" },
-  { key: "guarantor_id_number", label: "Guarantor ID number" },
-  { key: "guarantor_relationship", label: "Relationship to you" },
-] as const;
+{ key: "guarantor_name", label: "Guarantor name" },
+{ key: "guarantor_phone", label: "Guarantor phone" },
+{ key: "guarantor_id_number", label: "Guarantor ID number" },
+{ key: "guarantor_relationship", label: "Relationship to you" }] as
+const;
 
 const GUARANTOR_DOCS = [
-  { key: "guarantor_photo", label: "Guarantor photo", bucket: "avatars" },
-  { key: "guarantor_id_photo", label: "Guarantor ID document", bucket: "id-documents" },
-] as const;
+{ key: "guarantor_photo", label: "Guarantor photo", bucket: "avatars" },
+{ key: "guarantor_id_photo", label: "Guarantor ID document", bucket: "id-documents" }] as
+const;
 
 const PERSONAL_FIELDS = EDITABLE_FIELDS.workers.filter((f) => !f.key.startsWith("guarantor_"));
 
-type WorkerRow = Record<string, unknown> & { id: string; full_name: string };
+type WorkerRow = Record<string, unknown> & {id: string;full_name: string;};
 
-function UpdateProfilePage() {
+function UpdateProfilePage() {const { t } = useLanguage();
   const { user } = useSession();
   const { profile } = useProfile(user?.id);
   const [tab, setTab] = useState<"personal" | "guarantor">("personal");
@@ -62,7 +62,7 @@ function UpdateProfilePage() {
     (async () => {
       const { data } = await supabase.from("workers").select("*").eq("user_id", user.id).maybeSingle();
       if (!active) return;
-      setWorker((data as WorkerRow | null) ?? null);
+      setWorker(data as WorkerRow | null ?? null);
       setLoading(false);
       if (data?.id) refresh(data.id);
     })();
@@ -71,66 +71,66 @@ function UpdateProfilePage() {
     };
   }, [user?.id, refresh]);
 
-  if (loading) return <p className="text-muted-foreground">Loading your registration…</p>;
+  if (loading) return <p className="text-muted-foreground">{t("ui.loading.your.registration")}</p>;
 
   if (!worker) {
     return (
       <div className="card-soft p-6">
-        <h1 className="text-2xl font-bold">Update profile</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          We could not find an employee registration linked to your account. Please contact the back office if you
-          believe this is a mistake.
+        <h1 className="text-2xl font-bold">{t("ui.update.profile")}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t("ui.we.could.not.find.an.employee.registration.linked.to.y")}
+
+
         </p>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Update profile</h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Changes are not applied straight away. Everything you submit here goes to the back-office document review
-          queue and is only published once approved.
+        <h1 className="text-2xl font-bold">{t("ui.update.profile")}</h1>
+        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{t("ui.changes.are.not.applied.straight.away.everything.you.s")}
+
+
         </p>
       </div>
 
       <div className="flex gap-2 rounded-full bg-secondary p-1 text-sm font-semibold">
         {[
-          { key: "personal", label: "Personal Information" },
-          { key: "guarantor", label: "Update Guarantor" },
-        ].map((x) => (
-          <button
-            key={x.key}
-            onClick={() => setTab(x.key as "personal" | "guarantor")}
-            className={`flex-1 rounded-full px-4 py-2 transition ${
-              tab === x.key ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
-            }`}
-          >
+        { key: "personal", label: "Personal Information" },
+        { key: "guarantor", label: "Update Guarantor" }].
+        map((x) =>
+        <button
+          key={x.key}
+          onClick={() => setTab(x.key as "personal" | "guarantor")}
+          className={`flex-1 rounded-full px-4 py-2 transition ${
+          tab === x.key ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"}`
+          }>
+          
             {x.label}
           </button>
-        ))}
+        )}
       </div>
 
-      {tab === "personal" ? (
-        <PersonalTab
-          worker={worker}
-          userId={user!.id}
-          requesterName={profile?.full_name ?? null}
-          onSubmitted={() => refresh(worker.id)}
-        />
-      ) : (
-        <GuarantorTab
-          worker={worker}
-          userId={user!.id}
-          requesterName={profile?.full_name ?? null}
-          onSubmitted={() => refresh(worker.id)}
-        />
-      )}
+      {tab === "personal" ?
+      <PersonalTab
+        worker={worker}
+        userId={user!.id}
+        requesterName={profile?.full_name ?? null}
+        onSubmitted={() => refresh(worker.id)} /> :
+
+
+      <GuarantorTab
+        worker={worker}
+        userId={user!.id}
+        requesterName={profile?.full_name ?? null}
+        onSubmitted={() => refresh(worker.id)} />
+
+      }
 
       <History rows={requests} />
-    </div>
-  );
+    </div>);
+
 }
 
 function useDraft(worker: WorkerRow, keys: string[]) {
@@ -148,13 +148,13 @@ function PersonalTab({
   worker,
   userId,
   requesterName,
-  onSubmitted,
-}: {
-  worker: WorkerRow;
-  userId: string;
-  requesterName: string | null;
-  onSubmitted: () => void;
-}) {
+  onSubmitted
+
+
+
+
+
+}: {worker: WorkerRow;userId: string;requesterName: string | null;onSubmitted: () => void;}) {const { t } = useLanguage();
   const keys = PERSONAL_FIELDS.map((f) => f.key);
   const [draft, setDraft] = useDraft(worker, keys);
   const [note, setNote] = useState("");
@@ -171,7 +171,7 @@ function PersonalTab({
       const current = worker[field.key] == null ? "" : String(worker[field.key]);
       if (value.trim() === current.trim()) continue;
       changes[field.key] =
-        value.trim() === "" ? null : field.type === "number" ? Number(value) : value.trim();
+      value.trim() === "" ? null : field.type === "number" ? Number(value) : value.trim();
     }
     if (Object.keys(changes).length === 0) return setError("Nothing changed yet.");
 
@@ -184,7 +184,7 @@ function PersonalTab({
         requestedBy: userId,
         requesterName,
         changes,
-        note: note.trim() || null,
+        note: note.trim() || null
       });
       setDone(true);
       setNote("");
@@ -198,44 +198,44 @@ function PersonalTab({
   return (
     <form onSubmit={submit} className="card-soft space-y-4 p-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        {PERSONAL_FIELDS.map((f) => (
-          <label key={f.key} className="block text-sm font-semibold">
+        {PERSONAL_FIELDS.map((f) =>
+        <label key={f.key} className="block text-sm font-semibold">
             {f.label}
             <input
-              value={draft[f.key] ?? ""}
-              type={f.type === "number" ? "number" : "text"}
-              onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
-              className={input}
-            />
+            value={draft[f.key] ?? ""}
+            type={f.type === "number" ? "number" : "text"}
+            onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
+            className={input} />
+          
           </label>
-        ))}
+        )}
       </div>
 
-      <label className="block text-sm font-semibold">
-        Note for the reviewer (optional)
+      <label className="block text-sm font-semibold">{t("ui.note.for.the.reviewer.optional")}
+
         <textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} className={input} />
       </label>
 
       {error && <p className="text-sm text-destructive">{error}</p>}
-      {done && <p className="text-sm text-emerald-600">Sent for document review.</p>}
+      {done && <p className="text-sm text-emerald-600">{t("ui.sent.for.document.review")}</p>}
       <button disabled={busy} className="btn-brand text-sm disabled:opacity-60">
         {busy ? "Submitting…" : "Submit for review"}
       </button>
-    </form>
-  );
+    </form>);
+
 }
 
 function GuarantorTab({
   worker,
   userId,
   requesterName,
-  onSubmitted,
-}: {
-  worker: WorkerRow;
-  userId: string;
-  requesterName: string | null;
-  onSubmitted: () => void;
-}) {
+  onSubmitted
+
+
+
+
+
+}: {worker: WorkerRow;userId: string;requesterName: string | null;onSubmitted: () => void;}) {const { t } = useLanguage();
   const keys = GUARANTOR_FIELDS.map((f) => f.key);
   const [draft, setDraft] = useDraft(worker, keys);
   const [files, setFiles] = useState<Record<string, File | null>>({});
@@ -273,7 +273,7 @@ function GuarantorTab({
         requestedBy: userId,
         requesterName,
         changes,
-        note: note.trim() || null,
+        note: note.trim() || null
       });
       setDone(true);
       setFiles({});
@@ -288,52 +288,52 @@ function GuarantorTab({
   return (
     <form onSubmit={submit} className="card-soft space-y-4 p-6">
       <div className="grid gap-4 sm:grid-cols-2">
-        {GUARANTOR_FIELDS.map((f) => (
-          <label key={f.key} className="block text-sm font-semibold">
+        {GUARANTOR_FIELDS.map((f) =>
+        <label key={f.key} className="block text-sm font-semibold">
             {f.label}
             <input
-              value={draft[f.key] ?? ""}
-              onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
-              className={input}
-            />
+            value={draft[f.key] ?? ""}
+            onChange={(e) => setDraft({ ...draft, [f.key]: e.target.value })}
+            className={input} />
+          
           </label>
-        ))}
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {GUARANTOR_DOCS.map((d) => (
-          <label key={d.key} className="block text-sm font-semibold">
+        {GUARANTOR_DOCS.map((d) =>
+        <label key={d.key} className="block text-sm font-semibold">
             {d.label}
             <input
-              type="file"
-              accept="image/*,application/pdf"
-              onChange={(e) => setFiles({ ...files, [d.key]: e.target.files?.[0] ?? null })}
-              className={`${input} file:mr-3 file:rounded-full file:border-0 file:bg-secondary file:px-3 file:py-1 file:text-xs file:font-semibold`}
-            />
+            type="file"
+            accept="image/*,application/pdf"
+            onChange={(e) => setFiles({ ...files, [d.key]: e.target.files?.[0] ?? null })}
+            className={`${input} file:mr-3 file:rounded-full file:border-0 file:bg-secondary file:px-3 file:py-1 file:text-xs file:font-semibold`} />
+          
             {files[d.key] && <span className="text-xs font-normal text-muted-foreground">{files[d.key]?.name}</span>}
           </label>
-        ))}
+        )}
       </div>
 
-      <label className="block text-sm font-semibold">
-        Note for the reviewer (optional)
+      <label className="block text-sm font-semibold">{t("ui.note.for.the.reviewer.optional")}
+
         <textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} className={input} />
       </label>
 
       {error && <p className="text-sm text-destructive">{error}</p>}
-      {done && <p className="text-sm text-emerald-600">Sent for document review.</p>}
+      {done && <p className="text-sm text-emerald-600">{t("ui.sent.for.document.review")}</p>}
       <button disabled={busy} className="btn-brand text-sm disabled:opacity-60">
         {busy ? "Submitting…" : "Submit for review"}
       </button>
-    </form>
-  );
+    </form>);
+
 }
 
-function History({ rows }: { rows: ChangeRequest[] }) {
+function History({ rows }: {rows: ChangeRequest[];}) {const { t } = useLanguage();
   if (rows.length === 0) return null;
   return (
     <div className="card-soft p-6">
-      <h2 className="text-lg font-semibold">Your submitted updates</h2>
+      <h2 className="text-lg font-semibold">{t("ui.your.submitted.updates")}</h2>
       <div className="mt-4 space-y-3">
         {rows.map((r) => {
           const changes = (r.changes ?? {}) as Record<string, unknown>;
@@ -344,15 +344,15 @@ function History({ rows }: { rows: ChangeRequest[] }) {
                 <span className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</span>
               </div>
               <p className="mt-1 text-muted-foreground">
-                {Object.keys(changes)
-                  .map((k) => fieldLabel("workers", k))
-                  .join(", ")}
+                {Object.keys(changes).
+                map((k) => fieldLabel("workers", k)).
+                join(", ")}
               </p>
-              {r.admin_note && <p className="mt-1">Reviewer note: {r.admin_note}</p>}
-            </div>
-          );
+              {r.admin_note && <p className="mt-1">{t("ui.reviewer.note")}{r.admin_note}</p>}
+            </div>);
+
         })}
       </div>
-    </div>
-  );
+    </div>);
+
 }

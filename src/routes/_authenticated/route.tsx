@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+import { useLanguage } from "@/lib/i18n";import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -8,10 +8,10 @@ import { fetchOnboardingStatus, joinPathForRole } from "@/lib/onboarding";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
-  component: AuthenticatedLayout,
+  component: AuthenticatedLayout
 });
 
-function AuthenticatedLayout() {
+function AuthenticatedLayout() {const { t } = useLanguage();
   const navigate = useNavigate();
   const [state, setState] = useState<"checking" | "in" | "out">("checking");
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
@@ -38,11 +38,11 @@ function AuthenticatedLayout() {
       if (!data.user || !active) return;
       const status = await fetchOnboardingStatus(data.user.id);
       if (!active) return;
-      if (status.state === "staff") navigate({ to: "/backoffice", replace: true });
-      else if (status.state === "complete") setOnboarded(true);
-      else if (status.state === "needs-form") navigate({ to: joinPathForRole[status.role], replace: true });
+      if (status.state === "staff") navigate({ to: "/backoffice", replace: true });else
+      if (status.state === "complete") setOnboarded(true);else
+      if (status.state === "needs-form") navigate({ to: joinPathForRole[status.role], replace: true });else
 
-      else navigate({ to: "/onboarding", replace: true });
+      navigate({ to: "/onboarding", replace: true });
     });
     return () => {
       active = false;
@@ -50,42 +50,42 @@ function AuthenticatedLayout() {
   }, [state, navigate]);
 
   if (state !== "in" || !onboarded) {
-    return <div className="container-page py-24 text-center text-muted-foreground">Loading…</div>;
+    return <div className="container-page py-24 text-center text-muted-foreground">{t("ui.loading")}</div>;
   }
 
   return <AuthenticatedShell />;
 }
 
 
-function AuthenticatedShell() {
+function AuthenticatedShell() {const { t } = useLanguage();
   const { user } = useSession();
   const { profile, setProfile } = useProfile(user?.id);
 
   if (profile?.must_change_password) {
     return (
       <div className="container-page mx-auto max-w-lg py-16">
-        <h1 className="text-2xl font-bold">Set your own password</h1>
-        <p className="mb-6 mt-1 text-sm text-muted-foreground">
-          Your account was created by an administrator with a temporary password. Choose a new one to continue.
+        <h1 className="text-2xl font-bold">{t("ui.set.your.own.password")}</h1>
+        <p className="mb-6 mt-1 text-sm text-muted-foreground">{t("ui.your.account.was.created.by.an.administrator.with.a.te")}
+
         </p>
         <ChangePassword
           confirmRequired={false}
           requireCurrent
           currentLabel="Current temporary password"
-          title="Create a new password"
+          title={t("ui.create.a.new.password")}
           description="Enter the temporary password you were given, then choose your own."
-          onDone={() => setProfile({ ...profile, must_change_password: false })}
-        />
-      </div>
-    );
+          onDone={() => setProfile({ ...profile, must_change_password: false })} />
+        
+      </div>);
+
   }
 
   return (
     <div className="container-page py-8">
       <AccountNav />
       <Outlet />
-    </div>
-  );
+    </div>);
+
 }
 
 function AccountNav() {
@@ -93,11 +93,11 @@ function AccountNav() {
   const { profile } = useProfile(user?.id);
   const { isAdmin, isKyc } = useRoleFlags(user?.id);
 
-  const links: { to: string; label: string }[] = [
-    { to: "/dashboard", label: "Dashboard" },
-    { to: "/bookings", label: "Bookings" },
-    { to: "/messages", label: "Messages" },
-  ];
+  const links: {to: string;label: string;}[] = [
+  { to: "/dashboard", label: "Dashboard" },
+  { to: "/bookings", label: "Bookings" },
+  { to: "/messages", label: "Messages" }];
+
   if (profile?.role === "broker") {
     links.push({ to: "/broker", label: "My Employees" });
   }
@@ -106,20 +106,20 @@ function AccountNav() {
   if (profile?.role === "employee") links.push({ to: "/update-profile", label: "Update Profile" });
 
 
-  if (isAdmin) links.push({ to: "/admin", label: "Admin" });
-  else if (isKyc) links.push({ to: "/admin/verification", label: "Verification" });
+  if (isAdmin) links.push({ to: "/admin", label: "Admin" });else
+  if (isKyc) links.push({ to: "/admin/verification", label: "Verification" });
 
   return (
     <nav className="mb-8 flex gap-2 overflow-x-auto rounded-full bg-secondary p-1 text-sm font-semibold">
-      {links.map((l) => (
-        <Link
-          key={l.to}
-          to={l.to}
-          className="whitespace-nowrap rounded-full px-4 py-2 text-muted-foreground transition data-[status=active]:bg-card data-[status=active]:text-foreground data-[status=active]:shadow-sm"
-        >
+      {links.map((l) =>
+      <Link
+        key={l.to}
+        to={l.to}
+        className="whitespace-nowrap rounded-full px-4 py-2 text-muted-foreground transition data-[status=active]:bg-card data-[status=active]:text-foreground data-[status=active]:shadow-sm">
+        
           {l.label}
         </Link>
-      ))}
-    </nav>
-  );
+      )}
+    </nav>);
+
 }

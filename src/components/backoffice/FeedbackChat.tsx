@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useCallback, useEffect, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { openSigned } from "@/lib/uploads";
 import { timeAgo } from "@/lib/backoffice";
 import {
   loadSubjectMessages,
   sendReviewMessage,
-  type ReviewMessage,
-} from "@/lib/review-chat";
+  type ReviewMessage } from
+"@/lib/review-chat";
 
 type Props = {
   /** The account under review — the other side of the conversation. */
@@ -36,8 +36,8 @@ export function FeedbackChat({
   viewerId,
   asStaff,
   messages: external,
-  onSent,
-}: Props) {
+  onSent
+}: Props) {const { t } = useLanguage();
   const [messages, setMessages] = useState<ReviewMessage[]>(external ?? []);
   const [text, setText] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -63,14 +63,14 @@ export function FeedbackChat({
 
   useEffect(() => {
     if (controlled || !ownerId) return;
-    const channel = supabase
-      .channel(`review-${source}-${subjectId}`)
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "review_messages", filter: `subject_id=eq.${subjectId}` },
-        () => load(),
-      )
-      .subscribe();
+    const channel = supabase.
+    channel(`review-${source}-${subjectId}`).
+    on(
+      "postgres_changes",
+      { event: "*", schema: "public", table: "review_messages", filter: `subject_id=eq.${subjectId}` },
+      () => load()
+    ).
+    subscribe();
     return () => {
       supabase.removeChannel(channel);
     };
@@ -82,7 +82,7 @@ export function FeedbackChat({
 
   async function send() {
     const body = text.trim();
-    if ((!body && !file) || !ownerId || !viewerId) return;
+    if (!body && !file || !ownerId || !viewerId) return;
     setBusy(true);
     setError(null);
     try {
@@ -93,7 +93,7 @@ export function FeedbackChat({
         senderId: viewerId,
         fromStaff: asStaff,
         body,
-        file,
+        file
       });
       setText("");
       setFile(null);
@@ -107,7 +107,7 @@ export function FeedbackChat({
   }
 
   if (!ownerId) {
-    return <p className="text-sm text-muted-foreground">No linked account to chat with for this record.</p>;
+    return <p className="text-sm text-muted-foreground">{t("ui.no.linked.account.to.chat.with.for.this.record")}</p>;
   }
 
   return (
@@ -119,26 +119,26 @@ export function FeedbackChat({
             <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
               <div
                 className={`max-w-[85%] rounded-2xl px-3 py-2 text-sm ${
-                  m.from_staff ? "bg-primary/10" : "bg-secondary/60"
-                }`}
-              >
+                m.from_staff ? "bg-primary/10" : "bg-secondary/60"}`
+                }>
+                
                 <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
                   {m.from_staff ? "Reviewer" : name} · {timeAgo(m.created_at)}
                 </p>
                 {m.body && <p className="mt-1 whitespace-pre-wrap">{m.body}</p>}
-                {m.attachment_path && m.attachment_bucket && (
-                  <button
-                    onClick={() => openSigned(m.attachment_bucket!, m.attachment_path!)}
-                    className="mt-2 text-xs font-semibold text-primary underline"
-                  >
+                {m.attachment_path && m.attachment_bucket &&
+                <button
+                  onClick={() => openSigned(m.attachment_bucket!, m.attachment_path!)}
+                  className="mt-2 text-xs font-semibold text-primary underline">
+                  
                     📎 {m.attachment_name || "Open attachment"}
                   </button>
-                )}
+                }
               </div>
-            </div>
-          );
+            </div>);
+
         })}
-        {messages.length === 0 && <p className="text-sm text-muted-foreground">No messages yet.</p>}
+        {messages.length === 0 && <p className="text-sm text-muted-foreground">{t("ui.no.messages.yet")}</p>}
         <div ref={endRef} />
       </div>
 
@@ -149,22 +149,22 @@ export function FeedbackChat({
           className="min-h-16 w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary"
           placeholder={asStaff ? `Tell ${name} what needs fixing…` : "Reply to the reviewer…"}
           value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
+          onChange={(e) => setText(e.target.value)} />
+        
         <div className="flex flex-wrap items-center gap-2">
-          {!asStaff && (
-            <input
-              ref={fileRef}
-              type="file"
-              className="text-xs"
-              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-            />
-          )}
+          {!asStaff &&
+          <input
+            ref={fileRef}
+            type="file"
+            className="text-xs"
+            onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+
+          }
           <button onClick={send} disabled={busy} className="btn-brand ml-auto text-xs disabled:opacity-60">
             {busy ? "Sending…" : "Send"}
           </button>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

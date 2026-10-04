@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useLanguage } from "@/lib/i18n";import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -6,8 +6,8 @@ import {
   useRouter,
   HeadContent,
   Scripts,
-  type ErrorComponentProps,
-} from "@tanstack/react-router";
+  type ErrorComponentProps } from
+"@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Wallet } from "lucide-react";
 
@@ -38,8 +38,8 @@ function NotFoundComponent() {
           <Link to="/" className="btn-brand">{t("common.goHome")}</Link>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
@@ -61,51 +61,51 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
               router.invalidate();
               reset();
             }}
-            className="btn-brand"
-          >
+            className="btn-brand">
+            
             {t("common.retry")}
           </button>
           <a href="/" className="btn-outline-brand">{t("common.goHome")}</a>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{queryClient: QueryClient;}>()({
   head: () => ({
     meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: `${BRAND.fullName} — ${BRAND.tagline}` },
-      { name: "description", content: BRAND.description },
-      { property: "og:title", content: `${BRAND.fullName} — ${BRAND.tagline}` },
-      { property: "og:description", content: BRAND.description },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: `${BRAND.fullName} — ${BRAND.tagline}` },
-      { name: "twitter:description", content: BRAND.description },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1c5c8149-6c30-4c2e-8b24-a69541985e6d/id-preview-91fc873a--3650553c-feb3-40d2-a9a6-17d21c39bc31.lovable.app-1784714866844.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1c5c8149-6c30-4c2e-8b24-a69541985e6d/id-preview-91fc873a--3650553c-feb3-40d2-a9a6-17d21c39bc31.lovable.app-1784714866844.png" },
-    ],
+    { charSet: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    { title: `${BRAND.fullName} — ${BRAND.tagline}` },
+    { name: "description", content: BRAND.description },
+    { property: "og:title", content: `${BRAND.fullName} — ${BRAND.tagline}` },
+    { property: "og:description", content: BRAND.description },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: `${BRAND.fullName} — ${BRAND.tagline}` },
+    { name: "twitter:description", content: BRAND.description },
+    { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1c5c8149-6c30-4c2e-8b24-a69541985e6d/id-preview-91fc873a--3650553c-feb3-40d2-a9a6-17d21c39bc31.lovable.app-1784714866844.png" },
+    { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/1c5c8149-6c30-4c2e-8b24-a69541985e6d/id-preview-91fc873a--3650553c-feb3-40d2-a9a6-17d21c39bc31.lovable.app-1784714866844.png" }],
+
     links: [
-      { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600&display=swap",
-      },
-    ],
+    { rel: "stylesheet", href: appCss },
+    { rel: "icon", type: "image/png", href: "/favicon.png" },
+    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+    { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Ethiopic:wght@400;500;600&display=swap"
+    }]
+
   }),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
-  errorComponent: ErrorComponent,
+  errorComponent: ErrorComponent
 });
 
-function RootShell({ children }: { children: ReactNode }) {
+function RootShell({ children }: {children: ReactNode;}) {
   return (
     <html lang="en">
       <head>
@@ -115,8 +115,8 @@ function RootShell({ children }: { children: ReactNode }) {
         {children}
         <Scripts />
       </body>
-    </html>
-  );
+    </html>);
+
 }
 
 function SiteHeader() {
@@ -133,7 +133,7 @@ function SiteHeader() {
         </Link>
         <nav className="hidden flex-wrap items-center gap-x-6 gap-y-2 md:flex">
           <Link to="/workers" className="text-sm font-medium text-muted-foreground hover:text-foreground">{t("nav.findWorkers")}</Link>
-          <Link to="/jobs" className="text-sm font-medium text-muted-foreground hover:text-foreground">Jobs</Link>
+          <Link to="/jobs" className="text-sm font-medium text-muted-foreground hover:text-foreground">{t("ui.jobs")}</Link>
           <Link to="/nearby" className="text-sm font-medium text-muted-foreground hover:text-foreground">{t("nav.nearby")}</Link>
           <a href="/#services" className="text-sm font-medium text-muted-foreground hover:text-foreground">{t("nav.services")}</a>
           <PostJobLink />
@@ -144,20 +144,20 @@ function SiteHeader() {
           <HeaderAuth />
         </div>
       </div>
-    </header>
-  );
+    </header>);
+
 }
 
 /** "Post a Job" is visible to employers and staff (admin, sub-admin, KYC) only. */
-function PostJobLink() {
+function PostJobLink() {const { t } = useLanguage();
   const { user } = useSession();
   const { canPost } = useJobAccess(user?.id);
   if (!canPost) return null;
   return (
-    <Link to="/post-job" className="btn-brand px-4 py-1.5 text-sm">
-      Post a Job
-    </Link>
-  );
+    <Link to="/post-job" className="btn-brand px-4 py-1.5 text-sm">{t("ui.post.a.job")}
+
+    </Link>);
+
 }
 
 function HeaderAuth() {
@@ -170,28 +170,28 @@ function HeaderAuth() {
       <div className="flex items-center gap-3">
         <Link to="/auth" className="hidden text-sm font-medium text-muted-foreground hover:text-foreground sm:inline">{t("nav.login")}</Link>
         <Link to="/join" className="btn-brand text-sm">{t("nav.join")}</Link>
-      </div>
-    );
+      </div>);
+
   }
   return (
     <div className="flex items-center gap-3">
       <Link to="/dashboard" className="hidden text-sm font-medium text-muted-foreground hover:text-foreground sm:inline">{t("nav.dashboard")}</Link>
       {/* Wallet badge: standard users only — hidden for admin, sub-admin and KYC. */}
-      {canUseWallet && (
-        <Link
-          to="/payment"
-          search={{ purpose: "recharge", amount: 0 }}
-          className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-sm font-semibold md:inline-flex"
-        >
+      {canUseWallet &&
+      <Link
+        to="/payment"
+        search={{ purpose: "recharge", amount: 0 }}
+        className="hidden items-center gap-1.5 rounded-full border border-border bg-card px-3 py-1.5 text-sm font-semibold md:inline-flex">
+        
           <Wallet className="h-4 w-4 text-primary" />
           {money(balance ?? 0)}
         </Link>
-      )}
+      }
       {/* Notification bell with unread badge (desktop-only). */}
       <NotificationsBell userId={user.id} />
       <Link to="/profile" className="btn-brand text-sm">{t("nav.account")}</Link>
-    </div>
-  );
+    </div>);
+
 }
 
 
@@ -218,10 +218,10 @@ function SiteFooter() {
         <div className="w-[55%] shrink-0 snap-start md:w-auto">
           <h4 className="text-sm font-semibold">{t("footer.services")}</h4>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/workers" className="hover:text-foreground">Cleaning</Link></li>
-            <li><Link to="/workers" className="hover:text-foreground">Babysitting</Link></li>
-            <li><Link to="/workers" className="hover:text-foreground">Cooking</Link></li>
-            <li><Link to="/workers" className="hover:text-foreground">Waitstaff</Link></li>
+            <li><Link to="/workers" className="hover:text-foreground">{t("ui.cleaning")}</Link></li>
+            <li><Link to="/workers" className="hover:text-foreground">{t("ui.babysitting")}</Link></li>
+            <li><Link to="/workers" className="hover:text-foreground">{t("ui.cooking")}</Link></li>
+            <li><Link to="/workers" className="hover:text-foreground">{t("ui.waitstaff")}</Link></li>
             <li><a href="/#services" className="hover:text-foreground">{t("footer.allServices")}</a></li>
           </ul>
         </div>
@@ -254,32 +254,32 @@ function SiteFooter() {
         <Link to="/terms" className="hover:text-foreground">{t("footer.termsPrivacy")}</Link>
         <Link to="/contact" className="hover:text-foreground">{t("footer.contact")}</Link>
       </div>
-    </footer>
-  );
+    </footer>);
+
 }
 
-function BackendConfigAlert() {
+function BackendConfigAlert() {const { t } = useLanguage();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="max-w-md rounded-xl border border-border bg-card p-6 text-center">
-        <h1 className="text-lg font-semibold">Backend not configured</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          This deployment is missing its backend connection settings. Re-publish the app to apply the
-          latest configuration.
+        <h1 className="text-lg font-semibold">{t("ui.backend.not.configured")}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t("ui.this.deployment.is.missing.its.backend.connection.sett")}
+
+
         </p>
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   const backendReady = Boolean(
-    (import.meta.env["VITE_SUPABASE_URL"] || process.env["SUPABASE_URL"]) &&
-      (import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
-        import.meta.env["VITE_SUPABASE_ANON_KEY"] ||
-        process.env["SUPABASE_PUBLISHABLE_KEY"]),
+    (import.meta.env["VITE_SUPABASE_URL"] || process.env["SUPABASE_URL"]) && (
+    import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
+    import.meta.env["VITE_SUPABASE_ANON_KEY"] ||
+    process.env["SUPABASE_PUBLISHABLE_KEY"])
   );
 
   if (!backendReady) return <BackendConfigAlert />;
@@ -296,7 +296,7 @@ function RootComponent() {
         <SiteFooter />
         <Toaster />
       </LanguageProvider>
-    </QueryClientProvider>
-  );
+    </QueryClientProvider>);
+
 
 }

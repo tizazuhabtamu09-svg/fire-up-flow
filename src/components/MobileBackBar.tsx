@@ -1,6 +1,6 @@
-import { Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { useLanguage } from "@/lib/i18n";import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 
-export function MobileBackBar() {
+export function MobileBackBar() {const { t } = useLanguage();
   const router = useRouter();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -12,20 +12,20 @@ export function MobileBackBar() {
       <button
         type="button"
         onClick={() => router.history.back()}
-        aria-label="Go back"
-        className="flex items-center gap-1.5 rounded-xl border border-border/70 bg-card px-3 py-2 text-sm font-medium text-foreground active:scale-95"
-      >
-        <span aria-hidden="true">←</span>
-        Back
+        aria-label={t("ui.go.back")}
+        className="flex items-center gap-1.5 rounded-xl border border-border/70 bg-card px-3 py-2 text-sm font-medium text-foreground active:scale-95">
+        
+        <span aria-hidden="true">←</span>{t("ui.back")}
+
       </button>
       <Link
         to="/"
-        aria-label="Go to home"
-        className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground active:scale-95"
-      >
-        <span aria-hidden="true">🏠</span>
-        Home
+        aria-label={t("ui.go.to.home")}
+        className="flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground active:scale-95">
+        
+        <span aria-hidden="true">🏠</span>{t("ui.home")}
+
       </Link>
-    </div>
-  );
+    </div>);
+
 }

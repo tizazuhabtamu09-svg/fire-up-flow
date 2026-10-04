@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useCallback, useEffect, useRef, useState } from "react";
 import { Send } from "lucide-react";
 import { loadConversation, sendDirectMessage, type DirectMessage } from "@/lib/employee-employer";
 
@@ -6,12 +6,12 @@ import { loadConversation, sendDirectMessage, type DirectMessage } from "@/lib/e
 export function EmployerChat({
   me,
   other,
-  otherName,
-}: {
-  me: string;
-  other: string;
-  otherName: string;
-}) {
+  otherName
+
+
+
+
+}: {me: string;other: string;otherName: string;}) {const { t } = useLanguage();
   const [messages, setMessages] = useState<DirectMessage[]>([]);
   const [body, setBody] = useState("");
   const [sending, setSending] = useState(false);
@@ -51,25 +51,25 @@ export function EmployerChat({
 
   return (
     <div className="rounded-2xl bg-secondary/50 p-4">
-      <p className="mb-3 text-xs uppercase tracking-wide text-muted-foreground">Chat with {otherName}</p>
+      <p className="mb-3 text-xs uppercase tracking-wide text-muted-foreground">{t("ui.chat.with")}{otherName}</p>
       <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
-        {messages.length === 0 && (
-          <p className="text-sm text-muted-foreground">No messages yet — say hello.</p>
-        )}
-        {messages.map((m) => (
-          <div key={m.id} className={`flex ${m.sender_id === me ? "justify-end" : "justify-start"}`}>
+        {messages.length === 0 &&
+        <p className="text-sm text-muted-foreground">{t("ui.no.messages.yet.say.hello")}</p>
+        }
+        {messages.map((m) =>
+        <div key={m.id} className={`flex ${m.sender_id === me ? "justify-end" : "justify-start"}`}>
             <div
-              className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
-                m.sender_id === me ? "bg-primary text-primary-foreground" : "bg-card"
-              }`}
-            >
+            className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
+            m.sender_id === me ? "bg-primary text-primary-foreground" : "bg-card"}`
+            }>
+            
               <p>{m.body}</p>
               <p className={`mt-0.5 text-[10px] ${m.sender_id === me ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                 {new Date(m.created_at).toLocaleString()}
               </p>
             </div>
           </div>
-        ))}
+        )}
         <div ref={bottomRef} />
       </div>
       <form onSubmit={send} className="mt-3 flex gap-2">
@@ -77,14 +77,14 @@ export function EmployerChat({
           value={body}
           onChange={(e) => setBody(e.target.value)}
           maxLength={2000}
-          placeholder="Write a message…"
-          className="flex-1 rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary"
-        />
+          placeholder={t("ui.write.a.message")}
+          className="flex-1 rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary" />
+        
         <button disabled={sending || !body.trim()} className="btn-brand inline-flex items-center gap-1.5 text-sm disabled:opacity-60">
-          <Send className="h-4 w-4" /> Send
+          <Send className="h-4 w-4" />{t("ui.send")}
         </button>
       </form>
       {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
-    </div>
-  );
+    </div>);
+
 }

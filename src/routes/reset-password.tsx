@@ -8,16 +8,16 @@ export const Route = createFileRoute("/reset-password")({
   ssr: false,
   head: () => ({
     meta: [
-      { title: "Reset password — Agaze/አጋዝ" },
-      { name: "description", content: "Choose a new password for your Agaze/አጋዝ account." },
-      { name: "robots", content: "noindex" },
-    ],
+    { title: "Reset password — Agaze/አጋዝ" },
+    { name: "description", content: "Choose a new password for your Agaze/አጋዝ account." },
+    { name: "robots", content: "noindex" }]
+
   }),
-  component: ResetPasswordPage,
+  component: ResetPasswordPage
 });
 
 const inputCls =
-  "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary";
+"mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary";
 
 function ResetPasswordPage() {
   const navigate = useNavigate();
@@ -74,49 +74,49 @@ function ResetPasswordPage() {
   return (
     <div className="container-page grid min-h-[70vh] place-items-center py-12">
       <div className="w-full max-w-md card-soft p-8">
-        <h1 className="text-2xl font-bold">Set a new password</h1>
-        <p className="mt-1 text-sm text-muted-foreground">Enter a new password for your account.</p>
-        {done ? (
-          <p className="mt-6 text-sm text-muted-foreground">
-            Password updated. Redirecting you to sign in…
-          </p>
-        ) : (
-          <form onSubmit={submit} className="mt-6 space-y-4">
+        <h1 className="text-2xl font-bold">{t("ui.set.a.new.password")}</h1>
+        <p className="mt-1 text-sm text-muted-foreground">{t("ui.enter.a.new.password.for.your.account")}</p>
+        {done ?
+        <p className="mt-6 text-sm text-muted-foreground">{t("ui.password.updated.redirecting.you.to.sign.in")}
+
+        </p> :
+
+        <form onSubmit={submit} className="mt-6 space-y-4">
             <label className="block">
-              <span className="text-sm font-medium">New password</span>
+              <span className="text-sm font-medium">{t("ui.new.password")}</span>
               <input
-                required
-                minLength={8}
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={inputCls}
-              />
+              required
+              minLength={8}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={inputCls} />
+            
               <span className="mt-1 block text-xs text-muted-foreground">{t("auth.passwordHint")}</span>
             </label>
             <label className="block">
-              <span className="text-sm font-medium">Confirm new password</span>
+              <span className="text-sm font-medium">{t("ui.confirm.new.password")}</span>
               <input
-                required
-                minLength={8}
-                type="password"
-                value={confirm}
-                onChange={(e) => setConfirm(e.target.value)}
-                className={inputCls}
-              />
+              required
+              minLength={8}
+              type="password"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              className={inputCls} />
+            
             </label>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <button disabled={loading || !ready} className="btn-brand w-full disabled:opacity-60">
               {loading ? "Saving…" : "Update password"}
             </button>
           </form>
-        )}
+        }
         <p className="mt-6 text-center text-sm">
-          <Link to="/auth" className="text-muted-foreground hover:text-foreground">
-            ← Back to sign in
+          <Link to="/auth" className="text-muted-foreground hover:text-foreground">{t("ui.back.to.sign.in")}
+
           </Link>
         </p>
       </div>
-    </div>
-  );
+    </div>);
+
 }

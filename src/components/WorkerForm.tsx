@@ -36,7 +36,7 @@ export const emptyWorker: WorkerFormValues = {
   gender: "",
   age: "",
   price: "",
-  available: true,
+  available: true
 };
 
 export function toFormValues(w: WorkerRow): WorkerFormValues {
@@ -53,7 +53,7 @@ export function toFormValues(w: WorkerRow): WorkerFormValues {
     gender: (w.gender ?? "") as WorkerFormValues["gender"],
     age: w.age ? String(w.age) : "",
     price: w.price ? String(w.price) : "",
-    available: w.available,
+    available: w.available
   };
 }
 
@@ -63,13 +63,13 @@ export function WorkerForm({
   initial,
   submitLabel,
   onSubmit,
-  note,
-}: {
-  initial: WorkerFormValues;
-  submitLabel: string;
-  note?: string;
-  onSubmit: (values: WorkerFormValues) => Promise<string | null>;
-}) {
+  note
+
+
+
+
+
+}: {initial: WorkerFormValues;submitLabel: string;note?: string;onSubmit: (values: WorkerFormValues) => Promise<string | null>;}) {
   const { t } = useLanguage();
   const [form, setForm] = useState(initial);
   const [saving, setSaving] = useState(false);
@@ -109,18 +109,18 @@ export function WorkerForm({
             other={form.sector_other}
             onChange={(v) => set("sector", v)}
             onOtherChange={(v) => set("sector_other", v)}
-            className={cls}
-          />
+            className={cls} />
+          
         </label>
         <label className="block">
-          <span className="text-sm font-medium">Language</span>
+          <span className="text-sm font-medium">{t("ui.language")}</span>
           <LanguageSelect
             value={form.language}
             other={form.language_other}
             onChange={(v) => set("language", v)}
             onOtherChange={(v) => set("language_other", v)}
-            className={cls}
-          />
+            className={cls} />
+          
         </label>
         <label className="block">
           <span className="text-sm font-medium">{t("auth.monthlyPrice")}</span>
@@ -159,6 +159,6 @@ export function WorkerForm({
       {note && <p className="text-xs text-muted-foreground">{note}</p>}
       {error && <p className="text-sm text-destructive">{error}</p>}
       <button disabled={saving} className="btn-brand w-full disabled:opacity-60">{saving ? t("auth.saving") : submitLabel}</button>
-    </form>
-  );
+    </form>);
+
 }
