@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useState } from "react";
 import { X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { TERMINATION_REASONS } from "@/lib/employees";
@@ -13,14 +13,14 @@ export function EmployeeTerminateModal({
   workerId,
   employeeId,
   onClose,
-  onSent,
-}: {
-  mapping: EmployerMapping;
-  workerId: string;
-  employeeId: string;
-  onClose: () => void;
-  onSent: () => void;
-}) {
+  onSent
+
+
+
+
+
+
+}: {mapping: EmployerMapping;workerId: string;employeeId: string;onClose: () => void;onSent: () => void;}) {const { t } = useLanguage();
   const [reason, setReason] = useState(TERMINATION_REASONS[0]);
   const [details, setDetails] = useState("");
   const [busy, setBusy] = useState(false);
@@ -39,7 +39,7 @@ export function EmployeeTerminateModal({
       broker_employer_id: mapping.brokerEmployerId,
       employer_name: mapping.employerName,
       reason,
-      details: details.trim().slice(0, 2000) || null,
+      details: details.trim().slice(0, 2000) || null
     });
     setBusy(false);
     if (err) return setError(err.message);
@@ -52,51 +52,51 @@ export function EmployeeTerminateModal({
       <form onSubmit={submit} className="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-card p-6 sm:rounded-3xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-xl font-bold">Request termination</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              This asks to end your placement with {mapping.employerName}.
-              {mapping.kind === "direct"
-                ? " Your employer is asked to acknowledge it, then the back office makes the final decision."
-                : " The back office reviews it together with your broker."}
+            <h2 className="text-xl font-bold">{t("ui.request.termination")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t("ui.this.asks.to.end.your.placement.with")}
+              {mapping.employerName}.
+              {mapping.kind === "direct" ?
+              " Your employer is asked to acknowledge it, then the back office makes the final decision." :
+              " The back office reviews it together with your broker."}
             </p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="text-muted-foreground">
+          <button type="button" onClick={onClose} aria-label={t("ui.close")} className="text-muted-foreground">
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <label className="mt-5 block text-sm font-semibold">
-          Reason
+        <label className="mt-5 block text-sm font-semibold">{t("ui.reason")}
+
           <select
             value={reason}
             onChange={(e) => setReason(e.target.value)}
-            className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 font-normal outline-none focus:border-primary"
-          >
+            className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 font-normal outline-none focus:border-primary">
+            
             {TERMINATION_REASONS.map((r) => <option key={r}>{r}</option>)}
           </select>
         </label>
 
-        <label className="mt-4 block text-sm font-semibold">
-          Additional context (optional)
+        <label className="mt-4 block text-sm font-semibold">{t("ui.additional.context.optional")}
+
           <textarea
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             rows={4}
             maxLength={2000}
             className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 font-normal outline-none focus:border-primary"
-            placeholder="Anything the back office should know before deciding…"
-          />
+            placeholder={t("ui.anything.the.back.office.should.know.before.deciding")} />
+          
         </label>
 
         {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
 
         <div className="mt-6 flex gap-2">
-          <button type="button" onClick={onClose} className="btn-outline-brand flex-1 text-sm">Cancel</button>
+          <button type="button" onClick={onClose} className="btn-outline-brand flex-1 text-sm">{t("ui.cancel")}</button>
           <button disabled={busy} className="btn-brand flex-1 text-sm disabled:opacity-60">
             {busy ? "Sending…" : "Send termination request"}
           </button>
         </div>
       </form>
-    </div>
-  );
+    </div>);
+
 }

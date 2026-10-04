@@ -16,13 +16,13 @@ export function SectorsSelect({
   value,
   onChange,
   className,
-  required,
-}: {
-  value: string[];
-  onChange: (v: string[]) => void;
-  className?: string;
-  required?: boolean;
-}) {
+  required
+
+
+
+
+
+}: {value: string[];onChange: (v: string[]) => void;className?: string;required?: boolean;}) {
   const { t } = useLanguage();
   const custom = useCustomSectors();
   const [freeText, setFreeText] = useState("");
@@ -35,7 +35,7 @@ export function SectorsSelect({
   const remove = (v: string) => onChange(value.filter((s) => s !== v));
 
   const label = (v: string) =>
-    SECTORS.find((s) => s.value === v)?.label ?? custom.find((c) => c.key === v)?.label ?? sectorLabel(v) ?? v;
+  SECTORS.find((s) => s.value === v)?.label ?? custom.find((c) => c.key === v)?.label ?? sectorLabel(v) ?? v;
 
   return (
     <div>
@@ -44,21 +44,21 @@ export function SectorsSelect({
         onChange={(e) => {
           if (e.target.value) add(e.target.value);
         }}
-        className={className ?? cls}
-      >
+        className={className ?? cls}>
+        
         <option value="">{t("auth.selectSector")}</option>
-        {SECTORS.filter((s) => s.value !== OTHER_SECTOR && !value.includes(s.value)).map((s) => (
-          <option key={s.value} value={s.value}>
+        {SECTORS.filter((s) => s.value !== OTHER_SECTOR && !value.includes(s.value)).map((s) =>
+        <option key={s.value} value={s.value}>
             {s.label}
           </option>
-        ))}
-        {custom
-          .filter((c) => !value.includes(c.label))
-          .map((c) => (
-            <option key={c.key} value={c.label}>
+        )}
+        {custom.
+        filter((c) => !value.includes(c.label)).
+        map((c) =>
+        <option key={c.key} value={c.label}>
               {c.label}
             </option>
-          ))}
+        )}
       </select>
 
       <div className="mt-2 flex gap-2">
@@ -74,35 +74,35 @@ export function SectorsSelect({
           }}
           className={className ?? cls}
           placeholder={t("auth.writeYourSector")}
-          maxLength={80}
-        />
+          maxLength={80} />
+        
         <button
           type="button"
           onClick={() => {
             add(freeText);
             setFreeText("");
           }}
-          className="btn-outline-brand mt-1 shrink-0 px-4 text-sm"
-        >
-          Add
+          className="btn-outline-brand mt-1 shrink-0 px-4 text-sm">{t("ui.add")}
+
+
         </button>
       </div>
 
-      {value.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-2">
-          {value.map((s) => (
-            <span key={s} className="inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-1 text-xs font-semibold">
+      {value.length > 0 &&
+      <div className="mt-2 flex flex-wrap gap-2">
+          {value.map((s) =>
+        <span key={s} className="inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-1 text-xs font-semibold">
               {label(s)}
               <button type="button" onClick={() => remove(s)} aria-label={`Remove ${label(s)}`}>
                 <X className="h-3 w-3" />
               </button>
             </span>
-          ))}
+        )}
         </div>
-      )}
-      {required && value.length === 0 && (
-        <p className="mt-1 text-xs text-muted-foreground">Select at least one sector.</p>
-      )}
-    </div>
-  );
+      }
+      {required && value.length === 0 &&
+      <p className="mt-1 text-xs text-muted-foreground">{t("ui.select.at.least.one.sector")}</p>
+      }
+    </div>);
+
 }

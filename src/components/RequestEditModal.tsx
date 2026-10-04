@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useState } from "react";
 import { X } from "lucide-react";
 import { EDITABLE_FIELDS, submitChangeRequest, type ChangeTarget } from "@/lib/change-requests";
 
@@ -14,18 +14,18 @@ export function RequestEditModal({
   requestedBy,
   requesterName,
   onClose,
-  onSubmitted,
-}: {
-  target: ChangeTarget;
-  record: Record<string, unknown>;
-  requestedBy: string;
-  requesterName: string | null;
-  onClose: () => void;
-  onSubmitted: () => void;
-}) {
+  onSubmitted
+
+
+
+
+
+
+
+}: {target: ChangeTarget;record: Record<string, unknown>;requestedBy: string;requesterName: string | null;onClose: () => void;onSubmitted: () => void;}) {const { t } = useLanguage();
   const fields = EDITABLE_FIELDS[target];
   const initial = Object.fromEntries(
-    fields.map((f) => [f.key, record[f.key] == null ? "" : String(record[f.key])]),
+    fields.map((f) => [f.key, record[f.key] == null ? "" : String(record[f.key])])
   ) as Record<string, string>;
 
   const [form, setForm] = useState(initial);
@@ -55,7 +55,7 @@ export function RequestEditModal({
         requestedBy,
         requesterName,
         changes,
-        note: note.trim() || null,
+        note: note.trim() || null
       });
       onSubmitted();
       onClose();
@@ -71,31 +71,31 @@ export function RequestEditModal({
       <form onSubmit={submit} className="my-8 w-full max-w-2xl rounded-2xl bg-card p-6 shadow-xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-bold">Request document update</h2>
-            <p className="text-xs text-muted-foreground">
-              Your changes are sent to admin / KYC for approval and apply instantly once approved.
+            <h2 className="text-lg font-bold">{t("ui.request.document.update")}</h2>
+            <p className="text-xs text-muted-foreground">{t("ui.your.changes.are.sent.to.admin.kyc.for.approval.and.ap")}
+
             </p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="rounded-full p-1 hover:bg-muted">
+          <button type="button" onClick={onClose} aria-label={t("ui.close")} className="rounded-full p-1 hover:bg-muted">
             <X className="h-5 w-5" />
           </button>
         </div>
 
         <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          {fields.map((f) => (
-            <div key={f.key}>
+          {fields.map((f) =>
+          <div key={f.key}>
               <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{f.label}</label>
               <input
-                type={f.type === "number" ? "number" : "text"}
-                value={form[f.key] ?? ""}
-                onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.value }))}
-                className={cls}
-              />
+              type={f.type === "number" ? "number" : "text"}
+              value={form[f.key] ?? ""}
+              onChange={(e) => setForm((s) => ({ ...s, [f.key]: e.target.value }))}
+              className={cls} />
+            
             </div>
-          ))}
+          )}
           <div className="sm:col-span-2">
-            <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Reason for the update
+            <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{t("ui.reason.for.the.update")}
+
             </label>
             <textarea rows={3} value={note} onChange={(e) => setNote(e.target.value)} className={cls} />
           </div>
@@ -104,12 +104,12 @@ export function RequestEditModal({
         {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
         <div className="mt-6 flex justify-end gap-3">
-          <button type="button" onClick={onClose} className="btn-outline-brand">Cancel</button>
+          <button type="button" onClick={onClose} className="btn-outline-brand">{t("ui.cancel")}</button>
           <button type="submit" disabled={saving} className="btn-brand disabled:opacity-60">
             {saving ? "Submitting…" : "Submit for approval"}
           </button>
         </div>
       </form>
-    </div>
-  );
+    </div>);
+
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Modal } from "@/components/employer/RateWorkerModal";
 import { REPORT_CATEGORIES, REPORT_FORMS, type HiredEmployee, type ReportCategory } from "@/lib/requests";
@@ -6,7 +6,7 @@ import { REPORT_CATEGORIES, REPORT_FORMS, type HiredEmployee, type ReportCategor
 const input = "w-full rounded-xl border border-input bg-background px-3 py-2 text-sm outline-none focus:border-primary";
 
 /** Incident intake: employer picks a category, fills the structured form and uploads evidence. */
-export function IncidentReportModal({ hire, onClose }: { hire: HiredEmployee; onClose: () => void }) {
+export function IncidentReportModal({ hire, onClose }: {hire: HiredEmployee;onClose: () => void;}) {const { t } = useLanguage();
   const [category, setCategory] = useState<ReportCategory | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
   const [files, setFiles] = useState<File[]>([]);
@@ -61,89 +61,89 @@ export function IncidentReportModal({ hire, onClose }: { hire: HiredEmployee; on
       worker_name: hire.worker_name,
       category,
       details,
-      attachments: paths,
+      attachments: paths
     });
     setSaving(false);
-    if (err) setError(err.message);
-    else setDone(true);
+    if (err) setError(err.message);else
+    setDone(true);
   }
 
   return (
     <Modal title={`Submit incident report — ${hire.worker_name}`} onClose={onClose}>
-      {done ? (
-        <div className="text-center">
-          <p className="text-sm">Your report was sent to the Agaze compliance team. They will respond to you directly.</p>
-          <button onClick={onClose} className="btn-brand mt-4 text-sm">Close</button>
-        </div>
-      ) : !category ? (
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">Choose the type of issue you want to report.</p>
-          {REPORT_CATEGORIES.map((c) => (
-            <button
-              key={c.value}
-              onClick={() => setCategory(c.value)}
-              className="w-full rounded-2xl border border-border p-4 text-left transition hover:border-primary"
-            >
+      {done ?
+      <div className="text-center">
+          <p className="text-sm">{t("ui.your.report.was.sent.to.the.agaze.compliance.team.they")}</p>
+          <button onClick={onClose} className="btn-brand mt-4 text-sm">{t("ui.close")}</button>
+        </div> :
+      !category ?
+      <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">{t("ui.choose.the.type.of.issue.you.want.to.report")}</p>
+          {REPORT_CATEGORIES.map((c) =>
+        <button
+          key={c.value}
+          onClick={() => setCategory(c.value)}
+          className="w-full rounded-2xl border border-border p-4 text-left transition hover:border-primary">
+          
               <p className="font-semibold">{c.title}</p>
               <p className="mt-1 text-sm text-muted-foreground">{c.description}</p>
             </button>
-          ))}
-        </div>
-      ) : (
-        <form onSubmit={submit} className="space-y-4">
-          <button type="button" onClick={() => setCategory(null)} className="text-sm text-primary">← Change category</button>
-          {visible.map((f) => (
-            <label key={f.name} className="block text-sm font-semibold">
+        )}
+        </div> :
+
+      <form onSubmit={submit} className="space-y-4">
+          <button type="button" onClick={() => setCategory(null)} className="text-sm text-primary">{t("ui.change.category")}</button>
+          {visible.map((f) =>
+        <label key={f.name} className="block text-sm font-semibold">
               {f.label}
               {f.required && <span className="text-destructive"> *</span>}
-              {f.type === "textarea" ? (
-                <textarea
-                  className={`${input} mt-1 min-h-28`}
-                  maxLength={f.maxLength}
-                  value={values[f.name] ?? ""}
-                  onChange={(e) => set(f.name, e.target.value)}
-                />
-              ) : f.type === "select" ? (
-                <select className={`${input} mt-1`} value={values[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)}>
-                  <option value="">Select…</option>
+              {f.type === "textarea" ?
+          <textarea
+            className={`${input} mt-1 min-h-28`}
+            maxLength={f.maxLength}
+            value={values[f.name] ?? ""}
+            onChange={(e) => set(f.name, e.target.value)} /> :
+
+          f.type === "select" ?
+          <select className={`${input} mt-1`} value={values[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)}>
+                  <option value="">{t("ui.select")}</option>
                   {(f.options ?? []).map((o) => <option key={o} value={o}>{o}</option>)}
-                </select>
-              ) : f.type === "toggle" ? (
-                <div className="mt-1 flex gap-2">
-                  {(f.options ?? ["Yes", "No"]).map((o) => (
-                    <button
-                      type="button"
-                      key={o}
-                      onClick={() => set(f.name, o)}
-                      className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
-                        values[f.name] === o ? "bg-primary text-primary-foreground" : "bg-secondary"
-                      }`}
-                    >
+                </select> :
+          f.type === "toggle" ?
+          <div className="mt-1 flex gap-2">
+                  {(f.options ?? ["Yes", "No"]).map((o) =>
+            <button
+              type="button"
+              key={o}
+              onClick={() => set(f.name, o)}
+              className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
+              values[f.name] === o ? "bg-primary text-primary-foreground" : "bg-secondary"}`
+              }>
+              
                       {o}
                     </button>
-                  ))}
-                </div>
-              ) : (
-                <input
-                  className={`${input} mt-1`}
-                  type={f.type === "datetime" ? "datetime-local" : f.type === "date" ? "date" : "text"}
-                  maxLength={f.maxLength ?? 200}
-                  value={values[f.name] ?? ""}
-                  onChange={(e) => set(f.name, e.target.value)}
-                />
-              )}
-            </label>
-          ))}
+            )}
+                </div> :
 
-          <label className="block text-sm font-semibold">
-            Supporting documents (photos, log extracts, PDFs)
-            <input
-              className={`${input} mt-1`}
-              type="file"
-              multiple
-              accept="image/*,application/pdf,.txt,.doc,.docx"
-              onChange={(e) => setFiles(Array.from(e.target.files ?? []))}
-            />
+          <input
+            className={`${input} mt-1`}
+            type={f.type === "datetime" ? "datetime-local" : f.type === "date" ? "date" : "text"}
+            maxLength={f.maxLength ?? 200}
+            value={values[f.name] ?? ""}
+            onChange={(e) => set(f.name, e.target.value)} />
+
+          }
+            </label>
+        )}
+
+          <label className="block text-sm font-semibold">{t("ui.supporting.documents.photos.log.extracts.pdfs")}
+
+          <input
+            className={`${input} mt-1`}
+            type="file"
+            multiple
+            accept="image/*,application/pdf,.txt,.doc,.docx"
+            onChange={(e) => setFiles(Array.from(e.target.files ?? []))} />
+          
           </label>
 
           {error && <p className="rounded-xl bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
@@ -152,7 +152,7 @@ export function IncidentReportModal({ hire, onClose }: { hire: HiredEmployee; on
             {saving ? "Sending…" : "Send report"}
           </button>
         </form>
-      )}
-    </Modal>
-  );
+      }
+    </Modal>);
+
 }

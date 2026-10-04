@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { X } from "lucide-react";
 import { SectorSelect } from "@/components/SectorSelect";
@@ -18,12 +18,12 @@ const cls = "mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.
 export function EditUserProfileModal({
   worker,
   onClose,
-  onSaved,
-}: {
-  worker: WorkerRecord;
-  onClose: () => void;
-  onSaved: (updated: WorkerRecord) => void;
-}) {
+  onSaved
+
+
+
+
+}: {worker: WorkerRecord;onClose: () => void;onSaved: (updated: WorkerRecord) => void;}) {const { t } = useLanguage();
   const save = useServerFn(adminUpdateWorkerProfile);
   const [form, setForm] = useState({
     full_name: worker.full_name ?? "",
@@ -49,7 +49,7 @@ export function EditUserProfileModal({
     language_other: worker.language_other ?? "",
     skills: (worker.skills ?? []) as string[],
     available: Boolean(worker.available),
-    photo_url: worker.photo_url ?? "",
+    photo_url: worker.photo_url ?? ""
   });
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -99,9 +99,9 @@ export function EditUserProfileModal({
             photo_url: form.photo_url || null,
             gender: form.gender || null,
             age: form.age ? Number(form.age) : null,
-            price: form.price ? Number(form.price) : null,
-          },
-        },
+            price: form.price ? Number(form.price) : null
+          }
+        }
       });
       onSaved(res.worker as WorkerRecord);
       onClose();
@@ -117,14 +117,14 @@ export function EditUserProfileModal({
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4">
       <form
         onSubmit={submit}
-        className="my-8 w-full max-w-2xl rounded-2xl bg-card p-6 shadow-xl"
-      >
+        className="my-8 w-full max-w-2xl rounded-2xl bg-card p-6 shadow-xl">
+        
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-bold">Edit profile</h2>
-            <p className="text-xs text-muted-foreground">Admin edit of registration information.</p>
+            <h2 className="text-lg font-bold">{t("ui.edit.profile.2")}</h2>
+            <p className="text-xs text-muted-foreground">{t("ui.admin.edit.of.registration.information")}</p>
           </div>
-          <button type="button" onClick={onClose} aria-label="Close" className="rounded-full p-1 hover:bg-muted">
+          <button type="button" onClick={onClose} aria-label={t("ui.close")} className="rounded-full p-1 hover:bg-muted">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -134,17 +134,17 @@ export function EditUserProfileModal({
             {photoPreview && <img src={photoPreview} alt={form.full_name} className="h-full w-full object-cover" />}
           </div>
           <label className="text-sm">
-            <span className="block text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              Profile photo
+            <span className="block text-xs font-semibold uppercase tracking-widest text-muted-foreground">{t("ui.profile.photo")}
+
             </span>
             <input
               type="file"
               accept="image/*"
               disabled={uploading}
               onChange={(e) => pickPhoto(e.target.files?.[0] ?? null)}
-              className="mt-1 text-sm"
-            />
-            {uploading && <span className="text-xs text-muted-foreground">Uploading…</span>}
+              className="mt-1 text-sm" />
+            
+            {uploading && <span className="text-xs text-muted-foreground">{t("ui.uploading")}</span>}
           </label>
         </div>
 
@@ -160,10 +160,10 @@ export function EditUserProfileModal({
           </Field>
           <Field label="Gender">
             <select value={form.gender} onChange={(e) => set("gender", e.target.value as typeof form.gender)} className={cls}>
-              <option value="">Not disclosed</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              <option value="">{t("ui.not.disclosed")}</option>
+              <option value="male">{t("ui.male")}</option>
+              <option value="female">{t("ui.female")}</option>
+              <option value="other">{t("ui.other")}</option>
             </select>
           </Field>
           <Field label="Age">
@@ -178,8 +178,8 @@ export function EditUserProfileModal({
               other={form.sector_other}
               onChange={(v) => set("sector", v)}
               onOtherChange={(v) => set("sector_other", v)}
-              className={cls}
-            />
+              className={cls} />
+            
           </Field>
           <Field label="Experience">
             <input value={form.experience} onChange={(e) => set("experience", e.target.value)} className={cls} />
@@ -220,36 +220,36 @@ export function EditUserProfileModal({
               other={form.language_other}
               onChange={(v) => set("language", v)}
               onOtherChange={(v) => set("language_other", v)}
-              className={cls}
-            />
+              className={cls} />
+            
           </Field>
           <Field label="Skills">
             <SkillsSelect value={form.skills} onChange={(v) => set("skills", v)} className={cls} />
           </Field>
           <label className="flex items-center gap-2 text-sm sm:col-span-2">
-            <input type="checkbox" checked={form.available} onChange={(e) => set("available", e.target.checked)} />
-            Available for work
+            <input type="checkbox" checked={form.available} onChange={(e) => set("available", e.target.checked)} />{t("ui.available.for.work")}
+
           </label>
         </div>
 
         {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
         <div className="mt-6 flex justify-end gap-3">
-          <button type="button" onClick={onClose} className="btn-outline-brand">Cancel</button>
+          <button type="button" onClick={onClose} className="btn-outline-brand">{t("ui.cancel")}</button>
           <button type="submit" disabled={saving} className="btn-brand disabled:opacity-60">
             {saving ? "Saving…" : "Save changes"}
           </button>
         </div>
       </form>
-    </div>
-  );
+    </div>);
+
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({ label, children }: {label: string;children: React.ReactNode;}) {
   return (
     <div>
       <label className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{label}</label>
       {children}
-    </div>
-  );
+    </div>);
+
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useState } from "react";
 import { adminInput } from "@/components/admin/shared";
 import {
   BANNER_PLACEMENTS,
@@ -9,8 +9,8 @@ import {
   uploadBannerImage,
   useAllBanners,
   type BannerInput,
-  type BannerWithUrls,
-} from "@/lib/banners";
+  type BannerWithUrls } from
+"@/lib/banners";
 
 const empty: BannerInput = {
   title: "",
@@ -25,10 +25,10 @@ const empty: BannerInput = {
   active: true,
   sort_order: 0,
   starts_at: null,
-  ends_at: null,
+  ends_at: null
 };
 
-export function BannerManager({ userId }: { userId: string | null }) {
+export function BannerManager({ userId }: {userId: string | null;}) {const { t } = useLanguage();
   const { banners, loading, reload } = useAllBanners();
   const [form, setForm] = useState<BannerInput>(empty);
   const [desktopFile, setDesktopFile] = useState<File | null>(null);
@@ -61,9 +61,9 @@ export function BannerManager({ userId }: { userId: string | null }) {
           cta_label: form.cta_label || null,
           cta_link: form.cta_link || null,
           desktop_image,
-          mobile_image,
+          mobile_image
         },
-        userId,
+        userId
       );
       setForm(empty);
       setDesktopFile(null);
@@ -109,117 +109,117 @@ export function BannerManager({ userId }: { userId: string | null }) {
   return (
     <div>
       <form onSubmit={submit} className="card-soft grid gap-4 p-5 md:grid-cols-2">
-        <label className="block text-sm font-semibold">
-          Banner type
+        <label className="block text-sm font-semibold">{t("ui.banner.type")}
+
           <select
             value={form.kind}
             onChange={(e) => set("kind", e.target.value)}
-            className={`${adminInput} mt-1 font-normal`}
-          >
-            <option value="graphic">Graphic / image advertisement</option>
-            <option value="text">Text banner (headline + message)</option>
+            className={`${adminInput} mt-1 font-normal`}>
+            
+            <option value="graphic">{t("ui.graphic.image.advertisement")}</option>
+            <option value="text">{t("ui.text.banner.headline.message")}</option>
           </select>
         </label>
 
-        <label className="block text-sm font-semibold">
-          Where it shows
+        <label className="block text-sm font-semibold">{t("ui.where.it.shows")}
+
           <select
             value={form.placement}
             onChange={(e) => set("placement", e.target.value)}
-            className={`${adminInput} mt-1 font-normal`}
-          >
-            {BANNER_PLACEMENTS.map((p) => (
-              <option key={p.value} value={p.value}>
+            className={`${adminInput} mt-1 font-normal`}>
+            
+            {BANNER_PLACEMENTS.map((p) =>
+            <option key={p.value} value={p.value}>
                 {p.label}
               </option>
-            ))}
+            )}
           </select>
         </label>
 
-        <label className="block text-sm font-semibold">
-          Headline / title
+        <label className="block text-sm font-semibold">{t("ui.headline.title")}
+
           <input
             value={form.title ?? ""}
             onChange={(e) => set("title", e.target.value)}
             maxLength={120}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Small label above headline
+        <label className="block text-sm font-semibold">{t("ui.small.label.above.headline")}
+
           <input
             value={form.subtitle ?? ""}
             onChange={(e) => set("subtitle", e.target.value)}
             maxLength={80}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold md:col-span-2">
-          Message
+        <label className="block text-sm font-semibold md:col-span-2">{t("ui.message")}
+
           <textarea
             value={form.body ?? ""}
             onChange={(e) => set("body", e.target.value)}
             rows={3}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Button label (optional)
+        <label className="block text-sm font-semibold">{t("ui.button.label.optional")}
+
           <input
             value={form.cta_label ?? ""}
             onChange={(e) => set("cta_label", e.target.value)}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Link (e.g. /jobs or https://…)
+        <label className="block text-sm font-semibold">{t("ui.link.e.g.jobs.or.https")}
+
           <input
             value={form.cta_link ?? ""}
             onChange={(e) => set("cta_link", e.target.value)}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Desktop graphic (wide, e.g. 1600×500)
+        <label className="block text-sm font-semibold">{t("ui.desktop.graphic.wide.e.g.1600.500")}
+
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setDesktopFile(e.target.files?.[0] ?? null)}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Mobile graphic (tall, e.g. 800×800)
+        <label className="block text-sm font-semibold">{t("ui.mobile.graphic.tall.e.g.800.800")}
+
           <input
             type="file"
             accept="image/*"
             onChange={(e) => setMobileFile(e.target.files?.[0] ?? null)}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Start showing (optional)
+        <label className="block text-sm font-semibold">{t("ui.start.showing.optional")}
+
           <input
             type="datetime-local"
             onChange={(e) => set("starts_at", e.target.value ? new Date(e.target.value).toISOString() : null)}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
-        <label className="block text-sm font-semibold">
-          Stop showing (optional)
+        <label className="block text-sm font-semibold">{t("ui.stop.showing.optional")}
+
           <input
             type="datetime-local"
             onChange={(e) => set("ends_at", e.target.value ? new Date(e.target.value).toISOString() : null)}
-            className={`${adminInput} mt-1 font-normal`}
-          />
+            className={`${adminInput} mt-1 font-normal`} />
+          
         </label>
 
         <div className="flex items-center gap-3 md:col-span-2">
@@ -227,9 +227,9 @@ export function BannerManager({ userId }: { userId: string | null }) {
             <input
               type="checkbox"
               checked={form.active}
-              onChange={(e) => set("active", e.target.checked)}
-            />
-            Show immediately
+              onChange={(e) => set("active", e.target.checked)} />{t("ui.show.immediately")}
+
+
           </label>
           <button disabled={busy} className="btn-brand text-sm disabled:opacity-60">
             {busy ? "Publishing…" : "Publish banner"}
@@ -240,37 +240,37 @@ export function BannerManager({ userId }: { userId: string | null }) {
       {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
       {message && <p className="mt-3 text-sm text-emerald-600">{message}</p>}
 
-      <h3 className="mt-8 text-sm font-bold uppercase tracking-widest text-muted-foreground">
-        Banners
+      <h3 className="mt-8 text-sm font-bold uppercase tracking-widest text-muted-foreground">{t("ui.banners")}
+
       </h3>
-      {loading && <p className="mt-3 text-sm text-muted-foreground">Loading…</p>}
-      {!loading && banners.length === 0 && (
-        <p className="mt-3 text-sm text-muted-foreground">No banners yet.</p>
-      )}
+      {loading && <p className="mt-3 text-sm text-muted-foreground">{t("ui.loading")}</p>}
+      {!loading && banners.length === 0 &&
+      <p className="mt-3 text-sm text-muted-foreground">{t("ui.no.banners.yet")}</p>
+      }
       <div className="mt-3 space-y-3">
-        {banners.map((b) => (
-          <div key={b.id} className="card-soft flex flex-wrap items-center gap-4 p-4">
+        {banners.map((b) =>
+        <div key={b.id} className="card-soft flex flex-wrap items-center gap-4 p-4">
             <div className="flex gap-2">
-              {b.desktopUrl && (
-                <img src={b.desktopUrl} alt="Desktop artwork" className="h-16 w-28 rounded-lg object-cover" />
-              )}
-              {b.mobileUrl && (
-                <img src={b.mobileUrl} alt="Mobile artwork" className="h-16 w-16 rounded-lg object-cover" />
-              )}
+              {b.desktopUrl &&
+            <img src={b.desktopUrl} alt={t("ui.desktop.artwork")} className="h-16 w-28 rounded-lg object-cover" />
+            }
+              {b.mobileUrl &&
+            <img src={b.mobileUrl} alt={t("ui.mobile.artwork")} className="h-16 w-16 rounded-lg object-cover" />
+            }
             </div>
             <div className="min-w-[12rem] flex-1">
               <p className="font-semibold">{b.title || "(untitled banner)"}</p>
               <p className="text-xs text-muted-foreground">
-                {placementLabel(b.placement)} · {b.kind === "graphic" ? "Graphic" : "Text"} · order{" "}
+                {placementLabel(b.placement)} · {b.kind === "graphic" ? "Graphic" : "Text"}{t("ui.order")}{" "}
                 {b.sort_order}
               </p>
               {b.cta_link && <p className="text-xs text-muted-foreground">→ {b.cta_link}</p>}
             </div>
             <span
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                b.active ? "bg-emerald-100 text-emerald-800" : "bg-muted text-muted-foreground"
-              }`}
-            >
+            className={`rounded-full px-3 py-1 text-xs font-semibold ${
+            b.active ? "bg-emerald-100 text-emerald-800" : "bg-muted text-muted-foreground"}`
+            }>
+            
               {b.active ? "Live" : "Hidden"}
             </span>
             <div className="flex items-center gap-2">
@@ -279,13 +279,13 @@ export function BannerManager({ userId }: { userId: string | null }) {
               <button onClick={() => toggle(b)} className="btn-outline-brand text-xs">
                 {b.active ? "Hide" : "Show"}
               </button>
-              <button onClick={() => remove(b)} className="btn-outline-brand text-xs text-destructive">
-                Delete
-              </button>
+              <button onClick={() => remove(b)} className="btn-outline-brand text-xs text-destructive">{t("ui.delete")}
+
+            </button>
             </div>
           </div>
-        ))}
+        )}
       </div>
-    </div>
-  );
+    </div>);
+
 }

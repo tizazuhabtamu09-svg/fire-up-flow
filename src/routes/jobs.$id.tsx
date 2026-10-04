@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useLanguage } from "@/lib/i18n";import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { MapPin, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,21 +11,21 @@ import { uploadApplicationFile } from "@/lib/application-files";
 export const Route = createFileRoute("/jobs/$id")({
   head: () => ({
     meta: [
-      { title: "Job details — Agaze/አጋዝ" },
-      {
-        name: "description",
-        content: "Job details and requirements for a verified Agaze employer listing. Verified employees can apply directly.",
-      },
-      { property: "og:title", content: "Job details — Agaze/አጋዝ" },
-      { property: "og:description", content: "Apply to a verified employer listing on Agaze." },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
+    { title: "Job details — Agaze/አጋዝ" },
+    {
+      name: "description",
+      content: "Job details and requirements for a verified Agaze employer listing. Verified employees can apply directly."
+    },
+    { property: "og:title", content: "Job details — Agaze/አጋዝ" },
+    { property: "og:description", content: "Apply to a verified employer listing on Agaze." },
+    { property: "og:type", content: "article" },
+    { name: "twitter:card", content: "summary_large_image" }]
+
   }),
-  component: JobDetail,
+  component: JobDetail
 });
 
-function JobDetail() {
+function JobDetail() {const { t } = useLanguage();
   const { id } = Route.useParams();
   const { user } = useSession();
   const access = useJobAccess(user?.id);
@@ -41,32 +41,32 @@ function JobDetail() {
   const [eduDoc, setEduDoc] = useState<File | null>(null);
 
   useEffect(() => {
-    supabase
-      .from("job_posts")
-      .select("*")
-      .eq("id", id)
-      .maybeSingle()
-      .then(({ data }) => {
-        setJob(data ?? null);
-        setLoading(false);
-      });
+    supabase.
+    from("job_posts").
+    select("*").
+    eq("id", id).
+    maybeSingle().
+    then(({ data }) => {
+      setJob(data ?? null);
+      setLoading(false);
+    });
   }, [id]);
 
   useEffect(() => {
     if (!user) return;
-    supabase
-      .from("job_applications")
-      .select("id")
-      .eq("job_id", id)
-      .eq("applicant_id", user.id)
-      .maybeSingle()
-      .then(({ data }) => setApplied(Boolean(data)));
-    supabase
-      .from("profiles")
-      .select("phone")
-      .eq("id", user.id)
-      .maybeSingle()
-      .then(({ data }) => setPhone((p) => p || data?.phone || ""));
+    supabase.
+    from("job_applications").
+    select("id").
+    eq("job_id", id).
+    eq("applicant_id", user.id).
+    maybeSingle().
+    then(({ data }) => setApplied(Boolean(data)));
+    supabase.
+    from("profiles").
+    select("phone").
+    eq("id", user.id).
+    maybeSingle().
+    then(({ data }) => setPhone((p) => p || data?.phone || ""));
   }, [id, user]);
 
   async function apply(e: React.FormEvent) {
@@ -75,14 +75,14 @@ function JobDetail() {
     setSaving(true);
     setError(null);
     const [{ data: profile }, { data: worker }] = await Promise.all([
-      supabase.from("profiles").select("full_name, city").eq("id", user.id).maybeSingle(),
-      supabase
-        .from("workers")
-        .select("id, full_name, city, experience")
-        .eq("user_id", user.id)
-        .eq("verification_status", "approved")
-        .maybeSingle(),
-    ]);
+    supabase.from("profiles").select("full_name, city").eq("id", user.id).maybeSingle(),
+    supabase.
+    from("workers").
+    select("id, full_name, city, experience").
+    eq("user_id", user.id).
+    eq("verification_status", "approved").
+    maybeSingle()]
+    );
     let cvPath: string | null = null;
     let eduPath: string | null = null;
     try {
@@ -103,26 +103,26 @@ function JobDetail() {
       experience: worker?.experience ?? null,
       message: message.trim() || null,
       cv_path: cvPath,
-      education_document: eduPath,
+      education_document: eduPath
     });
     setSaving(false);
-    if (err) setError(err.message);
-    else setApplied(true);
+    if (err) setError(err.message);else
+    setApplied(true);
   }
 
-  if (loading) return <div className="container-page py-10 text-muted-foreground">Loading…</div>;
+  if (loading) return <div className="container-page py-10 text-muted-foreground">{t("ui.loading")}</div>;
   if (!job)
-    return (
-      <div className="container-page py-16 text-center">
-        <h1 className="text-2xl font-bold">Job not found</h1>
-        <p className="mt-2 text-sm text-muted-foreground">This listing may have been closed.</p>
-        <Link to="/jobs" className="btn-brand mt-6 inline-block">Browse open jobs</Link>
-      </div>
-    );
+  return (
+    <div className="container-page py-16 text-center">
+        <h1 className="text-2xl font-bold">{t("ui.job.not.found")}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t("ui.this.listing.may.have.been.closed")}</p>
+        <Link to="/jobs" className="btn-brand mt-6 inline-block">{t("ui.browse.open.jobs")}</Link>
+      </div>);
+
 
   return (
     <div className="container-page max-w-3xl py-10">
-      <Link to="/jobs" className="text-sm font-semibold text-primary hover:underline">← All jobs</Link>
+      <Link to="/jobs" className="text-sm font-semibold text-primary hover:underline">{t("ui.all.jobs")}</Link>
       <h1 className="mt-3 text-3xl font-bold">{job.title}</h1>
       <p className="mt-2 flex items-center gap-1.5 text-sm text-muted-foreground">
         <MapPin className="h-4 w-4" />
@@ -130,109 +130,109 @@ function JobDetail() {
         {employmentLabel(job.employment_type)}
         {job.duration ? ` · ${job.duration}` : ""}
       </p>
-      {job.salary != null && (
-        <p className="mt-2 text-lg font-bold text-primary">
+      {job.salary != null &&
+      <p className="mt-2 text-lg font-bold text-primary">
           {money(Number(job.salary))}
-          {job.salary_max != null ? ` – ${money(Number(job.salary_max))}` : ""} / month
-        </p>
-      )}
+          {job.salary_max != null ? ` – ${money(Number(job.salary_max))}` : ""}{t("ui.month")}
+      </p>
+      }
 
       <div className="card-soft mt-6 space-y-4 p-6">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Job description</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{t("ui.job.description.2")}</h2>
           <p className="mt-2 whitespace-pre-line text-sm">{job.description}</p>
         </div>
-        {job.requirements && (
-          <div>
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Requirements</h2>
+        {job.requirements &&
+        <div>
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">{t("ui.requirements")}</h2>
             <p className="mt-2 whitespace-pre-line text-sm">{job.requirements}</p>
           </div>
-        )}
-        <p className="text-xs text-muted-foreground">
-          Openings: {job.openings} · Posted by {job.employer_name || "a verified employer"}
+        }
+        <p className="text-xs text-muted-foreground">{t("ui.openings.2")}
+          {job.openings}{t("ui.posted.by")}{job.employer_name || "a verified employer"}
         </p>
       </div>
 
       <div className="card-soft mt-6 p-6">
-        {!user ? (
-          <>
-            <h2 className="text-lg font-bold">Apply for this job</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Three quick steps: your details, your experience and documents, then your account — and your
-              application is sent.
-            </p>
-            <button onClick={() => setQuickApply(true)} className="btn-brand mt-4 text-sm">
-              Apply
-            </button>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Already registered?{" "}
-              <Link to="/auth" className="font-semibold text-primary hover:underline">
-                Sign in
-              </Link>
-            </p>
-          </>
-        ) : applied ? (
-          <>
-            <h2 className="text-lg font-bold">Application sent ✅</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              The employer can now see your profile and phone number.
-            </p>
-          </>
-        ) : access.loading ? (
-          <p className="text-sm text-muted-foreground">Checking your account…</p>
-        ) : !access.canApply ? (
-          <>
-            <h2 className="text-lg font-bold">Verified employees only</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Complete your employee registration and wait for verification to apply for jobs.
-            </p>
-            <Link to="/join/employee" className="btn-outline-brand mt-4 inline-block text-sm">
-              Register as an employee
+        {!user ?
+        <>
+            <h2 className="text-lg font-bold">{t("ui.apply.for.this.job")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t("ui.three.quick.steps.your.details.your.experience.and.doc")}
+
+
+          </p>
+            <button onClick={() => setQuickApply(true)} className="btn-brand mt-4 text-sm">{t("ui.apply")}
+
+          </button>
+            <p className="mt-2 text-xs text-muted-foreground">{t("ui.already.registered")}
+            {" "}
+              <Link to="/auth" className="font-semibold text-primary hover:underline">{t("ui.sign.in")}
+
             </Link>
-          </>
-        ) : (
-          <form onSubmit={apply} className="space-y-4">
-            <h2 className="text-lg font-bold">Apply for this job</h2>
+            </p>
+          </> :
+        applied ?
+        <>
+            <h2 className="text-lg font-bold">{t("ui.application.sent")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t("ui.the.employer.can.now.see.your.profile.and.phone.number")}
+
+          </p>
+          </> :
+        access.loading ?
+        <p className="text-sm text-muted-foreground">{t("ui.checking.your.account")}</p> :
+        !access.canApply ?
+        <>
+            <h2 className="text-lg font-bold">{t("ui.verified.employees.only")}</h2>
+            <p className="mt-1 text-sm text-muted-foreground">{t("ui.complete.your.employee.registration.and.wait.for.verif")}
+
+          </p>
+            <Link to="/join/employee" className="btn-outline-brand mt-4 inline-block text-sm">{t("ui.register.as.an.employee")}
+
+          </Link>
+          </> :
+
+        <form onSubmit={apply} className="space-y-4">
+            <h2 className="text-lg font-bold">{t("ui.apply.for.this.job")}</h2>
             <label className="block">
               <span className="text-sm font-medium">
-                <Phone className="mr-1 inline h-3.5 w-3.5" />
-                Phone number the employer can call
-              </span>
+                <Phone className="mr-1 inline h-3.5 w-3.5" />{t("ui.phone.number.the.employer.can.call")}
+
+            </span>
               <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary"
-              />
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary" />
+            
             </label>
             <label className="block">
-              <span className="text-sm font-medium">Message (optional)</span>
+              <span className="text-sm font-medium">{t("ui.message.optional")}</span>
               <textarea
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                rows={4}
-                className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary"
-                placeholder="Tell the employer about your experience"
-              />
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={4}
+              className="mt-1 w-full rounded-xl border border-input bg-background px-3 py-2.5 outline-none focus:border-primary"
+              placeholder={t("ui.tell.the.employer.about.your.experience")} />
+            
             </label>
             <div className="grid gap-3 sm:grid-cols-2">
               <label className="block">
-                <span className="text-sm font-medium">CV / resume</span>
+                <span className="text-sm font-medium">{t("ui.cv.resume")}</span>
                 <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,image/*"
-                  onChange={(e) => setCv(e.target.files?.[0] ?? null)}
-                  className="mt-1 w-full text-xs"
-                />
+                type="file"
+                accept=".pdf,.doc,.docx,image/*"
+                onChange={(e) => setCv(e.target.files?.[0] ?? null)}
+                className="mt-1 w-full text-xs" />
+              
               </label>
               <label className="block">
-                <span className="text-sm font-medium">Educational background</span>
+                <span className="text-sm font-medium">{t("ui.educational.background")}</span>
                 <input
-                  type="file"
-                  accept=".pdf,.doc,.docx,image/*"
-                  onChange={(e) => setEduDoc(e.target.files?.[0] ?? null)}
-                  className="mt-1 w-full text-xs"
-                />
+                type="file"
+                accept=".pdf,.doc,.docx,image/*"
+                onChange={(e) => setEduDoc(e.target.files?.[0] ?? null)}
+                className="mt-1 w-full text-xs" />
+              
               </label>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
@@ -240,20 +240,20 @@ function JobDetail() {
               {saving ? "Sending…" : "Send application"}
             </button>
           </form>
-        )}
+        }
       </div>
 
-      {quickApply && (
-        <QuickApplyModal
-          jobId={job.id}
-          jobTitle={job.title}
-          onClose={() => setQuickApply(false)}
-          onApplied={() => {
-            setQuickApply(false);
-            setApplied(true);
-          }}
-        />
-      )}
-    </div>
-  );
+      {quickApply &&
+      <QuickApplyModal
+        jobId={job.id}
+        jobTitle={job.title}
+        onClose={() => setQuickApply(false)}
+        onApplied={() => {
+          setQuickApply(false);
+          setApplied(true);
+        }} />
+
+      }
+    </div>);
+
 }

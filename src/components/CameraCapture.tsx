@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/lib/i18n";import { useCallback, useEffect, useRef, useState } from "react";
 import { Camera, RefreshCw, X } from "lucide-react";
 
 /**
@@ -9,12 +9,12 @@ import { Camera, RefreshCw, X } from "lucide-react";
 export function CameraCapture({
   onCapture,
   onClose,
-  fileName = "photo",
-}: {
-  onCapture: (file: File) => void;
-  onClose: () => void;
-  fileName?: string;
-}) {
+  fileName = "photo"
+
+
+
+
+}: {onCapture: (file: File) => void;onClose: () => void;fileName?: string;}) {const { t } = useLanguage();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [facing, setFacing] = useState<"environment" | "user">("environment");
@@ -32,7 +32,7 @@ export function CameraCapture({
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { facingMode: facing },
-          audio: false,
+          audio: false
         });
         if (cancelled) {
           stream.getTracks().forEach((t) => t.stop());
@@ -75,49 +75,49 @@ export function CameraCapture({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <div className="w-full max-w-lg rounded-2xl bg-card p-4 shadow-xl">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-semibold">Take a photo</h3>
-          <button type="button" onClick={() => { stop(); onClose(); }} className="rounded-full p-1 hover:bg-secondary">
+          <h3 className="text-sm font-semibold">{t("ui.take.a.photo")}</h3>
+          <button type="button" onClick={() => {stop();onClose();}} className="rounded-full p-1 hover:bg-secondary">
             <X className="h-4 w-4" />
           </button>
         </div>
 
         <div className="mt-3 overflow-hidden rounded-xl bg-black">
-          {error ? (
-            <p className="p-6 text-center text-sm text-destructive">{error}</p>
-          ) : shot ? (
-            <img src={shot} alt="Captured preview" className="max-h-80 w-full object-contain" />
-          ) : (
-            <video ref={videoRef} playsInline muted className="max-h-80 w-full object-contain" />
-          )}
+          {error ?
+          <p className="p-6 text-center text-sm text-destructive">{error}</p> :
+          shot ?
+          <img src={shot} alt={t("ui.captured.preview")} className="max-h-80 w-full object-contain" /> :
+
+          <video ref={videoRef} playsInline muted className="max-h-80 w-full object-contain" />
+          }
         </div>
 
         <div className="mt-3 flex flex-wrap justify-end gap-2 text-sm">
-          {!error && !shot && (
-            <>
+          {!error && !shot &&
+          <>
               <button
-                type="button"
-                onClick={() => setFacing((f) => (f === "environment" ? "user" : "environment"))}
-                className="btn-outline-brand inline-flex items-center gap-1 px-3 py-2"
-              >
-                <RefreshCw className="h-4 w-4" /> Flip
-              </button>
+              type="button"
+              onClick={() => setFacing((f) => f === "environment" ? "user" : "environment")}
+              className="btn-outline-brand inline-flex items-center gap-1 px-3 py-2">
+              
+                <RefreshCw className="h-4 w-4" />{t("ui.flip")}
+            </button>
               <button type="button" onClick={take} className="btn-brand inline-flex items-center gap-1 px-4 py-2">
-                <Camera className="h-4 w-4" /> Capture
-              </button>
+                <Camera className="h-4 w-4" />{t("ui.capture")}
+            </button>
             </>
-          )}
-          {shot && (
-            <>
-              <button type="button" onClick={() => setShot(null)} className="btn-outline-brand px-3 py-2">
-                Retake
-              </button>
-              <button type="button" onClick={use} className="btn-brand px-4 py-2">
-                Use photo
-              </button>
+          }
+          {shot &&
+          <>
+              <button type="button" onClick={() => setShot(null)} className="btn-outline-brand px-3 py-2">{t("ui.retake")}
+
+            </button>
+              <button type="button" onClick={use} className="btn-brand px-4 py-2">{t("ui.use.photo")}
+
+            </button>
             </>
-          )}
+          }
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 }

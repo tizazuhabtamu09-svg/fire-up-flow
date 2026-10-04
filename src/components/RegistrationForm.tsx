@@ -61,14 +61,14 @@ export type RegistrationFiles = {
 };
 
 const QUALIFICATIONS = [
-  "High School",
-  "Certificate",
-  "Diploma",
-  "Bachelor's Degree",
-  "Master's Degree",
-  "PhD",
-  "Other",
-];
+"High School",
+"Certificate",
+"Diploma",
+"Bachelor's Degree",
+"Master's Degree",
+"PhD",
+"Other"];
+
 
 /** Education document uploads are capped at 10 MB. */
 const EDUCATION_DOC_MAX_BYTES = 10 * 1024 * 1024;
@@ -103,7 +103,7 @@ export const emptyRegistration: RegistrationValues = {
   guarantor_phone: "",
   guarantor_id_number: "",
   latitude: null,
-  longitude: null,
+  longitude: null
 };
 
 const ENUM_SECTORS = new Set(SECTORS.map((s) => s.value as string));
@@ -134,16 +134,16 @@ export function RegistrationForm({
   note,
   showPrice = false,
   showAvailability = false,
-  onSubmit,
-}: {
-  variant: RegistrationVariant;
-  initial?: RegistrationValues;
-  submitLabel: string;
-  note?: string;
-  showPrice?: boolean;
-  showAvailability?: boolean;
-  onSubmit: (values: RegistrationValues, files: RegistrationFiles) => Promise<string | null>;
-}) {
+  onSubmit
+
+
+
+
+
+
+
+
+}: {variant: RegistrationVariant;initial?: RegistrationValues;submitLabel: string;note?: string;showPrice?: boolean;showAvailability?: boolean;onSubmit: (values: RegistrationValues, files: RegistrationFiles) => Promise<string | null>;}) {
   const { t } = useLanguage();
   // Merge with defaults so older saved drafts (missing newer fields) stay controlled.
   const [form, setForm] = useState<RegistrationValues>({ ...emptyRegistration, ...initial });
@@ -214,8 +214,8 @@ export function RegistrationForm({
           value={form.city}
           onChange={(c) => set("city", c)}
           onPick={(p) => setForm((f) => ({ ...f, city: p.city, latitude: p.latitude, longitude: p.longitude }))}
-          className={cls}
-        />
+          className={cls} />
+        
         <Field label={t("auth.subCity")}>
           <input value={form.sub_city} onChange={(e) => set("sub_city", e.target.value)} className={cls} />
         </Field>
@@ -230,8 +230,8 @@ export function RegistrationForm({
       <LocationPicker
         value={{ latitude: form.latitude, longitude: form.longitude }}
         onChange={(v: LatLng) => setForm((f) => ({ ...f, latitude: v.latitude, longitude: v.longitude }))}
-        onPlaceName={(name) => setForm((f) => (f.city ? f : { ...f, city: name }))}
-      />
+        onPlaceName={(name) => setForm((f) => f.city ? f : { ...f, city: name })} />
+      
 
       <Field label={t("auth.faydaIdNumber")} required={needsId}>
         <input required={needsId} value={form.fayda_number} onChange={(e) => set("fayda_number", e.target.value)} className={cls} />
@@ -247,19 +247,19 @@ export function RegistrationForm({
       </div>
 
 
-      {isEmployee && (
-        <>
+      {isEmployee &&
+      <>
           <Field label={`${t("auth.sector")} (choose one or more)`} required>
             <SectorsSelect required value={form.sectors} onChange={(v) => set("sectors", v)} className={cls} />
           </Field>
           <Field label="Language">
             <LanguageSelect
-              value={form.language}
-              other={form.language_other}
-              onChange={(v) => set("language", v)}
-              onOtherChange={(v) => set("language_other", v)}
-              className={cls}
-            />
+            value={form.language}
+            other={form.language_other}
+            onChange={(v) => set("language", v)}
+            onOtherChange={(v) => set("language_other", v)}
+            className={cls} />
+          
           </Field>
           <Field label="Skills">
             <SkillsSelect value={form.skills} onChange={(v) => set("skills", v)} className={cls} />
@@ -269,73 +269,73 @@ export function RegistrationForm({
           </Field>
           <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
             <input
-              type="checkbox"
-              checked={form.has_education}
-              onChange={(e) => set("has_education", e.target.checked)}
-            />
-            Add educational background
-          </label>
-          {form.has_education && (
-            <fieldset className="rounded-xl border border-border p-4">
-              <legend className="px-2 text-sm font-semibold">Educational background</legend>
+            type="checkbox"
+            checked={form.has_education}
+            onChange={(e) => set("has_education", e.target.checked)} />{t("ui.add.educational.background")}
+
+
+        </label>
+          {form.has_education &&
+        <fieldset className="rounded-xl border border-border p-4">
+              <legend className="px-2 text-sm font-semibold">{t("ui.educational.background")}</legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label="Institution name" required>
                   <input
-                    maxLength={200}
-                    value={form.education_institution}
-                    onChange={(e) => set("education_institution", e.target.value)}
-                    className={cls}
-                    placeholder="e.g. Addis Ababa University"
-                  />
+                maxLength={200}
+                value={form.education_institution}
+                onChange={(e) => set("education_institution", e.target.value)}
+                className={cls}
+                placeholder={t("ui.e.g.addis.ababa.university")} />
+              
                 </Field>
                 <Field label="Qualification type" required>
                   <select
-                    value={form.education_qualification}
-                    onChange={(e) => set("education_qualification", e.target.value)}
-                    className={cls}
-                  >
-                    <option value="">Select…</option>
-                    {QUALIFICATIONS.map((q) => (
-                      <option key={q}>{q}</option>
-                    ))}
+                value={form.education_qualification}
+                onChange={(e) => set("education_qualification", e.target.value)}
+                className={cls}>
+                
+                    <option value="">{t("ui.select")}</option>
+                    {QUALIFICATIONS.map((q) =>
+                <option key={q}>{q}</option>
+                )}
                   </select>
                 </Field>
                 <Field label="Year of graduation" required>
                   <input
-                    type="number"
-                    min={1950}
-                    max={new Date().getFullYear()}
-                    value={form.education_graduation_year}
-                    onChange={(e) => set("education_graduation_year", e.target.value)}
-                    className={cls}
-                    placeholder="e.g. 2019"
-                  />
+                type="number"
+                min={1950}
+                max={new Date().getFullYear()}
+                value={form.education_graduation_year}
+                onChange={(e) => set("education_graduation_year", e.target.value)}
+                className={cls}
+                placeholder={t("ui.e.g.2019")} />
+              
                 </Field>
                 <Field label="Education document (PDF or image, max 10 MB)">
                   <FileUpload
-                    file={files.educationDoc ?? null}
-                    onFile={(f) => setFile("educationDoc", f)}
-                    accept=".pdf,image/*"
-                    label="Upload certificate / diploma"
-                  />
+                file={files.educationDoc ?? null}
+                onFile={(f) => setFile("educationDoc", f)}
+                accept=".pdf,image/*"
+                label="Upload certificate / diploma" />
+              
                 </Field>
               </div>
               <div className="mt-4">
                 <Field label="Additional details (optional)">
                   <textarea
-                    rows={3}
-                    maxLength={800}
-                    value={form.education}
-                    onChange={(e) => set("education", e.target.value)}
-                    className={cls}
-                    placeholder="e.g. Grade 10 completed, TVET certificate in cooking — any other education details"
-                  />
+                rows={3}
+                maxLength={800}
+                value={form.education}
+                onChange={(e) => set("education", e.target.value)}
+                className={cls}
+                placeholder={t("ui.e.g.grade.10.completed.tvet.certificate.in.cooking.any")} />
+              
                 </Field>
               </div>
             </fieldset>
-          )}
+        }
         </>
-      )}
+      }
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label={t("auth.gender")}>
@@ -349,20 +349,20 @@ export function RegistrationForm({
         <Field label={t("auth.age")}>
           <input type="number" min={16} max={100} value={form.age} onChange={(e) => set("age", e.target.value)} className={cls} />
         </Field>
-        {showPrice && (
-          <Field label={t("auth.monthlyPrice")}>
+        {showPrice &&
+        <Field label={t("auth.monthlyPrice")}>
             <input type="number" min={0} value={form.price} onChange={(e) => set("price", e.target.value)} className={cls} />
           </Field>
-        )}
+        }
       </div>
 
-      {isEmployee && (
-        <div>
+      {isEmployee &&
+      <div>
           <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
             <input type="checkbox" checked={showGuarantor} onChange={(e) => setShowGuarantor(e.target.checked)} />
             {t("auth.addGuarantorDetails")}
           </label>
-          {showGuarantor && (
+          {showGuarantor &&
         <fieldset className="mt-3 rounded-xl border border-border p-4">
           <legend className="px-2 text-sm font-semibold">{t("auth.guarantorDetails")}</legend>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -385,27 +385,27 @@ export function RegistrationForm({
             </Field>
           </div>
         </fieldset>
-          )}
+        }
         </div>
-      )}
+      }
 
-      {showAvailability && (
-        <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
+      {showAvailability &&
+      <label className="flex cursor-pointer items-center gap-2 text-sm font-medium">
           <input type="checkbox" checked={form.available} onChange={(e) => set("available", e.target.checked)} />
           {t("auth.availableForWork")}
         </label>
-      )}
+      }
 
       {note && <p className="text-xs text-muted-foreground">{note}</p>}
       {error && <p className="text-sm text-destructive">{error}</p>}
       <button disabled={saving} className="btn-brand w-full disabled:opacity-60">
         {saving ? t("auth.saving") : submitLabel}
       </button>
-    </form>
-  );
+    </form>);
+
 }
 
-function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
+function Field({ label, required, children }: {label: string;required?: boolean;children: React.ReactNode;}) {
   return (
     <label className="block">
       <span className="text-sm font-medium">
@@ -413,6 +413,6 @@ function Field({ label, required, children }: { label: string; required?: boolea
         {required && <span className="text-destructive"> *</span>}
       </span>
       {children}
-    </label>
-  );
+    </label>);
+
 }
