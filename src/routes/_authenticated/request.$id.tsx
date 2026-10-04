@@ -31,6 +31,7 @@ function TellUsAboutYou() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     loadPublicEmployee(id).then((w) => {
@@ -56,11 +57,6 @@ function TellUsAboutYou() {
     if (!worker) return;
     setError(null);
 
-    const missing = visible.find((f) => f.required && !(answers[f.name] ?? "").trim());
-    if (missing) {
-      setError(`Please fill in “${missing.label}”.`);
-      return;
-    }
     if (!location.trim()) {
       setError("Please tell us where the work is.");
       return;
@@ -79,7 +75,7 @@ function TellUsAboutYou() {
       employee_ref: worker.demo ? null : worker.id,
       employee_name: worker.name,
       sector: worker.role,
-      sector_answers: answers,
+      sector_answers: showDetails ? answers : {},
       location,
       duration,
       budget: budget ? Number(budget) : null,
@@ -141,10 +137,14 @@ function TellUsAboutYou() {
             </div>
           </section>
 
+          {fields.length > 0 && (
           <section className="card-soft mt-6 space-y-4 p-6">
-            <h2 className="text-lg font-bold">{worker.role} details</h2>
-            {visible.map((f) => (
-              <Field key={f.name} label={f.label} required={f.required}>
+            <label className="flex cursor-pointer items-center gap-2">
+              <input type="checkbox" checked={showDetails} onChange={(e) => setShowDetails(e.target.checked)} className="h-4 w-4" />
+              <span className="text-lg font-bold">Add {worker.role} details (optional)</span>
+            </label>
+            {showDetails && visible.map((f) => (
+              <Field key={f.name} label={f.label}>
                 {f.type === "textarea" ? (
                   <textarea className={`${input} min-h-24`} value={answers[f.name] ?? ""} onChange={(e) => set(f.name, e.target.value)} />
                 ) : f.type === "select" ? (
@@ -180,6 +180,7 @@ function TellUsAboutYou() {
               </Field>
             ))}
           </section>
+          )}
 
           <section className="card-soft mt-6 space-y-4 p-6">
             <h2 className="text-lg font-bold">Message to the review team</h2>
