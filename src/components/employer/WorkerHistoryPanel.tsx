@@ -91,24 +91,24 @@ export function WorkerHistoryPanel({
         {history.terminations.length === 0 ?
         <Empty>{t("ui.no.termination.requests")}</Empty> :
 
-        history.terminations.map((t) =>
-        <li key={t.id} className="rounded-xl bg-card p-3 text-sm">
+        history.terminations.map((term) =>
+        <li key={term.id} className="rounded-xl bg-card p-3 text-sm">
               <p className="font-semibold">
-                {t.reason}
+                {term.reason}
                 <span className="ml-2 text-xs font-normal text-muted-foreground">
-                  {new Date(t.created_at).toLocaleDateString()} · {t.status}
+                  {new Date(term.created_at).toLocaleDateString()} · {term.status}
                 </span>
               </p>
-              {t.details && <p className="mt-1 text-muted-foreground">{t.details}</p>}
-              {t.admin_note &&
+              {term.details && <p className="mt-1 text-muted-foreground">{term.details}</p>}
+              {term.admin_note &&
           <p className="mt-2 rounded-lg bg-secondary p-2">
                   <span className="font-semibold">{t("ui.back.office")}</span>
-                  {t.admin_note}
+                  {term.admin_note}
                 </p>
           }
-              {t.status === "approved" &&
+              {term.status === "approved" &&
           <p className="mt-1 text-xs text-muted-foreground">{t("ui.worker.marked")}
-            {t.make_available ? "available" : "unavailable"}{t("ui.for.future.placement")}
+            {term.make_available ? "available" : "unavailable"}{t("ui.for.future.placement")}
           </p>
           }
             </li>
