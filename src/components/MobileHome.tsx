@@ -222,6 +222,9 @@ export function MobileHome() {
           )}
         </div>
 
+        {/* Admin-managed scrolling section */}
+        <BannerSlot placement="home_mid" className="mt-7" />
+
 
 
 

@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- The `home_mid` banner placement renders after the home services section on mobile and desktop so admins control that scrolling section from Posting (Banners).
