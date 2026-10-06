@@ -19,7 +19,7 @@ function AdminBanners() {const { t } = useLanguage();
   return (
     <AdminSection
       title={t("ui.posting.banners.advertisements")}
-      description="Publish image or text advertisements. Upload one wide graphic for desktop and one for mobile; the site switches between them automatically based on the visitor's screen.">
+      description="Publish image or text advertisements for the top banner or the middle scrolling section. Add multiple banners to create a swipeable, automatically rotating slider; the site switches between desktop and mobile artwork automatically.">
       
       <BannerManager userId={user?.id ?? null} />
     </AdminSection>);

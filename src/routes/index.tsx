@@ -161,6 +161,9 @@ function Home() {
         </div>
       </section>
 
+      {/* Admin-managed scrolling section */}
+      <BannerSlot placement="home_mid" className="container-page pb-20" />
+
       {/* JOB POSTINGS */}
       <section id="jobs" className="bg-secondary/40 py-20">
         <div className="container-page">
