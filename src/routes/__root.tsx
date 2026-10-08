@@ -275,6 +275,16 @@ function BackendConfigAlert() {const { t } = useLanguage();
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  // Load Google Analytics once, then report every client-side navigation.
+  useEffect(() => {
+    initAnalytics();
+    const unsubscribe = router.subscribe("onResolved", () => {
+      trackPageView(window.location.pathname + window.location.search);
+    });
+    return unsubscribe;
+  }, [router]);
 
   const backendReady = Boolean(
     (import.meta.env["VITE_SUPABASE_URL"] || process.env["SUPABASE_URL"]) && (
