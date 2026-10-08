@@ -17,6 +17,7 @@ import { useWalletAccess } from "../lib/wallet-access";
 import { useJobAccess } from "../lib/jobs";
 import { CONTACT, money, BRAND } from "../lib/app-config";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { initAnalytics, trackPageView } from "../lib/analytics";
 import { LanguageProvider, useLanguage, useStandaloneTranslation } from "../lib/i18n";
 import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { NotificationsBell } from "../components/NotificationsBell";
