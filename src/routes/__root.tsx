@@ -17,6 +17,7 @@ import { useWalletAccess } from "../lib/wallet-access";
 import { useJobAccess } from "../lib/jobs";
 import { CONTACT, money, BRAND } from "../lib/app-config";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { initAnalytics, trackPageView } from "../lib/analytics";
 import { LanguageProvider, useLanguage, useStandaloneTranslation } from "../lib/i18n";
 import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { NotificationsBell } from "../components/NotificationsBell";
@@ -274,6 +275,16 @@ function BackendConfigAlert() {const { t } = useLanguage();
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+
+  // Load Google Analytics once, then report every client-side navigation.
+  useEffect(() => {
+    initAnalytics();
+    const unsubscribe = router.subscribe("onResolved", () => {
+      trackPageView(window.location.pathname + window.location.search);
+    });
+    return unsubscribe;
+  }, [router]);
 
   const backendReady = Boolean(
     (import.meta.env["VITE_SUPABASE_URL"] || process.env["SUPABASE_URL"]) && (
