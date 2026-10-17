@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { sectorLabel } from "@/lib/app-config";
 import { signAvatars } from "@/lib/avatars.functions";
+import { isPubliclyVisibleWorker } from "@/lib/worker-visibility";
 import type { Database } from "@/integrations/supabase/types";
 
 export type EmployeeCard = {
@@ -53,6 +54,7 @@ type PublicRow = {
   price: number | null;
   photo_url: string | null;
   available: boolean | null;
+  verification_status?: string | null;
   fayda_verified?: boolean | null;
   guarantor_verified?: boolean | null;
 };
@@ -79,17 +81,19 @@ export function toEmployeeCard(row: PublicRow, signed: Record<string, string>): 
 }
 
 /**
- * Every approved employee, visible to all users in public listings.
+ * Only approved and available employees, visible in public listings.
  */
 export async function loadAvailableEmployees(limit?: number): Promise<EmployeeCard[]> {
   let query = supabase
     .from("workers_public")
     .select("*")
+    .eq("verification_status", "approved")
+    .eq("available", true)
     .order("created_at", { ascending: false });
   if (limit) query = query.limit(limit);
 
   const { data } = await query;
-  const rows = (data ?? []) as PublicRow[];
+  const rows = ((data ?? []) as PublicRow[]).filter(isPubliclyVisibleWorker);
   const signed = await resolveAvatars(rows.map((r) => r.photo_url));
   return rows.map((r) => toEmployeeCard(r, signed));
 }
@@ -116,6 +120,8 @@ export function useAvailableEmployees(limit?: number) {
       if (alive) void refresh();
     };
     run();
+    // RLS may suppress realtime events when a row stops being public.
+    const timer = window.setInterval(run, 15000);
 
     const channel = supabase
       .channel(`public-workers-${Math.random().toString(36).slice(2)}`)
@@ -131,6 +137,7 @@ export function useAvailableEmployees(limit?: number) {
 
     return () => {
       alive = false;
+      window.clearInterval(timer);
       supabase.removeChannel(channel);
       document.removeEventListener("visibilitychange", onFocus);
       window.removeEventListener("focus", onFocus);

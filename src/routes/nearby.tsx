@@ -45,17 +45,34 @@ function NearbyPage() {const { t } = useLanguage();
   const [photos, setPhotos] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    supabase.
+    let active = true;
+    const refresh = () => { void supabase.
     from("workers_public").
     select("*").
+    eq("verification_status", "approved").
     eq("available", true).
     not("latitude", "is", null).
     not("longitude", "is", null).
     then(async ({ data }) => {
       const rows = data ?? [];
+      if (!active) return;
       setWorkers(rows);
-      setPhotos(await resolveAvatars(rows.map((r) => r.photo_url)));
-    });
+      const signed = await resolveAvatars(rows.map((r) => r.photo_url));
+      if (active) setPhotos(signed);
+    }); };
+    refresh();
+    const timer = window.setInterval(refresh, 15000);
+    const channel = supabase.channel("nearby-public-workers")
+      .on("postgres_changes", { event: "*", schema: "public", table: "worker_public_profiles" }, refresh)
+      .on("postgres_changes", { event: "*", schema: "public", table: "workers" }, refresh)
+      .subscribe();
+    window.addEventListener("focus", refresh);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      window.removeEventListener("focus", refresh);
+      void supabase.removeChannel(channel);
+    };
   }, []);
 
   const locate = useCallback(() => {
@@ -77,10 +94,10 @@ function NearbyPage() {const { t } = useLanguage();
 
   const results = useMemo(() => {
     const list = workers.
-    filter((w) => !sector || w.sector === sector).
+    filter((w) => w.latitude != null && w.longitude != null && (!sector || w.sector === sector)).
     map((w) => ({
       worker: w,
-      km: origin ? distanceKm(origin.lat, origin.lng, w.latitude!, w.longitude!) : null
+      km: origin && w.latitude != null && w.longitude != null ? distanceKm(origin.lat, origin.lng, w.latitude, w.longitude) : null
     }));
     if (!origin) return list;
     return list.filter((r) => (r.km ?? 0) <= radius).sort((a, b) => (a.km ?? 0) - (b.km ?? 0));
@@ -121,8 +138,8 @@ function NearbyPage() {const { t } = useLanguage();
           }}
           points={results.map((r) => ({
             id: r.worker.id ?? "",
-            lat: r.worker.latitude!,
-            lng: r.worker.longitude!,
+             lat: r.worker.latitude ?? 0,
+             lng: r.worker.longitude ?? 0,
             title: `${r.worker.full_name} — ${sectorLabel(r.worker.sector ?? "")}`
           }))} />
         

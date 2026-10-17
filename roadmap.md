@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Enforce approved-and-available worker visibility across public views and verify the rule.
+- [x] Enforce approved-and-available worker visibility across public views and verify the rule.
 
 - [x] Replace user-visible hardcoded route text, placeholders, labels and accessibility text with `t()` keys.
 - [x] Replace user-visible hardcoded component text, placeholders, labels and accessibility text with `t()` keys.

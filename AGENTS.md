@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - The `home_mid` banner placement renders after the home services section on mobile and desktop so admins control that scrolling section from Posting (Banners).
+- Public worker discovery uses the filtered `workers_public` projection, with matching public-profile RLS and periodic refresh alongside realtime so hidden-row events cannot leave stale listings; raw worker reads retain owner/staff authorization.
