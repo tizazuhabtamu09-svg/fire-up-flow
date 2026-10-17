@@ -36,7 +36,7 @@ export type PublicEmployee = {
 export async function loadPublicEmployee(id: string): Promise<PublicEmployee | null> {
   const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
   const { data } = isUuid
-    ? await supabase.from("workers_public").select("*").eq("id", id).maybeSingle()
+    ? await supabase.from("workers_public").select("*").eq("verification_status", "approved").eq("available", true).eq("id", id).maybeSingle()
     : { data: null };
 
   if (data) {
